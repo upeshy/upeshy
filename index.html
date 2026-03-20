@@ -540,8 +540,9 @@ firebase.database().ref("settings").on("value", snap => {
 
     // Director
     if(data.director){
-      document.querySelector(".owner").innerText = "Director : " + data.director;
-    }
+  document.querySelector(".director").innerHTML =
+  `<span>🎓 Director</span> ${data.director}`;
+}
 
     // About
     if(data.about){
@@ -555,10 +556,13 @@ firebase.database().ref("settings").on("value", snap => {
 
     // Teachers
     let teachers = document.querySelectorAll(".teacher h3");
-    if(teachers[0] && data.teacher1) teachers[0].innerText = data.teacher1;
-    if(teachers[1] && data.teacher2) teachers[1].innerText = data.teacher2;
-    if(teachers[2] && data.teacher3) teachers[2].innerText = data.teacher3;
+
+teachers.forEach((teacher, index) => {
+  let key = "teacher" + (index + 1);
+  if(data[key]){
+    teacher.innerText = data[key];
   }
+ 
 });
 </script>
 </body>
