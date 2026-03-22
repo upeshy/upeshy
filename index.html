@@ -1,958 +1,1472 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Excellent Commerce Classes</title>
-
-<style>
-
-/* ===== RESET ===== */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-body{
-  font-family:Arial, sans-serif;
-  background:#fff;
-  color:#0f172a;
-  overflow-x:hidden;
-}
-
-/* ===== SECTION ===== */
-section{
-  padding:50px 15px;
-  max-width:1200px;
-  margin:auto;
-  text-align:center;
-}
-
-/* ===== TOP BAR ===== */
-.topbar{
-  background:linear-gradient(270deg,#000,#1a1a1a,#facc15,#000);
-  background-size:400% 400%;
-  animation:bgMove 10s ease infinite;
-  color:#fff;
-  padding:8px;
-  overflow:hidden;
-}
-
-.topbar span{
-  display:inline-block;
-  padding-left:100%;
-  animation:scrollText 12s linear infinite;
-}
-
-@keyframes bgMove{
-  0%{background-position:0%;}
-  100%{background-position:100%;}
-}
-
-@keyframes scrollText{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-100%);}
-}
-
-/* ===== NAVBAR ===== */
-.navbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 20px;
-  background:#000;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-
-.nav-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.nav-left img{
-  width:40px;
-  height:40px;
-  border-radius:8px;
-}
-
-.nav-left h2{
-  color:#facc15;
-  font-size:18px;
-}
-
-/* MENU */
-.nav-links{
-  display:flex;
-  gap:20px;
-}
-
-.nav-links a{
-  color:#fff;
-  text-decoration:none;
-  transition:0.3s;
-}
-
-.nav-links a:hover{
-  color:#facc15;
-}
-
-.menu-toggle{
-  display:none;
-  font-size:26px;
-  color:white;
-  cursor:pointer;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .menu-toggle{display:block;}
-
-  .nav-links{
-    position:absolute;
-    top:60px;
-    right:0;
-    background:#000;
-    flex-direction:column;
-    width:200px;
-    display:none;
-  }
-
-  .nav-links.active{
-    display:flex;
-  }
-
-  .nav-links a{
-    padding:12px;
-    border-bottom:1px solid #222;
-  }
-
-  .nav-left h2{
-    font-size:16px;
-  }
-}
-
-/* ===== HERO SCROLL ===== */
-.hero-scroll{
-  overflow:hidden;
-  background:#0f172a;
-  padding:30px 0;
-}
-
-.scroll-track{
-  display:flex;
-  gap:20px;
-  width:max-content;
-  animation:scrollLeft 25s linear infinite;
-}
-
-.scroll-item{
-  min-width:300px;
-  background:#fff;
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:0 10px 20px rgba(0,0,0,0.2);
-}
-
-.scroll-item img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-}
-
-.scroll-item p{
-  padding:12px;
-  font-weight:bold;
-}
-
-@keyframes scrollLeft{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
-}
-
-/* ===== ABOUT ===== */
-.about-section{
-  background:#f8fafc;
-}
-
-.about-container{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:40px;
-  align-items:center;
-}
-
-.about-img img{
-  width:100%;
-  border-radius:20px;
-}
-
-.about-content h2{
-  color:#0ea5e9;
-  margin-bottom:10px;
-}
-
-@media(max-width:768px){
-  .about-container{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-}
-
-/* ===== TEACHERS ===== */
-.teacher-container{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-}
-
-.teacher-card{
-  background:#fff;
-  padding:20px;
-  border-radius:20px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.1);
-}
-
-.teacher-card img{
-  width:100px;
-  height:100px;
-  border-radius:50%;
-}
-
-/* ===== GALLERY ===== */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:15px;
-}
-
-.gallery img{
-  width:100%;
-  height:200px;
-  object-fit:cover;
-  border-radius:15px;
-}
-
-/* ===== COURSES ===== */
-.course-container{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:25px;
-}
-
-.course-box{
-  background:#e6f4f1;
-  padding:20px;
-  border-radius:20px;
-  transition:0.3s;
-}
-
-.course-box:hover{
-  transform:translateY(-5px);
-}
-
-/* ===== FEATURES ===== */
-.features-grid{
-  display:grid;
-  gap:20px;
-}
-
-.feature-box{
-  background:#e6f4f1;
-  padding:25px;
-  border-radius:20px;
-}
-
-/* ===== VIDEO ===== */
-.video-scroll{
-  overflow:hidden;
-}
-
-.video-track{
-  display:flex;
-  gap:20px;
-  width:max-content;
-  animation:scrollLeft 25s linear infinite;
-}
-
-.video-item{
-  min-width:300px;
-}
-
-/* ===== UPDATES ===== */
-.updates-box{
-  height:220px;
-  overflow:hidden;
-  background:#f1f5f9;
-  border-radius:15px;
-  padding:10px;
-  max-width:500px;
-  margin:auto;
-}
-
-.updates-track{
-  display:flex;
-  flex-direction:column;
-  animation:scrollUp 18s linear infinite;
-}
-
-.update-item{
-  background:#fff;
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
-}
-
-@keyframes scrollUp{
-  0%{transform:translateY(0);}
-  100%{transform:translateY(-50%);}
-}
-
-/* ===== FORM ===== */
-form{
-  max-width:500px;
-  margin:auto;
-  background:#fff;
-  padding:25px;
-  border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-form input,form select,form textarea{
-  padding:12px;
-  border:1px solid #ddd;
-  border-radius:8px;
-}
-
-form button{
-  padding:12px;
-  background:#0ea5e9;
-  color:white;
-  border:none;
-  border-radius:8px;
-}
-
-/* ===== FOOTER ===== */
-.footer{
-  background:#0f172a;
-  color:#fff;
-  margin-top:50px;
-}
-
-.footer-container{
-  max-width:1200px;
-  margin:auto;
-  padding:40px 20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-}
-
-.footer-bottom{
-  background:#020617;
-  text-align:center;
-  padding:15px;
-}
-</style>
-
- </head>  <body>  <!-- AUTO POPUP -->  <div class="popup-overlay" id="popupBox">
-  <div class="popup-content">    
-    <span class="popup-close" onclick="closePopup()">✖</span>    
-    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">    
-    <h3 id="popupTitle">Admission Open 🎓</h3>    
-    <p id="popupText">Join Best Commerce Classes Now</p>    
-  </div>    
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Excellent Commerce Classes</title>  <style>  
+/* ===== RESET ===== */  
+*{  
+  margin:0;  
+  padding:0;  
+  box-sizing:border-box;  
+}  
+  
+html,body{  
+  overflow-x:hidden;  
+  font-family:Arial, sans-serif;  
+  background:#fff;  
+  color:#0f172a;  
+}  
+  
+/* ===== SECTION ===== */  
+section{  
+  padding:40px 15px;  
+  max-width:1200px;  
+  margin:auto;  
+  text-align:center;  
+}  
+  
+/* ===== TOP BAR (BLACK + YELLOW SMOOTH) ===== */  
+.topbar{  
+  background:linear-gradient(270deg,#000,#1a1a1a,#facc15,#000);  
+  background-size:400% 400%;  
+  animation:bgMove 10s ease infinite;  
+  color:#fff;  
+  padding:8px;  
+  overflow:hidden;  
+  white-space:nowrap;  
+}  
+  
+@keyframes bgMove{  
+  0%{background-position:0% 50%;}  
+  50%{background-position:100% 50%;}  
+  100%{background-position:0% 50%;}  
+}  
+  
+.topbar span{  
+  display:inline-block;  
+  padding-left:100%;  
+  animation:move 12s linear infinite;  
+}  
+  
+@keyframes move{  
+  0%{transform:translateX(0);}  
+  100%{transform:translateX(-100%);}  
+}  
+  
+/* ===== NAVBAR ===== */  
+.navbar{  
+  display:flex;  
+  justify-content:space-between;  
+  align-items:center;  
+  padding:12px 20px;  
+  background:#000;  
+  position:sticky;  
+  top:0;  
+  z-index:100;  
+}  
+  
+.nav-left{  
+  display:flex;  
+  align-items:center;  
+  gap:10px;  
+}  
+  
+.nav-left img{  
+  width:45px;  
+  height:45px;  
+  border-radius:8px;  
+}  
+  
+.nav-left h2{  
+  color:#facc15;  
+  font-size:20px;  
+}  
+  
+/* MENU */  
+.nav-links{  
+  display:flex;  
+  gap:20px;  
+}  
+  
+.nav-links a{  
+  color:white;  
+  text-decoration:none;  
+  transition:0.3s;  
+}  
+  
+.nav-links a:hover{  
+  color:#facc15;  
+}  
+  
+.menu-toggle{  
+  display:none;  
+  font-size:26px;  
+  color:white;  
+  cursor:pointer;  
+}  
+  
+/* ===== MOBILE ===== */  
+@media(max-width:768px){  
+  
+  .menu-toggle{display:block;}  
+  
+  .nav-links{  
+    position:absolute;  
+    top:60px;  
+    right:0;  
+    background:#000;  
+    flex-direction:column;  
+    width:200px;  
+    display:none;  
+  }  
+  
+  .nav-links.active{  
+    display:flex;  
+  }  
+  
+  .nav-links a{  
+    padding:12px;  
+    border-bottom:1px solid #222;  
+  }  
+  
+  .nav-left img{  
+    width:35px;  
+    height:35px;  
+  }  
+  
+  .nav-left h2{  
+    font-size:16px;  
+  }  
+}  
+  
+  
+  
+@keyframes move{    
+0%{transform:translateX(0);}    
+100%{transform:translateX(-100%);}    
+}    
+    
+/* NAV */    
+nav{    
+display:flex;    
+justify-content:space-between;    
+padding:15px 20px; /* FIXED */    
+background:white;    
+box-shadow:0 2px 10px rgba(0,0,0,0.1);    
+position:sticky;    
+top:0;    
+z-index:100;    
+}    
+nav h2{color:#0ea5e9;}    
+nav a{margin:10px;text-decoration:none;color:black;}    
+    
+/* SLIDER */    
+.slider{    
+position:relative;    
+height:300px;    
+overflow:hidden;    
+}    
+.slide{    
+position:absolute;    
+width:100%;    
+height:100%;    
+opacity:0;    
+transition:1s;    
+}    
+.slide img{    
+width:100%;    
+height:100%;    
+object-fit:cover;    
+}    
+.active{opacity:1;}    
+    
+h2{color:#0ea5e9;}    
+    
+/* CARDS */    
+.cards{    
+display:grid;    
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));    
+gap:20px;    
+}    
+.card{    
+padding:20px;    
+border:1px solid #ddd;    
+border-radius:10px;    
+cursor:pointer;    
+transition:0.3s;    
+}    
+.card:hover{    
+background:#e0f2fe;    
+}    
+    
+/* VIDEO */    
+video{    
+width:250px;    
+margin:10px;    
+border-radius:10px;    
+}    
+    
+/* TESTIMONIAL */    
+.testimonial{    
+background:#f1f5f9;    
+padding:20px;    
+margin:10px;    
+border-radius:10px;    
+animation:slide 8s infinite;    
+}    
+@keyframes slide{    
+0%{transform:translateX(0);}    
+50%{transform:translateX(-20px);}    
+100%{transform:translateX(0);}    
+}    
+    
+/* FAQ */    
+.faq{    
+max-width:800px;    
+margin:auto;    
+text-align:left;    
+}    
+.faq-item{    
+padding:10px;    
+border-bottom:1px solid #ccc;    
+cursor:pointer;    
+}    
+.faq-content{    
+display:none;    
+padding:10px;    
+}    
+    
+/* POPUP */    
+.popup-overlay{    
+position:fixed;    
+top:0;    
+left:0;    
+width:100%;    
+height:100%;    
+background:rgba(0,0,0,0.6);    
+display:none;    
+justify-content:center;    
+align-items:center;    
+z-index:999;    
+}    
+.popup-content{    
+background:white;    
+padding:25px;    
+border-radius:15px;    
+width:300px;    
+text-align:center;    
+border-top:5px solid #0ea5e9;    
+animation:zoom 0.3s;    
+}    
+.popup-content img{    
+width:70px;    
+}    
+.popup-close{    
+position:absolute;    
+top:10px;    
+right:15px;    
+cursor:pointer;    
+font-size:18px;    
+color:#0ea5e9;    
+}    
+@keyframes zoom{    
+from{transform:scale(0.7);}    
+to{transform:scale(1);}    
+}    
+    
+/* FOOTER */    
+footer{    
+background:#0f172a;    
+color:white;    
+padding:40px 15px;    
+text-align:center;    
+}    
+    
+/* COURSE */    
+.course-container{    
+display:grid;    
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));    
+gap:25px;    
+margin-top:30px;    
+}    
+    
+.course-box{    
+background:#e6f4f1;    
+padding:20px;    
+border-radius:20px;    
+text-align:center;    
+box-shadow:0 5px 15px rgba(0,0,0,0.1);    
+transition:0.3s;    
+cursor:pointer;    
+}    
+    
+.course-box:hover{    
+transform:translateY(-5px);    
+}    
+    
+.course-box img{    
+width:100%;    
+height:150px;    
+object-fit:cover;    
+border-radius:10px;    
+margin-bottom:15px;    
+}    
+    
+.course-box h3{    
+color:#065f46;    
+margin-bottom:10px;    
+}    
+    
+.course-box button{    
+padding:12px 20px;    
+border:2px solid #065f46;    
+background:transparent;    
+border-radius:10px;    
+font-size:16px;    
+color:#065f46;    
+cursor:pointer;    
+transition:0.3s;    
+}    
+    
+.course-box button:hover{    
+background:#065f46;    
+color:white;    
+}    
+    
+/* FEATURES */    
+.features-grid{    
+display:grid;    
+gap:25px;    
+}    
+    
+.feature-box{    
+background:#e6f4f1;    
+padding:30px;    
+border-radius:20px;    
+text-align:center;    
+box-shadow:8px 8px 0 #065f46;    
+}    
+    
+.feature-box img{    
+width:80px;    
+margin-bottom:15px;    
+}    
+    
+.feature-box h3{    
+color:#065f46;    
+}    
+    
+/* REVIEW */    
+.review-card{    
+background:white;    
+padding:20px;    
+border-radius:15px;    
+box-shadow:0 10px 20px rgba(0,0,0,0.1);    
+max-width:350px;    
+margin:20px auto;    
+text-align:left;    
+}    
+    
+/* FAQ BOX */    
+.faq-box{    
+max-width:400px;    
+margin:auto;    
+}    
+    
+.faq-item{    
+background:#e6f4f1;    
+padding:20px;    
+margin:10px 0;    
+border-radius:15px;    
+display:flex;    
+justify-content:space-between;    
+cursor:pointer;    
+font-weight:bold;    
+}    
+    
+.faq-content{    
+display:none;    
+padding:15px;    
+background:white;    
+border-radius:10px;    
+margin-bottom:10px;    
+}    
+    
+/* SLIDER AUTO */    
+.slider-wrapper{    
+overflow:hidden;    
+position:relative;    
+}    
+    
+.featured-slider{    
+display:flex;    
+gap:20px;    
+width:max-content;    
+animation:scroll 20s linear infinite;    
+}    
+    
+.featured-card{    
+min-width:300px;    
+background:#e6f4f1;    
+border-radius:20px;    
+overflow:hidden;    
+box-shadow:0 10px 25px rgba(0,0,0,0.15);    
+}    
+    
+.featured-card img{    
+width:100%;    
+height:180px;    
+object-fit:cover;    
+}    
+    
+.featured-content{    
+padding:20px;    
+}    
+    
+.featured-content h3{    
+color:#065f46;    
+}    
+    
+.featured-content button{    
+margin-top:10px;    
+padding:10px 15px;    
+background:#065f46;    
+color:white;    
+border:none;    
+border-radius:10px;    
+cursor:pointer;    
+}    
+    
+@keyframes scroll{    
+0%{transform:translateX(0);}    
+100%{transform:translateX(-50%);}    
+}    
+/* ===== NAVBAR ===== */    
+.navbar{    
+  display:flex;    
+  justify-content:space-between;    
+  align-items:center;    
+  padding:15px 20px;    
+  background:white;    
+  box-shadow:0 4px 15px rgba(0,0,0,0.08);    
+  position:sticky;    
+  top:0;    
+  z-index:100;    
+}    
+    
+.logo{    
+  color:#0ea5e9;    
+}    
+    
+.nav-links{    
+  display:flex;    
+  gap:20px;    
+}    
+    
+.nav-links a{    
+  text-decoration:none;    
+  color:#334155;    
+  font-weight:500;    
+}    
+    
+.menu-toggle{    
+  display:none;    
+  font-size:26px;    
+  cursor:pointer;    
+}    
+    
+/* MOBILE MENU */    
+@media(max-width:768px){    
+  .menu-toggle{    
+    display:block;    
+  }    
+    
+  .nav-links{    
+    position:absolute;    
+    top:70px;    
+    right:0;    
+    background:white;    
+    flex-direction:column;    
+    width:200px;    
+    display:none;    
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);    
+  }    
+    
+  .nav-links a{    
+    padding:15px;    
+    border-bottom:1px solid #eee;    
+  }    
+    
+  .nav-links.active{    
+    display:flex;    
+  }    
+}    
+    
+/* ===== HERO ===== */    
+.hero{    
+  position:relative;    
+  height:500px;    
+  overflow:hidden;    
+}    
+    
+.slider{    
+  position:absolute;    
+  width:100%;    
+  height:100%;    
+}    
+    
+.slide{    
+  position:absolute;    
+  width:100%;    
+  height:100%;    
+  opacity:0;    
+  transition:1s;    
+}    
+    
+.slide img{    
+  width:100%;    
+  height:100%;    
+  object-fit:cover;    
+}    
+    
+.active{opacity:1;}    
+    
+.overlay{    
+  position:absolute;    
+  width:100%;    
+  height:100%;    
+  background:rgba(0,0,0,0.5);    
+  z-index:1;    
+}    
+    
+/* HERO TEXT */    
+.hero-content{    
+  position:absolute;    
+  top:50%;    
+  left:50%;    
+  transform:translate(-50%,-50%);    
+  text-align:center;    
+  color:white;    
+  z-index:2;    
+}    
+    
+.hero-content h1{    
+  font-size:40px;    
+}    
+    
+.hero-content p{    
+  margin:10px 0;    
+}    
+    
+.hero-content button{    
+  padding:12px 25px;    
+  border:none;    
+  background:#0ea5e9;    
+  color:white;    
+  border-radius:8px;    
+  cursor:pointer;    
+}    
+  .nav-links{    
+  display:flex;    
+  gap:20px;    
+}    
+    
+/* MOBILE */    
+@media(max-width:768px){    
+    
+  .menu-toggle{    
+    display:block;    
+  }    
+    
+  .nav-links{    
+    display:none; /* hidden by default */    
+    position:absolute;    
+    top:70px;    
+    right:0;    
+    background:white;    
+    flex-direction:column;    
+    width:200px;    
+  }    
+    
+  .nav-links.active{    
+    display:flex; /* show on click */    
+  }    
+}    
+ /* ===== FOOTER FULL WIDTH FIXED ===== */    
+/* ===== FULL WIDTH FOOTER PERFECT ===== */    
+.footer{    
+  background:#0f172a;    
+  color:white;    
+  width:100vw;              /* 🔥 full viewport */    
+  position:relative;    
+  left:50%;    
+  transform:translateX(-50%);    
+  margin-top:50px;    
+}    
+    
+/* CONTAINER CENTER */    
+.footer-container{    
+  max-width:1200px;    
+  margin:auto;    
+  padding:50px 20px;    
+  display:grid;    
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));    
+  gap:30px;    
+}    
+    
+/* BOTTOM BAR FULL WIDTH */    
+.footer-bottom{    
+  background:#020617;    
+  text-align:center;    
+  padding:15px;    
+  width:100vw;    
+  position:relative;    
+  left:50%;    
+  transform:translateX(-50%);    
+}    
+  .hero-scroll{    
+  overflow:hidden;    
+  background:#000;    
+  padding:30px 0;    
+}    
+    
+.scroll-track{    
+  display:flex;    
+  gap:20px;    
+  width:max-content;    
+  animation:scrollLeft 20s linear infinite;    
+}    
+    
+.scroll-item{    
+  min-width:300px;    
+  background:white;    
+  border-radius:15px;    
+  overflow:hidden;    
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);    
+  text-align:center;    
+}    
+    
+.scroll-item img{    
+  width:100%;    
+  height:180px;    
+  object-fit:cover;    
+}    
+    
+.scroll-item p{    
+  padding:10px;    
+  font-weight:bold;    
+  color:#0f172a;    
+}    
+    
+/* ANIMATION */    
+@keyframes scrollLeft{    
+  0%{transform:translateX(0);}    
+  100%{transform:translateX(-50%);}    
+}    
+  .video-scroll{    
+  overflow:hidden;    
+  padding:20px 0;    
+}    
+    
+.video-track{    
+  display:flex;    
+  gap:20px;    
+  width:max-content;    
+  animation:videoScroll 25s linear infinite;    
+}    
+    
+.video-item{    
+  min-width:300px;    
+}    
+    
+.video-item video{    
+  width:100%;    
+  height:200px;    
+  border-radius:12px;    
+  object-fit:cover;    
+}    
+    
+/* SCROLL ANIMATION */    
+@keyframes videoScroll{    
+  0%{transform:translateX(0);}    
+  100%{transform:translateX(-50%);}    
+}    
+  .updates-section{    
+  text-align:center;    
+}    
+    
+.updates-box{    
+  height:200px;             /* visible area */    
+  overflow:hidden;    
+  background:#f1f5f9;    
+  border-radius:10px;    
+  padding:10px;    
+  max-width:500px;    
+  margin:auto;    
+}    
+    
+.updates-track{    
+  display:flex;    
+  flex-direction:column;    
+  animation:scrollUp 15s linear infinite;    
+}    
+    
+.update-item{    
+  background:white;    
+  padding:15px;    
+  margin:10px 0;    
+  border-radius:10px;    
+  box-shadow:0 5px 10px rgba(0,0,0,0.1);    
+  text-align:left;    
+  font-size:14px;    
+}    
+    
+/* ANIMATION */    
+@keyframes scrollUp{    
+  0%{transform:translateY(0);}    
+  100%{transform:translateY(-50%);}    
+}    
+  .teacher-container{    
+  display:grid;    
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));    
+  gap:25px;    
+  margin-top:30px;    
+}    
+    
+.teacher-card{    
+  background:white;    
+  border-radius:20px;    
+  padding:20px;    
+  text-align:center;    
+  box-shadow:0 10px 20px rgba(0,0,0,0.1);    
+  transition:0.3s;    
+}    
+    
+.teacher-card:hover{    
+  transform:translateY(-8px);    
+}    
+    
+.teacher-card img{    
+  width:120px;    
+  height:120px;    
+  border-radius:50%;    
+  object-fit:cover;    
+  margin-bottom:15px;    
+}    
+    
+.teacher-card h3{    
+  color:#0ea5e9;    
+}    
+    
+.teacher-card p{    
+  color:#64748b;    
+}    
+  .gallery{    
+  display:grid;    
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));    
+  gap:15px;    
+  margin-top:30px;    
+}    
+    
+.gallery img{    
+  width:100%;    
+  height:200px;    
+  object-fit:cover;    
+  border-radius:15px;    
+  transition:0.3s;    
+  cursor:pointer;    
+}    
+    
+.gallery img:hover{    
+  transform:scale(1.05);    
+}    
+  .about-section{    
+  padding:50px 20px;    
+  background:#f8fafc;    
+}    
+    
+.about-container{    
+  max-width:1200px;    
+  margin:auto;    
+  display:grid;    
+  grid-template-columns:1fr 1fr;    
+  gap:40px;    
+  align-items:center;    
+}    
+    
+/* IMAGE */    
+.about-img img{    
+  width:100%;    
+  border-radius:20px;    
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);    
+}    
+    
+/* CONTENT */    
+.about-content h2{    
+  color:#0ea5e9;    
+  margin-bottom:15px;    
+}    
+    
+.about-content p{    
+  color:#334155;    
+  line-height:1.7;    
+  margin-bottom:10px;    
+}    
+    
+.about-content button{    
+  margin-top:15px;    
+  padding:12px 25px;    
+  background:#0ea5e9;    
+  color:white;    
+  border:none;    
+  border-radius:10px;    
+  cursor:pointer;    
+}    
+    
+/* MOBILE */    
+@media(max-width:768px){    
+  .about-container{    
+    grid-template-columns:1fr;    
+    text-align:center;    
+  }    
+}    
+  /* ===== FORM SECTION ===== */    
+.section{    
+  background:#f8fafc;    
+  padding:60px 20px;    
+}    
+    
+/* FORM HEADING */    
+.section h2{    
+  text-align:center;    
+  color:#0ea5e9;    
+  font-size:32px;    
+  margin-bottom:10px;    
+}    
+    
+.section h3{    
+  color:#334155;    
+  font-weight:600;    
+}    
+    
+/* FORM BOX */    
+form{    
+  max-width:500px;    
+  margin:20px auto;    
+  background:white;    
+  padding:25px;    
+  border-radius:15px;    
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);    
+  display:flex;    
+  flex-direction:column;    
+  gap:12px;    
+  transition:0.3s;    
+}    
+    
+/* INPUT FIELD */    
+form input,    
+form select,    
+form textarea{    
+  padding:12px;    
+  border:1px solid #e2e8f0;    
+  border-radius:8px;    
+  font-size:14px;    
+  outline:none;    
+  transition:0.3s;    
+}    
+    
+/* FOCUS EFFECT */    
+form input:focus,    
+form select:focus,    
+form textarea:focus{    
+  border-color:#0ea5e9;    
+  box-shadow:0 0 0 2px rgba(14,165,233,0.2);    
+}    
+    
+/* LABEL */    
+form label{    
+  font-size:14px;    
+  color:#475569;    
+  text-align:left;    
+}    
+    
+/* TEXTAREA */    
+form textarea{    
+  min-height:80px;    
+  resize:none;    
+}    
+    
+/* BUTTON */    
+form button{    
+  margin-top:10px;    
+  padding:12px;    
+  background:linear-gradient(135deg,#0284c7,#0ea5e9);    
+  color:white;    
+  border:none;    
+  border-radius:10px;    
+  font-size:16px;    
+  cursor:pointer;    
+  transition:0.3s;    
+}    
+    
+/* BUTTON HOVER */    
+form button:hover{    
+  transform:translateY(-2px);    
+  box-shadow:0 10px 20px rgba(0,0,0,0.15);    
+}    
+    
+/* MOBILE */    
+@media(max-width:768px){    
+  form{    
+    padding:20px;    
+  }    
+}    
+  .updates-section{    
+  text-align:center;    
+  padding:50px 20px;    
+}    
+    
+.updates-section h2{    
+  color:#0ea5e9;    
+  margin-bottom:20px;    
+}    
+    
+.updates-box{    
+  height:220px;    
+  overflow:hidden;    
+  background:#f1f5f9;    
+  border-radius:15px;    
+  padding:15px;    
+  max-width:550px;    
+  margin:auto;    
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);    
+}    
+    
+.updates-track{    
+  display:flex;    
+  flex-direction:column;    
+  animation:scrollUp 18s linear infinite;    
+}    
+    
+.update-item{    
+  background:white;    
+  padding:15px;    
+  margin:10px 0;    
+  border-radius:12px;    
+  box-shadow:0 5px 10px rgba(0,0,0,0.1);    
+  text-align:left;    
+  font-size:14px;    
+  border-left:5px solid #0ea5e9;    
+}    
+    
+/* SMOOTH SCROLL */    
+@keyframes scrollUp{    
+  0%{transform:translateY(0);}    
+  100%{transform:translateY(-50%);}    
+}    
+  .hero-scroll{    
+  overflow:hidden;    
+  background:#0f172a;    
+  padding:30px 0;    
+}    
+    
+.scroll-track{    
+  display:flex;    
+  gap:20px;    
+  width:max-content;    
+  animation:scrollLeft 25s linear infinite;    
+}    
+    
+.scroll-item{    
+  min-width:300px;    
+  background:white;    
+  border-radius:15px;    
+  overflow:hidden;    
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);    
+  text-align:center;    
+}    
+    
+.scroll-item img{    
+  width:100%;    
+  height:180px;    
+  object-fit:cover;    
+}    
+    
+.scroll-item p{    
+  padding:12px;    
+  font-weight:bold;    
+  color:#0f172a;    
+}    
+    
+/* ANIMATION */    
+@keyframes scrollLeft{    
+  0%{transform:translateX(0);}    
+  100%{transform:translateX(-50%);}    
+}    
+</style>   </head>  <body>  <!-- AUTO POPUP -->  <div class="popup-overlay" id="popupBox">  
+  <div class="popup-content">      
+    <span class="popup-close" onclick="closePopup()">✖</span>      
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">      
+    <h3 id="popupTitle">Admission Open 🎓</h3>      
+    <p id="popupText">Join Best Commerce Classes Now</p>      
+  </div>      
+</div>    <!-- NAVBAR -->  <nav class="navbar">    <!-- LEFT: LOGO + NAME -->    <div class="nav-left">  
+    <img src="logo.jpg" alt="Logo">  
+    <h2>Excellent Commerce Classes</h2>  
+  </div>    <!-- RIGHT -->    <div class="nav-right">  <div class="nav-links" id="navLinks">  
+  <a href="#">Home</a>  
+  <a href="#courses">Courses</a>  
+  <a href="#about">About</a>  
+  <a href="#contact">Contact</a>  
 </div>  
 
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
 
-<!-- NAVBAR -->
-<nav class="navbar">
+  </div>  </nav>  </nav>  
+<!-- TOP BAR -->  
+<div class="topbar">  
+  <span>🔥 Admission Open | AI | Python | CS | 11th | 12th | CCC</span>  
+</div>  
+<!-- HERO SLIDER -->  
+<div class="hero-scroll">    <div class="scroll-track">  <!-- SCHOOL COURSES -->  
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?1">  
+  <p>Nursery to Class 5 - Strong Foundation Batch</p>  
+</div>  
 
-  <!-- LEFT: LOGO + NAME -->
-  <div class="nav-left">
-    <img src="logo.jpg" alt="Logo">
-    <h2>Excellent Commerce Classes</h2>
-  </div>
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?2">  
+  <p>Class 6th to 10th - All Subjects Coaching</p>  
+</div>  
 
-  <!-- RIGHT -->
-  <div class="nav-right">
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?3">  
+  <p>Class 11th & 12th Commerce - Full तैयारी</p>  
+</div>  
 
-    <div class="nav-links" id="navLinks">
-      <a href="#">Home</a>
-      <a href="#courses">Courses</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </div>
+<!-- COMPUTER COURSES -->  
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?4">  
+  <p>Basic Computer / CCC Course - Admission Open</p>  
+</div>  
 
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?5">  
+  <p>ADCA / DCA / Tally Professional Course</p>  
+</div>  
 
-  </div>
+<!-- MODERN COURSES -->  
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?6">  
+  <p>Python Programming Course - Beginner to Advanced</p>  
+</div>  
 
-</nav>
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?7">  
+  <p>Artificial Intelligence (AI) Course - Future Skills</p>  
+</div>  
 
-</nav>
-<!-- TOP BAR -->
-<div class="topbar">
-  <span>🔥 Admission Open | AI | Python | CS | 11th | 12th | CCC</span>
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?8">  
+  <p>Robotics Course - Practical Lab Training</p>  
+</div>  
+
+<!-- DUPLICATE FOR SMOOTH LOOP -->  
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?1">  
+  <p>Nursery to Class 5 - Strong Foundation Batch</p>  
+</div>  
+
+<div class="scroll-item">  
+  <img src="https://picsum.photos/400/250?2">  
+  <p>Class 6th to 10th - All Subjects Coaching</p>  
 </div>
-<!-- HERO SLIDER -->
-<div class="hero-scroll">
 
-  <div class="scroll-track">
+  </div>  </div>  
+  <section class="about-section">    <div class="about-container">  <!-- IMAGE -->  
+<div class="about-img">  
+  <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">  
+</div>  
 
-    <!-- SCHOOL COURSES -->
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?1">
-      <p>Nursery to Class 5 - Strong Foundation Batch</p>
-    </div>
+<!-- CONTENT -->  
+<div class="about-content">  
+  <h2>Excellent Commerce Classes</h2>  
 
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?2">
-      <p>Class 6th to 10th - All Subjects Coaching</p>
-    </div>
+  <p>  
+    Excellent Commerce Classes is a trusted and result-oriented coaching institute in Prayagraj,  
+    providing quality education from Nursery to Class 12th for all streams with strong academic support.  
+  </p>  
 
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?3">
-      <p>Class 11th & 12th Commerce - Full तैयारी</p>
-    </div>
+  <p>  
+    We specialize in Commerce education including CA, CMA, CS along with  
+    Class 11th & 12th preparation. Our experienced faculty focuses on concept clarity,  
+    regular tests, and personal mentoring for every student.  
+  </p>  
 
-    <!-- COMPUTER COURSES -->
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?4">
-      <p>Basic Computer / CCC Course - Admission Open</p>
-    </div>
+  <p>  
+    Along with academics, we also provide modern skill-based courses like  
+    <b>Computer Courses (CCC, ADCA, DCA, Tally)</b>,  
+    <b>Python Programming</b>, <b>Artificial Intelligence (AI)</b> and  
+    <b>Robotics Training</b> to prepare students for future technologies.  
+  </p>  
 
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?5">
-      <p>ADCA / DCA / Tally Professional Course</p>
-    </div>
+  <p>  
+    Our mission is to build strong fundamentals, improve confidence,  
+    and help students achieve success in both academic and professional careers.  
+  </p>  
 
-    <!-- MODERN COURSES -->
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?6">
-      <p>Python Programming Course - Beginner to Advanced</p>
-    </div>
-
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?7">
-      <p>Artificial Intelligence (AI) Course - Future Skills</p>
-    </div>
-
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?8">
-      <p>Robotics Course - Practical Lab Training</p>
-    </div>
-
-    <!-- DUPLICATE FOR SMOOTH LOOP -->
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?1">
-      <p>Nursery to Class 5 - Strong Foundation Batch</p>
-    </div>
-
-    <div class="scroll-item">
-      <img src="https://picsum.photos/400/250?2">
-      <p>Class 6th to 10th - All Subjects Coaching</p>
-    </div>
-
-  </div>
-
+  <button onclick="openPopup('class')">Join Now</button>  
 </div>
-  <section class="about-section">
 
-  <div class="about-container">
+  </div>  </section>  
+  <section>  
+  <h2>OUR TEACHERS</h2>    <div class="teacher-container">  <!-- TEACHER 1 -->  
+<div class="teacher-card">  
+  <img src="teacher1.jpg">  
+  <h3>Ajay Gupta</h3>  
+  <p> Director</p>  
+</div>  
 
-    <!-- IMAGE -->
-    <div class="about-img">
-      <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">
-    </div>
+<!-- TEACHER 2 -->  
+<div class="teacher-card">  
+  <img src="teacher2.jpg">  
+  <h3>Neha Ma'am</h3>  
+  <p>Business Studies</p>  
+</div>  
 
-    <!-- CONTENT -->
-    <div class="about-content">
-      <h2>Excellent Commerce Classes</h2>
+<!-- TEACHER 3 -->  
+<div class="teacher-card">  
+  <img src="teacher3.jpg">  
+  <h3>Amit Sir</h3>  
+  <p>Economics Faculty</p>  
+</div>
 
-      <p>
-        Excellent Commerce Classes is a trusted and result-oriented coaching institute in Prayagraj,
-        providing quality education from Nursery to Class 12th for all streams with strong academic support.
-      </p>
+  </div>  
+</section>  
+  <section>  
+  <h2>GALLERY</h2>    <div class="gallery">  <img src="onee.jpg">
 
-      <p>
-        We specialize in Commerce education including CA, CMA, CS along with
-        Class 11th & 12th preparation. Our experienced faculty focuses on concept clarity,
-        regular tests, and personal mentoring for every student.
-      </p>
+  </div>  
+</section>  
+</div> <!-- COURSES -->  <section id="courses">      <h2>OUR COURSES</h2>  <!-- ================= SCHOOL COURSES ================= -->  <h3 style="margin-top:20px;">🎓 School Courses (NC to 12th)</h3>  <div class="course-container">  <div class="course-box" onclick="openPopup('nc')">  
+<img src="https://images.unsplash.com/photo-1588072432836-e10032774350">  
+<h3>Foundation</h3>  
+<button>Nursery to Class 5</button>  
+</div>  <div class="course-box" onclick="openPopup('mid')">  
+<img src="https://images.unsplash.com/photo-1509062522246-3755977927d7">  
+<h3>Middle School</h3>  
+<button>Class 6 - 8</button>  
+</div>  <div class="course-box" onclick="openPopup('high')">  
+<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">  
+<h3>High School</h3>  
+<button>Class 9 - 10</button>  
+</div>  <div class="course-box" onclick="openPopup('inter')">  
+<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">  
+<h3>Intermediate</h3>  
+<button>Class 11 - 12</button>  
+</div>  </div>  <!-- ================= COMPUTER COURSES ================= -->  <h3 style="margin-top:50px;">💻 Computer Courses</h3>  <div class="course-container">  <div class="course-box" onclick="openPopup('basic')">  
+<img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c">  
+<h3>Basic Computer</h3>  
+<button>Basic Course</button>  
+</div>  <div class="course-box" onclick="openPopup('ccc')">  
+<img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b">  
+<h3>CCC</h3>  
+<button>Course on Computer Concept</button>  
+</div>  <div class="course-box" onclick="openPopup('adca')">  
+<img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085">  
+<h3>ADCA / DCA</h3>  
+<button>Diploma Course</button>  
+</div>  <div class="course-box" onclick="openPopup('web')">  
+<img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6">  
+<h3>Web Development</h3>  
+<button>HTML, CSS, JS</button>  
+</div>  <div class="course-box" onclick="openPopup('tally')">  
+<img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f">  
+<h3>Tally</h3>  
+<button>Accounting Course</button>  
+</div>  <div class="course-box" onclick="openPopup('hardware')">  
+<img src="https://images.unsplash.com/photo-1518770660439-4636190af475">  
+<h3>Hardware</h3>  
+<button>Hardware & Networking</button>  
+</div>  </div>  </section>  <!-- FEATURES -->  <section>      
+<h2>SPECIAL FEATURES</h2>  <div class="features-grid">  <div class="feature-box">      
+<img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png">      
+<h3>Live Interactive Sessions</h3>      
+</div>  <div class="feature-box">      
+<img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">      
+<h3>Recorded Lectures</h3>      
+</div>  <div class="feature-box">      
+<img src="https://cdn-icons-png.flaticon.com/512/2995/2995467.png">      
+<h3>Study Material</h3>      
+</div>  </div>      
+</section>  <!-- VIDEOS --> <section class="video-scroll-section">  
+  <h2>Student Reviews</h2>    <div class="video-scroll">  <div class="video-track">  
 
-      <p>
-        Along with academics, we also provide modern skill-based courses like
-        <b>Computer Courses (CCC, ADCA, DCA, Tally)</b>,
-        <b>Python Programming</b>, <b>Artificial Intelligence (AI)</b> and
-        <b>Robotics Training</b> to prepare students for future technologies.
-      </p>
+  <!-- VIDEO 1 -->  
+  <div class="video-item">  
+    <video src="video1.mp4" controls></video>  
+  </div>  
 
-      <p>
-        Our mission is to build strong fundamentals, improve confidence,
-        and help students achieve success in both academic and professional careers.
-      </p>
+  <!-- VIDEO 2 -->  
+  <div class="video-item">  
+    <video src="video2.mp4" controls></video>  
+  </div>  
 
-      <button onclick="openPopup('class')">Join Now</button>
-    </div>
+  <!-- VIDEO 3 -->  
+  <div class="video-item">  
+    <video src="video3.mp4" controls></video>  
+  </div>  
 
-  </div>
-
-</section>
-  <section>
-  <h2>OUR TEACHERS</h2>
-
-  <div class="teacher-container">
-
-    <!-- TEACHER 1 -->
-    <div class="teacher-card">
-      <img src="teacher1.jpg">
-      <h3>Ajay Gupta</h3>
-      <p> Director</p>
-    </div>
-
-    <!-- TEACHER 2 -->
-    <div class="teacher-card">
-      <img src="teacher2.jpg">
-      <h3>Neha Ma'am</h3>
-      <p>Business Studies</p>
-    </div>
-
-    <!-- TEACHER 3 -->
-    <div class="teacher-card">
-      <img src="teacher3.jpg">
-      <h3>Amit Sir</h3>
-      <p>Economics Faculty</p>
-    </div>
-
-  </div>
-</section>
-  <section>
-  <h2>GALLERY</h2>
-
-  <div class="gallery">
-
-    <img src="onee.jpg">
     
-  </div>
-</section>
-</div> <!-- COURSES -->  <section id="courses">    
-
-<h2>OUR COURSES</h2>
-
-<!-- ================= SCHOOL COURSES ================= -->
-<h3 style="margin-top:20px;">🎓 School Courses (NC to 12th)</h3>
-
-<div class="course-container">
-
-<div class="course-box" onclick="openPopup('nc')">
-<img src="https://images.unsplash.com/photo-1588072432836-e10032774350">
-<h3>Foundation</h3>
-<button>Nursery to Class 5</button>
-</div>
-
-<div class="course-box" onclick="openPopup('mid')">
-<img src="https://images.unsplash.com/photo-1509062522246-3755977927d7">
-<h3>Middle School</h3>
-<button>Class 6 - 8</button>
-</div>
-
-<div class="course-box" onclick="openPopup('high')">
-<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">
-<h3>High School</h3>
-<button>Class 9 - 10</button>
-</div>
-
-<div class="course-box" onclick="openPopup('inter')">
-<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
-<h3>Intermediate</h3>
-<button>Class 11 - 12</button>
-</div>
 
 </div>
 
+  </div>  
+</section>  <!-- UPDATES --> <section class="updates-section">  
+  <h2>LATEST UPDATES</h2>    <div class="updates-box">  
+    <div class="updates-track">  <!-- SCHOOL COURSES -->  
+  <div class="update-item">  
+    <b>Nursery to Class 5</b><br>  
+    New Batch Started<br>  
+    Timing: 9 AM<br>  
+    Mode: Offline  
+  </div>  
 
-<!-- ================= COMPUTER COURSES ================= -->
-<h3 style="margin-top:50px;">💻 Computer Courses</h3>
+  <div class="update-item">  
+    <b>Class 6th to 10th</b><br>  
+    Started on 10th April 2026<br>  
+    Timing: 7 AM / 4 PM<br>  
+    Mode: Online / Offline  
+  </div>  
 
-<div class="course-container">
+  <div class="update-item">  
+    <b>Class 11th & 12th (Commerce)</b><br>  
+    Started on 15th April 2026<br>  
+    Timing: 11 AM<br>  
+    Mode: Online / Offline  
+  </div>  
 
-<div class="course-box" onclick="openPopup('basic')">
-<img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c">
-<h3>Basic Computer</h3>
-<button>Basic Course</button>
-</div>
+  <!-- COMPUTER COURSES -->  
+  <div class="update-item">  
+    <b>Basic Computer / CCC</b><br>  
+    New Batch Every Monday<br>  
+    Timing: 10 AM / 3 PM<br>  
+    Mode: Offline  
+  </div>  
 
-<div class="course-box" onclick="openPopup('ccc')">
-<img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b">
-<h3>CCC</h3>
-<button>Course on Computer Concept</button>
-</div>
+  <div class="update-item">  
+    <b>ADCA / DCA / Tally</b><br>  
+    Started on 1st April 2026<br>  
+    Timing: Flexible<br>  
+    Mode: Online / Offline  
+  </div>  
 
-<div class="course-box" onclick="openPopup('adca')">
-<img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085">
-<h3>ADCA / DCA</h3>
-<button>Diploma Course</button>
-</div>
+  <!-- MODERN COURSES -->  
+  <div class="update-item">  
+    <b>Python Programming</b><br>  
+    Started on 5th April 2026<br>  
+    Timing: 2 PM<br>  
+    Mode: Online  
+  </div>  
 
-<div class="course-box" onclick="openPopup('web')">
-<img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6">
-<h3>Web Development</h3>
-<button>HTML, CSS, JS</button>
-</div>
+  <div class="update-item">  
+    <b>Artificial Intelligence (AI)</b><br>  
+    New Batch Starting Soon<br>  
+    Timing: 1 PM<br>  
+    Mode: Online  
+  </div>  
 
-<div class="course-box" onclick="openPopup('tally')">
-<img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f">
-<h3>Tally</h3>
-<button>Accounting Course</button>
-</div>
+  <div class="update-item">  
+    <b>Robotics Course</b><br>  
+    Started on 20th April 2026<br>  
+    Timing: 12 PM<br>  
+    Mode: Offline Lab  
+  </div>  
 
-<div class="course-box" onclick="openPopup('hardware')">
-<img src="https://images.unsplash.com/photo-1518770660439-4636190af475">
-<h3>Hardware</h3>
-<button>Hardware & Networking</button>
-</div>
-
-</div>
-
-</section>  <!-- FEATURES -->  <section>    
-<h2>SPECIAL FEATURES</h2>  <div class="features-grid">  <div class="feature-box">    
-<img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png">    
-<h3>Live Interactive Sessions</h3>    
-</div>  <div class="feature-box">    
-<img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">    
-<h3>Recorded Lectures</h3>    
-</div>  <div class="feature-box">    
-<img src="https://cdn-icons-png.flaticon.com/512/2995/2995467.png">    
-<h3>Study Material</h3>    
-</div>  </div>    
-</section>  <!-- VIDEOS --> <section class="video-scroll-section">
-  <h2>Student Reviews</h2>
-
-  <div class="video-scroll">
-
-    <div class="video-track">
-
-      <!-- VIDEO 1 -->
-      <div class="video-item">
-        <video src="video1.mp4" controls></video>
-      </div>
-
-      <!-- VIDEO 2 -->
-      <div class="video-item">
-        <video src="video2.mp4" controls></video>
-      </div>
-
-      <!-- VIDEO 3 -->
-      <div class="video-item">
-        <video src="video3.mp4" controls></video>
-      </div>
-
-      
-
-    </div>
-
-  </div>
-</section>  <!-- UPDATES --> <section class="updates-section">
-  <h2>LATEST UPDATES</h2>
-
-  <div class="updates-box">
-    <div class="updates-track">
-
-      <!-- SCHOOL COURSES -->
-      <div class="update-item">
-        <b>Nursery to Class 5</b><br>
-        New Batch Started<br>
-        Timing: 9 AM<br>
-        Mode: Offline
-      </div>
-
-      <div class="update-item">
-        <b>Class 6th to 10th</b><br>
-        Started on 10th April 2026<br>
-        Timing: 7 AM / 4 PM<br>
-        Mode: Online / Offline
-      </div>
-
-      <div class="update-item">
-        <b>Class 11th & 12th (Commerce)</b><br>
-        Started on 15th April 2026<br>
-        Timing: 11 AM<br>
-        Mode: Online / Offline
-      </div>
-
-      <!-- COMPUTER COURSES -->
-      <div class="update-item">
-        <b>Basic Computer / CCC</b><br>
-        New Batch Every Monday<br>
-        Timing: 10 AM / 3 PM<br>
-        Mode: Offline
-      </div>
-
-      <div class="update-item">
-        <b>ADCA / DCA / Tally</b><br>
-        Started on 1st April 2026<br>
-        Timing: Flexible<br>
-        Mode: Online / Offline
-      </div>
-
-      <!-- MODERN COURSES -->
-      <div class="update-item">
-        <b>Python Programming</b><br>
-        Started on 5th April 2026<br>
-        Timing: 2 PM<br>
-        Mode: Online
-      </div>
-
-      <div class="update-item">
-        <b>Artificial Intelligence (AI)</b><br>
-        New Batch Starting Soon<br>
-        Timing: 1 PM<br>
-        Mode: Online
-      </div>
-
-      <div class="update-item">
-        <b>Robotics Course</b><br>
-        Started on 20th April 2026<br>
-        Timing: 12 PM<br>
-        Mode: Offline Lab
-      </div>
-
-      <!-- DUPLICATE FOR SMOOTH LOOP -->
-      <div class="update-item">
-        <b>Class 6th to 10th</b><br>
-        Started on 10th April 2026<br>
-        Timing: 7 AM / 4 PM<br>
-        Mode: Online / Offline
-      </div>
-
-    </div>
-  </div>
-</section>
-<section>
-
-<h2>FEATURED COURSES</h2>
-
-<div class="slider-wrapper">
-
-<div class="featured-slider">
-
-<!-- SCHOOL -->
-<div class="featured-card">
-<img src="https://images.unsplash.com/photo-1588072432836-e10032774350">
-<div class="featured-content">
-<p>School</p>
-<h3>NC to Class 12 Complete Course</h3>
-<p>All Subjects • Strong Foundation</p>
-<button onclick="openPopup('school')">View Details</button>
-</div>
-</div>
-
-<!-- AI COURSE -->
-<div class="featured-card">
-<img src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
-<div class="featured-content">
-<p>Technology</p>
-<h3>Artificial Intelligence (AI)</h3>
-<p>Future Tech • Machine Learning Basics</p>
-<button onclick="openPopup('ai')">View Details</button>
-</div>
-</div>
-
-
-<!-- ROBOTICS -->
-<div class="featured-card">
-<img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0">
-<div class="featured-content">
-<p>Innovation</p>
-<h3>Robotics Course</h3>
-<p>Automation • Practical Learning</p>
-<button onclick="openPopup('robotics')">View Details</button>
-</div>
-</div>
-
-<!-- CA -->
-<div class="featured-card">
-<img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f">
-<div class="featured-content">
-<p>CA</p>
-<h3>CA Foundation</h3>
-<p>Accounts • Law • Maths</p>
-<button onclick="openPopup('ca')">View Details</button>
-</div>
-</div>
-
-
+  <!-- DUPLICATE FOR SMOOTH LOOP -->  
+  <div class="update-item">  
+    <b>Class 6th to 10th</b><br>  
+    Started on 10th April 2026<br>  
+    Timing: 7 AM / 4 PM<br>  
+    Mode: Online / Offline  
+  </div>  
 
 </div>
 
+  </div>  
+</section>  
+<section>  <h2>FEATURED COURSES</h2>  <div class="slider-wrapper">  <div class="featured-slider">  <!-- SCHOOL -->  <div class="featured-card">  
+<img src="https://images.unsplash.com/photo-1588072432836-e10032774350">  
+<div class="featured-content">  
+<p>School</p>  
+<h3>NC to Class 12 Complete Course</h3>  
+<p>All Subjects • Strong Foundation</p>  
+<button onclick="openPopup('school')">View Details</button>  
+</div>  
+</div>  <!-- AI COURSE -->  <div class="featured-card">  
+<img src="https://images.unsplash.com/photo-1677442136019-21780ecad995">  
+<div class="featured-content">  
+<p>Technology</p>  
+<h3>Artificial Intelligence (AI)</h3>  
+<p>Future Tech • Machine Learning Basics</p>  
+<button onclick="openPopup('ai')">View Details</button>  
+</div>  
+</div>  <!-- ROBOTICS -->  <div class="featured-card">  
+<img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0">  
+<div class="featured-content">  
+<p>Innovation</p>  
+<h3>Robotics Course</h3>  
+<p>Automation • Practical Learning</p>  
+<button onclick="openPopup('robotics')">View Details</button>  
+</div>  
+</div>  <!-- CA -->  <div class="featured-card">  
+<img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f">  
+<div class="featured-content">  
+<p>CA</p>  
+<h3>CA Foundation</h3>  
+<p>Accounts • Law • Maths</p>  
+<button onclick="openPopup('ca')">View Details</button>  
+</div>  
+</div>  </div>  </div>  </section>  
+<section class="section" id="register">  
+<h2>Student Registration</h2>  
+<h3 style="text-align:center; margin-bottom:20px;">Computer Course Registration</h3>  
+<form onsubmit="sendComputerForm();return false;">  
+<input id="c_name" type="text" placeholder="Full Name" required>  
+<input id="c_father" type="text" placeholder="Father Name" required>  
+<input id="c_mother" type="text" placeholder="Mother Name" required>  <input id="c_phone" type="tel" placeholder="Mobile Number" required>  
+<input id="c_email" type="email" placeholder="Email" required>  
+<label>Date of Birth</label>  
+<input id="c_dob" type="date" required>  
+<select id="c_course" required>  
+<option>Select Computer Course</option>  
+<option>Basic Computer</option>  
+<option>CCC</option>  
+<option>ADCA</option>  
+<option>DCA</option>  
+<option>Tally</option>  
+<option>Hardware & Networking</option>  
+<option>Web Development</option>  
+</select>  
+<textarea id="c_address" placeholder="Address"></textarea>  
+<button type="submit">Submit Computer Form</button>  
+</form>  <h3 style="text-align:center; margin:40px 0 20px;">Coaching Registration</h3>  
+<form onsubmit="sendCoachingForm();return false;">  
+<input id="s_name" type="text" placeholder="Student Name" required>  
+<input id="s_father" type="text" placeholder="Father Name" required>  
+<input id="s_mother" type="text" placeholder="Mother Name" required>  <input id="s_phone" type="tel" placeholder="Mobile Number" required>  
+<input id="s_email" type="email" placeholder="Email" required>  
+<label>Date of Birth</label>  
+<input id="s_dob" type="date" required>  
+<select id="s_board" required>  
+<option>Select Board</option><option>CBSE</option><option>BSEB</option><option>ICSE</option><option>OTHER</option>  
+</select>  
+<select id="s_course" required>  
+<option>Select Course</option>  
+<option>Junior Class 1-5</option>  
+<option>Class 6-7</option>  
+<option>Class 8-9</option>  
+<option>Class 10th Board Preparation</option>  
+<option>Class 11-12 Arts</option>  
+<option>Class 11-12 Science</option>  
+<option>IIT / NEET Foundation</option>  
+<option>Polytechnic / ITI / Paramedical</option>  
+<option>Class 12 English (Girls Free)</option>  
+<option>Class 10 Maths (Girls Free)</option>  
+<option>Competition</option>  
+</select>  
+<textarea id="s_address" placeholder="Address"></textarea>  
+<button type="submit">Submit Coaching Form</button>  
+</form>  
+</section>  <section>      
+<h2>HAPPY STUDENTS HAPPY US</h2>  <h3 style="font-size:28px;">EXCELLENT ⭐⭐⭐⭐⭐</h3>      
+<p>Based on <b>634 reviews</b></p>  <div class="review-card">      
+<h4>Shreya Tiwari</h4>      
+<p>⭐⭐⭐⭐⭐</p>      
+<p>Excellent platform for ur goals... best coaching for commerce</p>      
+</div>  </section>      
+<section>      
+<h2>HAPPY STUDENTS</h2>      
+<div class="testimonial">Rahul ⭐⭐⭐⭐⭐</div>      
+<div class="testimonial">Amit ⭐⭐⭐⭐⭐</div>      
+<div class="testimonial">Neha ⭐⭐⭐⭐⭐</div>      
+</section>      <section>      
+<h2>FREQUENTLY ASKED QUESTIONS (FAQ)</h2>  <div class="faq-box">  <div class="faq-item" onclick="toggle(this)">      
+Why Excellent Commerce Classes? <span>+</span>      
+</div>      
+<div class="faq-content">      
+Best faculty, results & guidance for commerce students.      
+</div>  <div class="faq-item" onclick="toggle(this)">      
+Will there be academic support? <span>+</span>      
+</div>      
+<div class="faq-content">      
+Yes, personal mentoring & doubt solving available.      
+</div>  <div class="faq-item" onclick="toggle(this)">      
+Will there be revision classes? <span>+</span>      
+</div>      
+<div class="faq-content">      
+Yes, regular revision sessions conducted.      
+</div>  </div>      
+</section>  <footer class="footer">    <div class="footer-container">  <div class="footer-box">  
+  <h2>Excellent Commerce Classes</h2>  
+  <p>Best Commerce Coaching Institute in Prayagraj with 10+ years experience.</p>  
+</div>  
+
+<div class="footer-box">  
+  <h3>Quick Links</h3>  
+  <a href="#">Home</a>  
+  <a href="#courses">Courses</a>  
+  <a href="#contact">Contact</a>  
+</div>  
+
+<div class="footer-box">  
+  <h3>Contact Us</h3>  
+  <p>📍Shyam Talkies Road, Rudrapur, U.S. Nagar, Uttrakhand-263153</p>  
+  <p>📞 +91-95068 78769</p>  
+  <p>📧 ajayguptaca22@gmail.com</p>  
 </div>
 
-</section>
-<section class="section" id="register">
-<h2>Student Registration</h2>
-<h3 style="text-align:center; margin-bottom:20px;">Computer Course Registration</h3>
-<form onsubmit="sendComputerForm();return false;">
-<input id="c_name" type="text" placeholder="Full Name" required>
-<input id="c_father" type="text" placeholder="Father Name" required>
-<input id="c_mother" type="text" placeholder="Mother Name" required>
+  </div>    <div class="footer-bottom">  
+    © 2024 Excellent Commerce Classes | All Rights Reserved  
+  </div>  </footer>  <script>   
+document.querySelectorAll(".gallery img").forEach(img=>{  
+  img.onclick=()=>{  
+    let popup = document.createElement("div");  
+    popup.style.position="fixed";  
+    popup.style.top="0";  
+    popup.style.left="0";  
+    popup.style.width="100%";  
+    popup.style.height="100%";  
+    popup.style.background="rgba(0,0,0,0.8)";  
+    popup.style.display="flex";  
+    popup.style.justifyContent="center";  
+    popup.style.alignItems="center";  let bigImg = document.createElement("img");  
+bigImg.src = img.src;  
+bigImg.style.maxWidth="90%";  
+bigImg.style.borderRadius="10px";  
 
-<input id="c_phone" type="tel" placeholder="Mobile Number" required>
-<input id="c_email" type="email" placeholder="Email" required>
-<label>Date of Birth</label>
-<input id="c_dob" type="date" required>
-<select id="c_course" required>
-<option>Select Computer Course</option>
-<option>Basic Computer</option>
-<option>CCC</option>
-<option>ADCA</option>
-<option>DCA</option>
-<option>Tally</option>
-<option>Hardware & Networking</option>
-<option>Web Development</option>
-</select>
-<textarea id="c_address" placeholder="Address"></textarea>
-<button type="submit">Submit Computer Form</button>
-</form>
+popup.appendChild(bigImg);  
+document.body.appendChild(popup);  
 
-<h3 style="text-align:center; margin:40px 0 20px;">Coaching Registration</h3>
-<form onsubmit="sendCoachingForm();return false;">
-<input id="s_name" type="text" placeholder="Student Name" required>
-<input id="s_father" type="text" placeholder="Father Name" required>
-<input id="s_mother" type="text" placeholder="Mother Name" required>
+popup.onclick=()=>popup.remove();
 
-<input id="s_phone" type="tel" placeholder="Mobile Number" required>
-<input id="s_email" type="email" placeholder="Email" required>
-<label>Date of Birth</label>
-<input id="s_dob" type="date" required>
-<select id="s_board" required>
-<option>Select Board</option><option>CBSE</option><option>BSEB</option><option>ICSE</option><option>OTHER</option>
-</select>
-<select id="s_course" required>
-<option>Select Course</option>
-<option>Junior Class 1-5</option>
-<option>Class 6-7</option>
-<option>Class 8-9</option>
-<option>Class 10th Board Preparation</option>
-<option>Class 11-12 Arts</option>
-<option>Class 11-12 Science</option>
-<option>IIT / NEET Foundation</option>
-<option>Polytechnic / ITI / Paramedical</option>
-<option>Class 12 English (Girls Free)</option>
-<option>Class 10 Maths (Girls Free)</option>
-<option>Competition</option>
-</select>
-<textarea id="s_address" placeholder="Address"></textarea>
-<button type="submit">Submit Coaching Form</button>
-</form>
-</section>
-   
-<section>    
-<h2>HAPPY STUDENTS HAPPY US</h2>  <h3 style="font-size:28px;">EXCELLENT ⭐⭐⭐⭐⭐</h3>    
-<p>Based on <b>634 reviews</b></p>  <div class="review-card">    
-<h4>Shreya Tiwari</h4>    
-<p>⭐⭐⭐⭐⭐</p>    
-<p>Excellent platform for ur goals... best coaching for commerce</p>    
-</div>  </section>    
-<section>    
-<h2>HAPPY STUDENTS</h2>    
-<div class="testimonial">Rahul ⭐⭐⭐⭐⭐</div>    
-<div class="testimonial">Amit ⭐⭐⭐⭐⭐</div>    
-<div class="testimonial">Neha ⭐⭐⭐⭐⭐</div>    
-</section>    
-  
-<section>    
-<h2>FREQUENTLY ASKED QUESTIONS (FAQ)</h2>  <div class="faq-box">  <div class="faq-item" onclick="toggle(this)">    
-Why Excellent Commerce Classes? <span>+</span>    
-</div>    
-<div class="faq-content">    
-Best faculty, results & guidance for commerce students.    
-</div>  <div class="faq-item" onclick="toggle(this)">    
-Will there be academic support? <span>+</span>    
-</div>    
-<div class="faq-content">    
-Yes, personal mentoring & doubt solving available.    
-</div>  <div class="faq-item" onclick="toggle(this)">    
-Will there be revision classes? <span>+</span>    
-</div>    
-<div class="faq-content">    
-Yes, regular revision sessions conducted.    
-</div>  </div>    
-</section>  <footer class="footer">
-
-  <div class="footer-container">
-
-    <div class="footer-box">
-      <h2>Excellent Commerce Classes</h2>
-      <p>Best Commerce Coaching Institute in Prayagraj with 10+ years experience.</p>
-    </div>
-
-    <div class="footer-box">
-      <h3>Quick Links</h3>
-      <a href="#">Home</a>
-      <a href="#courses">Courses</a>
-      <a href="#contact">Contact</a>
-    </div>
-
-    <div class="footer-box">
-      <h3>Contact Us</h3>
-      <p>📍Shyam Talkies Road, Rudrapur, U.S. Nagar, Uttrakhand-263153</p>
-      <p>📞 +91-95068 78769</p>
-      <p>📧 ajayguptaca22@gmail.com</p>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    © 2024 Excellent Commerce Classes | All Rights Reserved
-  </div>
-
-</footer>  <script> 
-document.querySelectorAll(".gallery img").forEach(img=>{
-  img.onclick=()=>{
-    let popup = document.createElement("div");
-    popup.style.position="fixed";
-    popup.style.top="0";
-    popup.style.left="0";
-    popup.style.width="100%";
-    popup.style.height="100%";
-    popup.style.background="rgba(0,0,0,0.8)";
-    popup.style.display="flex";
-    popup.style.justifyContent="center";
-    popup.style.alignItems="center";
-
-    let bigImg = document.createElement("img");
-    bigImg.src = img.src;
-    bigImg.style.maxWidth="90%";
-    bigImg.style.borderRadius="10px";
-
-    popup.appendChild(bigImg);
-    document.body.appendChild(popup);
-
-    popup.onclick=()=>popup.remove();
-  }
+}
 });
-   
-// AUTO POPUP    
+
+// AUTO POPUP
 // POPUP
 window.onload=function(){
-  document.getElementById("popupBox").style.display="flex";
+document.getElementById("popupBox").style.display="flex";
 }
 
 function closePopup(){
-  document.getElementById("popupBox").style.display="none";
+document.getElementById("popupBox").style.display="none";
 }
 
 // MENU
 function toggleMenu(){
-  let menu = document.getElementById("navLinks");
-  menu.classList.toggle("active");
+let menu = document.getElementById("navLinks");
+menu.classList.toggle("active");
 }
 
 // SLIDER (ONLY ONCE)
@@ -960,15 +1474,15 @@ let slides = document.querySelectorAll(".slide");
 let i = 0;
 
 setInterval(()=>{
-  slides[i].classList.remove("active");
-  i = (i + 1) % slides.length;
-  slides[i].classList.add("active");
+slides[i].classList.remove("active");
+i = (i + 1) % slides.length;
+slides[i].classList.add("active");
 },3000);
 
 // FAQ
 function toggle(el){
-  let next = el.nextElementSibling;
-  next.style.display = next.style.display=="block" ? "none":"block";
+let next = el.nextElementSibling;
+next.style.display = next.style.display=="block" ? "none":"block";
 }
 
 // POPUP DATA
@@ -984,7 +1498,7 @@ document.getElementById("popupTitle").innerText=title;
 document.getElementById("popupText").innerText=text;
 document.getElementById("popupBox").style.display="flex";
 }
-   if(type=="nc"){title="Nursery to Class 5";text="Strong foundation classes";}
+if(type=="nc"){title="Nursery to Class 5";text="Strong foundation classes";}
 if(type=="mid"){title="Class 6-8";text="Middle school preparation";}
 if(type=="high"){title="Class 9-10";text="Board preparation";}
 if(type=="inter"){title="Class 11-12";text="Commerce / Science / Arts";}
@@ -1001,4 +1515,4 @@ if(type=="python"){title="Python Programming";text="Coding from basic to advance
 if(type=="robotics"){title="Robotics";text="Build and control robots";}
 </script>  </body>
 
-</html>  
+</html>    
