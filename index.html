@@ -6,58 +6,345 @@
 <title>Kisalay Commerce Classes</title>
 
 <style>
-/* ===== RESET ===== */
-*{
+html, body{
   margin:0;
   padding:0;
-  box-sizing:border-box;
-  font-family:'Segoe UI',sans-serif;
+  overflow-x:hidden;   /* 🔥 MOST IMPORTANT */
 }
-
-html,body{
-  overflow-x:hidden;
-  background:#f8fafc;
+body{
+  margin:0;
+  font-family:Arial;
+  background:white;
   color:#0f172a;
 }
 
-/* ===== GLOBAL ===== */
+/* ✅ GLOBAL SIDE FIX */
 section{
-  padding:60px 20px;
+  padding:40px 15px;
   max-width:1200px;
   margin:auto;
   text-align:center;
 }
 
-h2{
-  font-size:32px;
-  margin-bottom:25px;
-  color:#0ea5e9;
-}
-
-/* ===== TOPBAR ===== */
+/* TOP BAR */
 .topbar{
-  background:linear-gradient(90deg,#0284c7,#0ea5e9);
-  color:white;
-  padding:10px;
-  overflow:hidden;
+background:#0ea5e9;
+color:white;
+padding:8px;
+overflow:hidden;
+white-space:nowrap;
 }
-
 .topbar span{
-  display:inline-block;
-  animation:move 12s linear infinite;
+display:inline-block;
+padding-left:100%;
+animation:move 12s linear infinite;
 }
-
 @keyframes move{
-  0%{transform:translateX(100%)}
-  100%{transform:translateX(-100%)}
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
 }
 
+/* NAV */
+nav{
+display:flex;
+justify-content:space-between;
+padding:15px 20px; /* FIXED */
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+position:sticky;
+top:0;
+z-index:100;
+}
+nav h2{color:#0ea5e9;}
+nav a{margin:10px;text-decoration:none;color:black;}
+
+/* SLIDER */
+.slider{
+position:relative;
+height:300px;
+overflow:hidden;
+}
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+transition:1s;
+}
+.slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+.active{opacity:1;}
+
+h2{color:#0ea5e9;}
+
+/* CARDS */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+.card{
+padding:20px;
+border:1px solid #ddd;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+.card:hover{
+background:#e0f2fe;
+}
+
+/* VIDEO */
+video{
+width:250px;
+margin:10px;
+border-radius:10px;
+}
+
+/* TESTIMONIAL */
+.testimonial{
+background:#f1f5f9;
+padding:20px;
+margin:10px;
+border-radius:10px;
+animation:slide 8s infinite;
+}
+@keyframes slide{
+0%{transform:translateX(0);}
+50%{transform:translateX(-20px);}
+100%{transform:translateX(0);}
+}
+
+/* FAQ */
+.faq{
+max-width:800px;
+margin:auto;
+text-align:left;
+}
+.faq-item{
+padding:10px;
+border-bottom:1px solid #ccc;
+cursor:pointer;
+}
+.faq-content{
+display:none;
+padding:10px;
+}
+
+/* POPUP */
+.popup-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+.popup-content{
+background:white;
+padding:25px;
+border-radius:15px;
+width:300px;
+text-align:center;
+border-top:5px solid #0ea5e9;
+animation:zoom 0.3s;
+}
+.popup-content img{
+width:70px;
+}
+.popup-close{
+position:absolute;
+top:10px;
+right:15px;
+cursor:pointer;
+font-size:18px;
+color:#0ea5e9;
+}
+@keyframes zoom{
+from{transform:scale(0.7);}
+to{transform:scale(1);}
+}
+
+/* FOOTER */
+footer{
+background:#0f172a;
+color:white;
+padding:40px 15px;
+text-align:center;
+}
+
+/* COURSE */
+.course-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.course-box{
+background:#e6f4f1;
+padding:20px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+transition:0.3s;
+cursor:pointer;
+}
+
+.course-box:hover{
+transform:translateY(-5px);
+}
+
+.course-box img{
+width:100%;
+height:150px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.course-box h3{
+color:#065f46;
+margin-bottom:10px;
+}
+
+.course-box button{
+padding:12px 20px;
+border:2px solid #065f46;
+background:transparent;
+border-radius:10px;
+font-size:16px;
+color:#065f46;
+cursor:pointer;
+transition:0.3s;
+}
+
+.course-box button:hover{
+background:#065f46;
+color:white;
+}
+
+/* FEATURES */
+.features-grid{
+display:grid;
+gap:25px;
+}
+
+.feature-box{
+background:#e6f4f1;
+padding:30px;
+border-radius:20px;
+text-align:center;
+box-shadow:8px 8px 0 #065f46;
+}
+
+.feature-box img{
+width:80px;
+margin-bottom:15px;
+}
+
+.feature-box h3{
+color:#065f46;
+}
+
+/* REVIEW */
+.review-card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+max-width:350px;
+margin:20px auto;
+text-align:left;
+}
+
+/* FAQ BOX */
+.faq-box{
+max-width:400px;
+margin:auto;
+}
+
+.faq-item{
+background:#e6f4f1;
+padding:20px;
+margin:10px 0;
+border-radius:15px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-weight:bold;
+}
+
+.faq-content{
+display:none;
+padding:15px;
+background:white;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+/* SLIDER AUTO */
+.slider-wrapper{
+overflow:hidden;
+position:relative;
+}
+
+.featured-slider{
+display:flex;
+gap:20px;
+width:max-content;
+animation:scroll 20s linear infinite;
+}
+
+.featured-card{
+min-width:300px;
+background:#e6f4f1;
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.featured-card img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+
+.featured-content{
+padding:20px;
+}
+
+.featured-content h3{
+color:#065f46;
+}
+
+.featured-content button{
+margin-top:10px;
+padding:10px 15px;
+background:#065f46;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
+}
 /* ===== NAVBAR ===== */
 .navbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:15px 25px;
+  padding:15px 20px;
   background:white;
   box-shadow:0 4px 15px rgba(0,0,0,0.08);
   position:sticky;
@@ -66,39 +353,131 @@ h2{
 }
 
 .logo{
-  color:#0284c7;
-  font-size:22px;
-  font-weight:bold;
+  color:#0ea5e9;
 }
 
 .nav-links{
   display:flex;
-  gap:25px;
+  gap:20px;
 }
 
 .nav-links a{
   text-decoration:none;
   color:#334155;
   font-weight:500;
-  transition:0.3s;
 }
 
-.nav-links a:hover{
-  color:#0ea5e9;
-}
-
-/* MOBILE */
 .menu-toggle{
   display:none;
   font-size:26px;
   cursor:pointer;
 }
 
+/* MOBILE MENU */
 @media(max-width:768px){
-  .menu-toggle{display:block;}
+  .menu-toggle{
+    display:block;
+  }
 
   .nav-links{
+    position:absolute;
+    top:70px;
+    right:0;
+    background:white;
+    flex-direction:column;
+    width:200px;
     display:none;
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);
+  }
+
+  .nav-links a{
+    padding:15px;
+    border-bottom:1px solid #eee;
+  }
+
+  .nav-links.active{
+    display:flex;
+  }
+}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;
+  height:500px;
+  overflow:hidden;
+}
+
+.slider{
+  position:absolute;
+  width:100%;
+  height:100%;
+}
+
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  opacity:0;
+  transition:1s;
+}
+
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.active{opacity:1;}
+
+.overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:1;
+}
+
+/* HERO TEXT */
+.hero-content{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  color:white;
+  z-index:2;
+}
+
+.hero-content h1{
+  font-size:40px;
+}
+
+.hero-content p{
+  margin:10px 0;
+}
+
+.hero-content button{
+  padding:12px 25px;
+  border:none;
+  background:#0ea5e9;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+  .nav-links{
+  display:flex;
+  gap:20px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  .menu-toggle{
+    display:block;
+  }
+
+  .nav-links{
+    display:none; /* hidden by default */
     position:absolute;
     top:70px;
     right:0;
@@ -107,65 +486,62 @@ h2{
     width:200px;
   }
 
-  .nav-links.active{display:flex;}
+  .nav-links.active{
+    display:flex; /* show on click */
+  }
 }
-
-/* ===== HERO ===== */
-.hero{
+ /* ===== FOOTER FULL WIDTH FIXED ===== */
+/* ===== FULL WIDTH FOOTER PERFECT ===== */
+.footer{
+  background:#0f172a;
+  color:white;
+  width:100vw;              /* 🔥 full viewport */
   position:relative;
-  height:500px;
-}
-
-.overlay{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-}
-
-.hero-content{
-  position:absolute;
-  top:50%;
   left:50%;
-  transform:translate(-50%,-50%);
-  color:white;
-  z-index:2;
+  transform:translateX(-50%);
+  margin-top:50px;
 }
 
-.hero-content h1{
-  font-size:42px;
-  margin:10px 0;
+/* CONTAINER CENTER */
+.footer-container{
+  max-width:1200px;
+  margin:auto;
+  padding:50px 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
 }
 
-.hero-content button{
-  margin-top:15px;
-  padding:12px 25px;
-  background:#0ea5e9;
-  border:none;
-  border-radius:8px;
-  color:white;
-  cursor:pointer;
+/* BOTTOM BAR FULL WIDTH */
+.footer-bottom{
+  background:#020617;
+  text-align:center;
+  padding:15px;
+  width:100vw;
+  position:relative;
+  left:50%;
+  transform:translateX(-50%);
 }
-
-/* ===== SCROLL CARDS ===== */
-.hero-scroll{
+  .hero-scroll{
   overflow:hidden;
-  padding:40px 0;
+  background:#000;
+  padding:30px 0;
 }
 
 .scroll-track{
   display:flex;
   gap:20px;
   width:max-content;
-  animation:scrollLeft 25s linear infinite;
+  animation:scrollLeft 20s linear infinite;
 }
 
 .scroll-item{
-  min-width:280px;
+  min-width:300px;
   background:white;
   border-radius:15px;
   overflow:hidden;
-  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  text-align:center;
 }
 
 .scroll-item img{
@@ -175,118 +551,97 @@ h2{
 }
 
 .scroll-item p{
-  padding:12px;
-  font-weight:600;
+  padding:10px;
+  font-weight:bold;
+  color:#0f172a;
 }
 
+/* ANIMATION */
 @keyframes scrollLeft{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(-50%)}
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
 }
-
-/* ===== COURSES ===== */
-.course-container{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:25px;
-}
-
-.course-box{
-  background:white;
-  border-radius:20px;
-  padding:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  transition:0.3s;
-}
-
-.course-box:hover{
-  transform:translateY(-8px);
-}
-
-.course-box img{
-  width:100%;
-  height:150px;
-  border-radius:10px;
-  object-fit:cover;
-}
-
-.course-box h3{
-  margin:10px 0;
-}
-
-.course-box button{
-  padding:10px 20px;
-  border:none;
-  background:#0ea5e9;
-  color:white;
-  border-radius:8px;
-}
-
-/* ===== VIDEOS SCROLL ===== */
-.video-scroll{
+  .video-scroll{
   overflow:hidden;
+  padding:20px 0;
 }
 
 .video-track{
   display:flex;
   gap:20px;
   width:max-content;
-  animation:videoScroll 30s linear infinite;
+  animation:videoScroll 25s linear infinite;
 }
 
 .video-item{
-  min-width:280px;
+  min-width:300px;
 }
 
 .video-item video{
   width:100%;
+  height:200px;
   border-radius:12px;
+  object-fit:cover;
 }
 
+/* SCROLL ANIMATION */
 @keyframes videoScroll{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(-50%)}
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+  .updates-section{
+  text-align:center;
 }
 
-/* ===== UPDATES ===== */
 .updates-box{
-  height:220px;
+  height:200px;             /* visible area */
   overflow:hidden;
-  background:white;
-  border-radius:12px;
-  padding:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  background:#f1f5f9;
+  border-radius:10px;
+  padding:10px;
+  max-width:500px;
+  margin:auto;
 }
 
 .updates-track{
+  display:flex;
+  flex-direction:column;
   animation:scrollUp 15s linear infinite;
 }
 
 .update-item{
-  padding:10px;
+  background:white;
+  padding:15px;
   margin:10px 0;
-  background:#f1f5f9;
   border-radius:10px;
+  box-shadow:0 5px 10px rgba(0,0,0,0.1);
   text-align:left;
+  font-size:14px;
 }
 
+/* ANIMATION */
 @keyframes scrollUp{
-  0%{transform:translateY(0)}
-  100%{transform:translateY(-50%)}
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-50%);}
 }
-
-/* ===== TEACHERS ===== */
-.teacher-container{
+  .teacher-container{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:25px;
+  margin-top:30px;
 }
 
 .teacher-card{
   background:white;
-  padding:20px;
   border-radius:20px;
+  padding:20px;
+  text-align:center;
   box-shadow:0 10px 20px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.teacher-card:hover{
+  transform:translateY(-8px);
 }
 
 .teacher-card img{
@@ -294,70 +649,84 @@ h2{
   height:120px;
   border-radius:50%;
   object-fit:cover;
+  margin-bottom:15px;
 }
 
-/* ===== GALLERY ===== */
-.gallery{
+.teacher-card h3{
+  color:#0ea5e9;
+}
+
+.teacher-card p{
+  color:#64748b;
+}
+  .gallery{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:15px;
+  margin-top:30px;
 }
 
 .gallery img{
   width:100%;
-  border-radius:12px;
+  height:200px;
+  object-fit:cover;
+  border-radius:15px;
   transition:0.3s;
+  cursor:pointer;
 }
 
 .gallery img:hover{
   transform:scale(1.05);
 }
-
-/* ===== ABOUT ===== */
-.about-section{
-  background:white;
+  .about-section{
+  padding:50px 20px;
+  background:#f8fafc;
 }
 
 .about-container{
+  max-width:1200px;
+  margin:auto;
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:40px;
   align-items:center;
 }
 
-.about-container img{
+/* IMAGE */
+.about-img img{
   width:100%;
   border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
+/* CONTENT */
+.about-content h2{
+  color:#0ea5e9;
+  margin-bottom:15px;
+}
+
+.about-content p{
+  color:#334155;
+  line-height:1.7;
+  margin-bottom:10px;
+}
+
+.about-content button{
+  margin-top:15px;
+  padding:12px 25px;
+  background:#0ea5e9;
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* MOBILE */
 @media(max-width:768px){
   .about-container{
     grid-template-columns:1fr;
+    text-align:center;
   }
-}
-
-/* ===== FOOTER ===== */
-.footer{
-  background:#020617;
-  color:white;
-  width:100vw;
-  position:relative;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.footer-container{
-  max-width:1200px;
-  margin:auto;
-  padding:40px 20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-}
-
-.footer-bottom{
-  text-align:center;
-  padding:15px;
-  background:#000;
 }
 </style>
 
@@ -782,469 +1151,4 @@ document.getElementById("popupBox").style.display="flex";
 }
 </script>  </body>
 
-</html>    margin-top:10px;
-  font-size:16px;
-  color:#ffffff;
-  opacity:0.8;
-}
-
-/* Animated Light Effect */
-.premium-header{
-  text-align:center;
-  padding:40px 20px;
-  background:linear-gradient(135deg,#020617,#0f172a,#020617);
-  position:relative;
-  overflow:hidden;
-}
-
-/* FIXED GAP + PREMIUM LOOK */
-.glow-text{
-  font-size:clamp(32px,5vw,48px);
-  font-weight:900;
-  color:#ffd900;
-  letter-spacing:1.5px; /* 👈 gap fix */
-  text-transform:uppercase;
-  text-shadow:
-    0 0 10px #ffd900,
-    0 0 20px #ffd900,
-    0 0 40px #ffb700;
-  animation:glowMove 3s infinite alternate;
-}
-
-@keyframes glowMove{
-  from{ text-shadow:0 0 10px #ffd900;}
-  to{ text-shadow:0 0 25px #ffd900,0 0 50px #ffb700;}
-}
-
-.tagline{
-  margin-top:10px;
-  font-size:18px;
-  color:#00ffd5;
-}
-
-.director{
-  margin-top:15px;
-  font-size:18px;
-  font-weight:bold;
-  display:inline-block;
-  padding:8px 18px;
-  border-radius:30px;
-  background:linear-gradient(45deg,#ffd900,#ffb700);
-  color:black;
-  box-shadow:0 0 15px rgba(255,221,0,0.6);
-  animation:directorGlow 2.5s infinite alternate;
-}
-
-/* Director Label Style */
-.director span{
-  background:black;
-  color:#ffd900;
-  padding:4px 10px;
-  border-radius:20px;
-  margin-right:8px;
-  font-size:14px;
-}
-
-/* Glow Animation */
-@keyframes directorGlow{
-  from{box-shadow:0 0 10px rgba(255,221,0,0.5);}
-  to{box-shadow:0 0 25px rgba(255,221,0,0.9);}
-}
-
-.premium-header{
-  text-align:center;
-  padding:20px 10px;
-  background:linear-gradient(135deg,#020617,#0f172a,#020617);
-}
-
-/* 👇 PATLI PATTI DESIGN */
-.title-bar{
-  display:inline-block;
-  padding:8px 25px;
-  border-radius:30px;
-  background:rgba(255,221,0,0.1);
-  border:1px solid rgba(255,221,0,0.4);
-  box-shadow:0 0 15px rgba(255,221,0,0.3);
-}
-
-/* Title */
-.glow-text{
-  font-size:clamp(22px,4vw,32px);
-  font-weight:900;
-  color:#ffd900;
-  letter-spacing:1px;
-  margin:0;
-  text-transform:uppercase;
-  text-shadow:
-    0 0 8px #ffd900,
-    0 0 18px #ffb700;
-}
-
-/* Tagline */
-.tagline{
-  margin-top:8px;
-  font-size:16px;
-  color:#00ffd5;
-}
-
-/* Director Badge */
-.director{
-  margin-top:10px;
-  font-size:14px;
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:20px;
-  background:linear-gradient(45deg,#ffd900,#ffb700);
-  color:black;
-  font-weight:bold;
-}
-
-.director span{
-  background:black;
-  color:#ffd900;
-  padding:2px 8px;
-  border-radius:10px;
-  margin-right:6px;
-  font-size:12px;
-}
-/* MODAL */
-.modal{display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.75);}
-.modal-content{background:#020617;padding:30px;max-width:420px;margin:10% auto;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.1);}
-.close{float:right;cursor:pointer;font-size:22px;}
-.price{font-size:26px;color:#ffd900;font-weight:bold;}
-</style>
-</head>
-<body>
-
-<div class="bubbles">
-<span style="left:10%"></span><span style="left:30%"></span><span style="left:50%"></span><span style="left:70%"></span><span style="left:90%"></span>
-</div>
-
-<header class="premium-header">
-  <h1 class="glow-text"> EXCELLENT COMMERCE CLASSES </h1>
-  <p class="tagline">✨ Shape Your Future With Excellence ✨</p>
-  <div class="director">
-  <span>🎓 Director</span> Ajay Gupta
-</div>
-</header>
-<nav>
-<a href="#">Home</a>
-<a href="#about">About</a>
-<a href="#courses">Courses</a>
-<a href="#teachers">Teachers</a>
-<a href="#gallery">Gallery</a>
-<a href="#donation">Donation</a>
-<a href="#register">Register</a>
-<a href="#contact">Contact</a>
-</nav>
-
-<section class="hero">
-<h1>Excellent Commerce Classes</h1>
-<p>📘 Learn • Grow • Succeed</p>
-</section>
-
-<section class="section" id="about">
-<h2>Excellent Commerce Classes</h2>
-<p style="text-align:center">
-At Excellent Commerce Classes, we focus on delivering high-quality coaching for all classes with experienced teachers, 
-structured learning, and regular tests. We help students strengthen their basics and prepare for school exams 
-as well as competitive opportunities.
-</p>
-</section>
-
-<section class="section">
-<h2>Why Choose Us</h2>
-<div class="grid">
-<div class="card"><h3>Expert Teachers</h3><p>Experienced faculty with practical knowledge</p></div>
-<div class="card"><h3>Practical Training</h3><p>Real projects and practical computer training</p></div>
-<div class="card"><h3>Affordable Fees</h3><p>Quality education at very low cost</p></div>
-<div class="card"><h3>Certificates</h3><p>Course completion certificate provided</p></div>
-</div>
-</section>  <section class="section" id="courses">  
-<h2>Our Courses</h2>  <div class="grid">  <div class="card">  
-<h3>Junior Class 11-12 Arts competition </h3>  
-<p>Students : <span class="count">120</span></p>  
-<button onclick="openCourse('Junior Class 1-5','Government School Students','₹249/month')">View</button>  
-</div>  <div class="card">  
-<h3>Junior Class 1-5 </h3>  
-<p>Students : <span class="count">95</span></p>  
-<button onclick="openCourse('Junior Class 1-5','Bahadurpur Branch','₹499/month')">View</button>  
-</div>  <div class="card">  
-<h3>Class 6-7 </h3>  
-<p>Students : <span class="count">80</span></p>  
-<button onclick="openCourse('Class 6-7 CBSE','All Subjects','₹599/month')">View</button>  
-</div>  <div class="card">  
-<h3>Class 8-9 </h3>  
-<p>Students : <span class="count">75</span></p>  
-<button onclick="openCourse('Class 8-9 CBSE','All Subjects','₹699/month')">View</button>  
-</div>  <div class="card">  
-<h3>Class 10th Board</h3>  
-<p>Students : <span class="count">110</span></p>  
-<button onclick="openCourse('Class 10th','Board Preparation','₹499/month')">View</button>  
-</div>  <div class="card">  
-<h3>Class 11-12 Science</h3>  
-<p>Students : <span class="count">60</span></p>  
-<button onclick="openCourse('Class 11-12 Science','All Subjects','₹1499/month')">View</button>  
-</div>  <div class="card">  
-<h3>IIT / NEET Foundation</h3>  
-<p>Students : <span class="count">45</span></p>  
-<button onclick="openCourse('IIT NEET Foundation','Entrance Preparation','₹499/month')">View</button>  
-</div>  <div class="card">  
-<h3>Computer Course</h3>  
-<p>Students : <span class="count">140</span></p>  
-<button onclick="openCourse('Computer Course','Professional Computer Training','₹799/month')">View</button>  
-</div>  <div class="card">  
-<h3>Polytechnic / ITI / Paramedical</h3>  
-<p>Students : <span class="count">35</span></p>  
-<button onclick="openCourse('Polytechnic ITI','Entrance Preparation','₹499/month')">View</button>  
-</div>  <div class="card">  
-<h3>Class 12 English (Girls)</h3>  
-<p>Students : <span class="count">30</span></p>  
-<button onclick="openCourse('Class 12 English','Girls Free Batch','FREE')">View</button>  
-</div>  <div class="card">  
-<h3>Class 10 Maths (Girls)</h3>  
-<p>Students : <span class="count">28</span></p>  
-<button onclick="openCourse('Class 10 Maths','Girls Free Batch','FREE')">View</button>  
-</div>  </div>  
-</section> 
-
-<section class="section" id="teachers">
-<h2>Our Teachers</h2>
-<div class="grid">
-
-<div class="card teacher">
-<img src="teacher1.jpg">
-<h3>Ajay Gupta</h3>
-<p>Director</p>
-</div>
-
-<div class="card teacher">
-<img src="https://randomuser.me/api/portraits/women/44.jpg">
-<h3>Neha Sharma</h3>
-<p>Math Teacher</p>
-</div>
-
-<div class="card teacher">
-<img src="https://randomuser.me/api/portraits/men/55.jpg">
-<h3>Rahul Singh</h3>
-<p>Science Teacher</p>
-</div>
-
-</div>
-</section>
-
-<section class="section gallery" id="gallery">
-<h2>Gallery</h2>
-<div class="grid">
-<img src="onee.jpg">
-</div>
-</section>
-
-<section class="section">
-<h2>Student Reviews</h2>
-<div class="grid">
-<div class="card"><h3>Rahul Kumar</h3><p>⭐⭐⭐⭐⭐</p><p>Best computer institute. Teachers explain very clearly.</p></div>
-<div class="card"><h3>Pooja Singh</h3><p>⭐⭐⭐⭐⭐</p><p>Affordable fees and good practical training.</p></div>
-<div class="card"><h3>Aman Verma</h3><p>⭐⭐⭐⭐</p><p>Very good institute for computer and school coaching.</p></div>
-<div class="card"><h3>Neha Gupta</h3><p>⭐⭐⭐⭐⭐</p><p>I learned MS Office and internet skills here.</p></div>
-</div>
-</section>
-
-
-<section class="section" id="register">
-<h2>Student Registration</h2>
-
-
-<h3 style="text-align:center; margin:40px 0 20px;">Coaching Registration</h3>
-<form onsubmit="sendCoachingForm();return false;">
-<input id="s_name" type="text" placeholder="Student Name" required>
-<input id="s_father" type="text" placeholder="Father Name" required>
-<input id="s_mother" type="text" placeholder="Mother Name" required>
-
-<input id="s_phone" type="tel" placeholder="Mobile Number" required>
-<input id="s_email" type="email" placeholder="Email" required>
-<label>Date of Birth</label>
-<input id="s_dob" type="date" required>
-<select id="s_board" required>
-<option>Select Board</option><option>CBSE</option><option>BSEB</option><option>ICSE</option><option>OTHER</option>
-</select>
-<select id="s_course" required>
-<option>Select Course</option>
-<option>Junior Class 1-5</option>
-<option>Class 6-7</option>
-<option>Class 8-9</option>
-<option>Class 10th Board Preparation</option>
-<option>Class 11-12 Arts</option>
-<option>Class 11-12 Science</option>
-<option>IIT / NEET Foundation</option>
-<option>Polytechnic / ITI / Paramedical</option>
-<option>Class 12 English (Girls Free)</option>
-<option>Class 10 Maths (Girls Free)</option>
-<option>Competition</option>
-</select>
-<textarea id="s_address" placeholder="Address"></textarea>
-<button type="submit">Submit Coaching Form</button>
-</form>
-</section>
-
-<section class="section" id="contact">
-<h2>Contact Us</h2>
-<p style="text-align:center">
-📍 Kalyani view, Shyam Talkies Rd, near AGRAWAL SMALL SCALE INDUSTRIES, Rudrapur, Jagatpura, Uttarakhand <br><br>
-📞 +91 9506878769  <br><br>
-📧 chirag.gaba479@gmail.com
-</p>
-<br>
-<iframe 
-    src="https://www.google.com/maps?q=26.4865,82.2306&z=15&output=embed" 
-    width="100%" 
-    height="300" 
-    style="border:0;" 
-    allowfullscreen="" 
-    loading="lazy">
-  </iframe>
-</section>
-
-<footer>
-<p>© 2024 Excellent Commerce Classes</p>
-</footer>
-
-<a class="whatsapp" href="https://wa.me/919506878769" target="_blank">WhatsApp</a>
-
-<div id="courseModal" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal()">✖</span>
-<h2 id="courseTitle"></h2>
-<p id="courseDesc"></p>
-<div class="price" id="coursePrice"></div>
-</div>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-<script>
-// Firebase Config
-const firebaseConfig = {
-apiKey:"AIzaSyDJeCeh1kA9rNqFEtTIkc5zUnS0wZnfgE",
-authDomain:"ngo-422f.firebaseapp.com",
-databaseURL:"https://ngo-422f-default-rtdb.firebaseio.com",
-projectId:"ngo-422f",
-storageBucket:"ngo-432f.appspot.com",
-messagingSenderId:"80204983176",
-appId:"1:80204939176:web:28bba1c0da47dad891c87d"
-};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.database();
-const storage=firebase.storage();
-
-// Course Modal
-function openCourse(title,desc,price){document.getElementById("courseTitle").innerText=title;document.getElementById("courseDesc").innerText=desc;document.getElementById("coursePrice").innerText=price;document.getElementById("courseModal").style.display="block";}
-function closeModal(){document.getElementById("courseModal").style.display="none";}
-
-// Submit Forms
-function sendComputerForm(){
-
-alert("Submitting... ⏳");
-
-let data={
-name:document.getElementById("c_name").value,
-father:document.getElementById("c_father").value,
-mother:document.getElementById("c_mother").value,
-phone:document.getElementById("c_phone").value,
-email:document.getElementById("c_email").value,
-dob:document.getElementById("c_dob").value,
-course:document.getElementById("c_course").value,
-address:document.getElementById("c_address").value,
-time:new Date().toLocaleString()
-};
-
-db.ref("students/computer").push(data)
-.then(()=>{
-alert("Computer Form Submitted ✅");
-document.querySelectorAll("#register form")[0].reset();
-})
-.catch(error=>{
-alert("❌ Error: " + error.message);
-});
-}
-function sendCoachingForm(){
-
-alert("Submitting... ⏳");
-
-let data={
-name:document.getElementById("s_name").value,
-father:document.getElementById("s_father").value,
-mother:document.getElementById("s_mother").value,
-phone:document.getElementById("s_phone").value,
-email:document.getElementById("s_email").value,
-dob:document.getElementById("s_dob").value,
-board:document.getElementById("s_board").value,
-course:document.getElementById("s_course").value,
-address:document.getElementById("s_address").value,
-time:new Date().toLocaleString()
-};
-
-db.ref("students/coaching").push(data)
-.then(()=>{
-alert("Coaching Form Submitted ✅");
-document.querySelectorAll("#register form")[1].reset();
-})
-.catch(error=>{
-alert("❌ Error: " + error.message);
-});
-}
-
-// Student Counters Animation
-let counters = document.querySelectorAll('.count');
-counters.forEach(counter => {
-  let target = +counter.innerText;
-  let count = 0;
-
-  function update() {
-    count += Math.ceil(target / 100);
-    if (count >= target) {
-      counter.innerText = target;
-    } else {
-      counter.innerText = count;
-      requestAnimationFrame(update);
-    }
-  }
-
-  update();
-});
-</script>
-<script>
-firebase.database().ref("settings").on("value", snap => {
-  if(snap.exists()){
-    let data = snap.val();
-
-    // Director
-    if(data.director){
-  document.querySelector(".director").innerHTML =
-  `<span>🎓 Director</span> ${data.director}`;
-}
-
-    // About
-    if(data.about){
-      document.querySelector("#about p").innerText = data.about;
-    }
-
-    // Welcome
-    if(data.welcome){
-      document.querySelector(".welcome").innerText = data.welcome;
-    }
-
-    // Teachers
-    let teachers = document.querySelectorAll(".teacher h3");
-
-teachers.forEach((teacher, index) => {
-  let key = "teacher" + (index + 1);
-  if(data[key]){
-    teacher.innerText = data[key];
-  }
- 
-});
-</script>
-</body>
-</html>
+</html>  
