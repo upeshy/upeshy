@@ -3,105 +3,1155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Excellent Commerce Classes</title>
+<title>Kisalay Commerce Classes</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:linear-gradient(135deg,#0b1320,#020617);color:white;overflow-x:hidden;}
-/* BUBBLES BACKGROUND */
-.bubbles{position:fixed;width:100%;height:100%;top:0;left:0;z-index:-1;overflow:hidden;}
-.bubbles span{position:absolute;bottom:-100px;width:25px;height:25px;background:rgba(255,221,0,0.35);border-radius:50%;animation:rise 18s linear infinite;}
-@keyframes rise{0%{transform:translateY(0) scale(.4);opacity:.6;}100%{transform:translateY(-1200px) scale(1);opacity:0;}}
+html, body{
+  margin:0;
+  padding:0;
+  overflow-x:hidden;   /* 🔥 MOST IMPORTANT */
+}
+body{
+  margin:0;
+  font-family:Arial;
+  background:white;
+  color:#0f172a;
+}
 
-/* HEADER */
-header{background:linear-gradient(90deg,#020617,#0f172a);text-align:center;padding:25px;box-shadow:0 0 30px rgba(0,0,0,0.6);border-bottom:1px solid rgba(255,255,255,0.1);}
-header h1{display:inline-block;background:#10b981;color:#ffd900;font-size:clamp(26px,4vw,34px);font-family:'Orbitron', sans-serif;font-weight:800;letter-spacing:4px;padding:10px 28px;border-radius:6px;border:2px solid #065f46;animation:titleFloat 3s ease-in-out infinite;}
-@keyframes titleFloat{0%{transform:translateY(0px);}50%{transform:translateY(-3px);}100%{transform:translateY(0px);}}
-.welcome{font-size:22px;margin-top:8px;color:#e2e8f0;}
-.owner{margin-top:8px;font-size:20px;color:#00ffd5;font-weight:bold;}
+/* ✅ GLOBAL SIDE FIX */
+section{
+  padding:40px 15px;
+  max-width:1200px;
+  margin:auto;
+  text-align:center;
+}
 
-/* NAVBAR */
-nav{background:linear-gradient(90deg,#020617,#111827);display:flex;justify-content:center;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,0.1);}
-nav a{color:white;padding:15px 22px;text-decoration:none;transition:.3s;}
-nav a:hover{background:#ffd900;color:black;border-radius:6px;}
+/* TOP BAR */
+.topbar{
+background:#0ea5e9;
+color:white;
+padding:8px;
+overflow:hidden;
+white-space:nowrap;
+}
+.topbar span{
+display:inline-block;
+padding-left:100%;
+animation:move 12s linear infinite;
+}
+@keyframes move{
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
+}
 
-/* HERO */
-.hero{text-align:center;padding:140px 20px;background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),url("https://images.unsplash.com/photo-1523580846011-d3a5bc25702b");background-size:cover;background-position:center;}
-.hero h1{font-size:50px;color:#ffd900;margin-bottom:10px;}
+/* NAV */
+nav{
+display:flex;
+justify-content:space-between;
+padding:15px 20px; /* FIXED */
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+position:sticky;
+top:0;
+z-index:100;
+}
+nav h2{color:#0ea5e9;}
+nav a{margin:10px;text-decoration:none;color:black;}
 
-/* SECTION */
-.section{padding:90px 20px;max-width:1100px;margin:auto;}
-.section h2{text-align:center;margin-bottom:45px;font-size:32px;color:#ffd900;}
+/* SLIDER */
+.slider{
+position:relative;
+height:300px;
+overflow:hidden;
+}
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+transition:1s;
+}
+.slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+.active{opacity:1;}
 
-/* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;}
+h2{color:#0ea5e9;}
 
-/* CARD */
-.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(8px);padding:28px;border-radius:14px;text-align:center;transition:.35s;border:1px solid rgba(255,255,255,0.08);}
-.card:hover{transform:translateY(-12px) scale(1.03);box-shadow:0 10px 35px rgba(0,0,0,0.6),0 0 20px rgba(255,221,0,0.4);}
+/* CARDS */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+.card{
+padding:20px;
+border:1px solid #ddd;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+.card:hover{
+background:#e0f2fe;
+}
 
-/* BUTTON */
-button{margin-top:14px;padding:11px 22px;border:none;border-radius:30px;background:linear-gradient(45deg,#ffd900,#ffb700);color:black;font-weight:bold;cursor:pointer;transition:.3s;}
-button:hover{transform:scale(1.08);box-shadow:0 0 18px #ffd900;}
+/* VIDEO */
+video{
+width:250px;
+margin:10px;
+border-radius:10px;
+}
 
-/* COUNT */
-.count{font-size:22px;color:#00ffd5;font-weight:bold;}
+/* TESTIMONIAL */
+.testimonial{
+background:#f1f5f9;
+padding:20px;
+margin:10px;
+border-radius:10px;
+animation:slide 8s infinite;
+}
+@keyframes slide{
+0%{transform:translateX(0);}
+50%{transform:translateX(-20px);}
+100%{transform:translateX(0);}
+}
 
-/* FORM */
-form{background:rgba(255,255,255,0.05);padding:35px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);}
-input,select,textarea{width:100%;padding:11px;margin:10px 0;border:none;border-radius:6px;background:#020617;color:white;}
+/* FAQ */
+.faq{
+max-width:800px;
+margin:auto;
+text-align:left;
+}
+.faq-item{
+padding:10px;
+border-bottom:1px solid #ccc;
+cursor:pointer;
+}
+.faq-content{
+display:none;
+padding:10px;
+}
 
-/* GALLERY */
-.gallery img{width:100%;border-radius:12px;transition:.4s;}
-.gallery img:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,221,0,0.5);}
-
-/* TEACHER */
-.teacher img{width:95px;border-radius:50%;margin-bottom:12px;border:3px solid #ffd900;}
+/* POPUP */
+.popup-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+.popup-content{
+background:white;
+padding:25px;
+border-radius:15px;
+width:300px;
+text-align:center;
+border-top:5px solid #0ea5e9;
+animation:zoom 0.3s;
+}
+.popup-content img{
+width:70px;
+}
+.popup-close{
+position:absolute;
+top:10px;
+right:15px;
+cursor:pointer;
+font-size:18px;
+color:#0ea5e9;
+}
+@keyframes zoom{
+from{transform:scale(0.7);}
+to{transform:scale(1);}
+}
 
 /* FOOTER */
-footer{background:#020617;text-align:center;padding:25px;margin-top:40px;border-top:1px solid rgba(255,255,255,0.1);}
+footer{
+background:#0f172a;
+color:white;
+padding:40px 15px;
+text-align:center;
+}
 
-/* WHATSAPP */
-.whatsapp{position:fixed;bottom:20px;right:20px;background:#25D366;color:white;padding:14px 20px;border-radius:30px;text-decoration:none;font-weight:bold;box-shadow:0 0 15px rgba(0,0,0,0.4);}
-.premium-header{
-  text-align:center;
-  padding:40px 20px;
-  background:linear-gradient(135deg,#020617,#0f172a,#020617);
+/* COURSE */
+.course-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.course-box{
+background:#e6f4f1;
+padding:20px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+transition:0.3s;
+cursor:pointer;
+}
+
+.course-box:hover{
+transform:translateY(-5px);
+}
+
+.course-box img{
+width:100%;
+height:150px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.course-box h3{
+color:#065f46;
+margin-bottom:10px;
+}
+
+.course-box button{
+padding:12px 20px;
+border:2px solid #065f46;
+background:transparent;
+border-radius:10px;
+font-size:16px;
+color:#065f46;
+cursor:pointer;
+transition:0.3s;
+}
+
+.course-box button:hover{
+background:#065f46;
+color:white;
+}
+
+/* FEATURES */
+.features-grid{
+display:grid;
+gap:25px;
+}
+
+.feature-box{
+background:#e6f4f1;
+padding:30px;
+border-radius:20px;
+text-align:center;
+box-shadow:8px 8px 0 #065f46;
+}
+
+.feature-box img{
+width:80px;
+margin-bottom:15px;
+}
+
+.feature-box h3{
+color:#065f46;
+}
+
+/* REVIEW */
+.review-card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+max-width:350px;
+margin:20px auto;
+text-align:left;
+}
+
+/* FAQ BOX */
+.faq-box{
+max-width:400px;
+margin:auto;
+}
+
+.faq-item{
+background:#e6f4f1;
+padding:20px;
+margin:10px 0;
+border-radius:15px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-weight:bold;
+}
+
+.faq-content{
+display:none;
+padding:15px;
+background:white;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+/* SLIDER AUTO */
+.slider-wrapper{
+overflow:hidden;
+position:relative;
+}
+
+.featured-slider{
+display:flex;
+gap:20px;
+width:max-content;
+animation:scroll 20s linear infinite;
+}
+
+.featured-card{
+min-width:300px;
+background:#e6f4f1;
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.featured-card img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+
+.featured-content{
+padding:20px;
+}
+
+.featured-content h3{
+color:#065f46;
+}
+
+.featured-content button{
+margin-top:10px;
+padding:10px 15px;
+background:#065f46;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
+}
+/* ===== NAVBAR ===== */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:white;
+  box-shadow:0 4px 15px rgba(0,0,0,0.08);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.logo{
+  color:#0ea5e9;
+}
+
+.nav-links{
+  display:flex;
+  gap:20px;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:#334155;
+  font-weight:500;
+}
+
+.menu-toggle{
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+}
+
+/* MOBILE MENU */
+@media(max-width:768px){
+  .menu-toggle{
+    display:block;
+  }
+
+  .nav-links{
+    position:absolute;
+    top:70px;
+    right:0;
+    background:white;
+    flex-direction:column;
+    width:200px;
+    display:none;
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);
+  }
+
+  .nav-links a{
+    padding:15px;
+    border-bottom:1px solid #eee;
+  }
+
+  .nav-links.active{
+    display:flex;
+  }
+}
+
+/* ===== HERO ===== */
+.hero{
   position:relative;
+  height:500px;
   overflow:hidden;
 }
 
-/* Glow Title */
-.glow-text{
-  font-size:clamp(32px,5vw,48px);
-  font-weight:900;
-  color:#ffd900;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  text-shadow:
-    0 0 10px #ffd900,
-    0 0 20px #ffd900,
-    0 0 40px #ffb700;
-  animation:glowMove 3s infinite alternate;
+.slider{
+  position:absolute;
+  width:100%;
+  height:100%;
 }
 
-/* Glow Animation */
-@keyframes glowMove{
-  from{ text-shadow:0 0 10px #ffd900;}
-  to{ text-shadow:0 0 25px #ffd900,0 0 50px #ffb700;}
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  opacity:0;
+  transition:1s;
 }
 
-/* Tagline */
-.tagline{
-  margin-top:10px;
-  font-size:18px;
-  color:#00ffd5;
-  letter-spacing:1px;
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-/* Director */
-.director{
-  margin-top:10px;
+.active{opacity:1;}
+
+.overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:1;
+}
+
+/* HERO TEXT */
+.hero-content{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  color:white;
+  z-index:2;
+}
+
+.hero-content h1{
+  font-size:40px;
+}
+
+.hero-content p{
+  margin:10px 0;
+}
+
+.hero-content button{
+  padding:12px 25px;
+  border:none;
+  background:#0ea5e9;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+  .nav-links{
+  display:flex;
+  gap:20px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  .menu-toggle{
+    display:block;
+  }
+
+  .nav-links{
+    display:none; /* hidden by default */
+    position:absolute;
+    top:70px;
+    right:0;
+    background:white;
+    flex-direction:column;
+    width:200px;
+  }
+
+  .nav-links.active{
+    display:flex; /* show on click */
+  }
+}
+ /* ===== FOOTER FULL WIDTH FIXED ===== */
+/* ===== FULL WIDTH FOOTER PERFECT ===== */
+.footer{
+  background:#0f172a;
+  color:white;
+  width:100vw;              /* 🔥 full viewport */
+  position:relative;
+  left:50%;
+  transform:translateX(-50%);
+  margin-top:50px;
+}
+
+/* CONTAINER CENTER */
+.footer-container{
+  max-width:1200px;
+  margin:auto;
+  padding:50px 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+}
+
+/* BOTTOM BAR FULL WIDTH */
+.footer-bottom{
+  background:#020617;
+  text-align:center;
+  padding:15px;
+  width:100vw;
+  position:relative;
+  left:50%;
+  transform:translateX(-50%);
+}
+  .hero-scroll{
+  overflow:hidden;
+  background:#000;
+  padding:30px 0;
+}
+
+.scroll-track{
+  display:flex;
+  gap:20px;
+  width:max-content;
+  animation:scrollLeft 20s linear infinite;
+}
+
+.scroll-item{
+  min-width:300px;
+  background:white;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  text-align:center;
+}
+
+.scroll-item img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+
+.scroll-item p{
+  padding:10px;
+  font-weight:bold;
+  color:#0f172a;
+}
+
+/* ANIMATION */
+@keyframes scrollLeft{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+  .video-scroll{
+  overflow:hidden;
+  padding:20px 0;
+}
+
+.video-track{
+  display:flex;
+  gap:20px;
+  width:max-content;
+  animation:videoScroll 25s linear infinite;
+}
+
+.video-item{
+  min-width:300px;
+}
+
+.video-item video{
+  width:100%;
+  height:200px;
+  border-radius:12px;
+  object-fit:cover;
+}
+
+/* SCROLL ANIMATION */
+@keyframes videoScroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+  .updates-section{
+  text-align:center;
+}
+
+.updates-box{
+  height:200px;             /* visible area */
+  overflow:hidden;
+  background:#f1f5f9;
+  border-radius:10px;
+  padding:10px;
+  max-width:500px;
+  margin:auto;
+}
+
+.updates-track{
+  display:flex;
+  flex-direction:column;
+  animation:scrollUp 15s linear infinite;
+}
+
+.update-item{
+  background:white;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
+  box-shadow:0 5px 10px rgba(0,0,0,0.1);
+  text-align:left;
+  font-size:14px;
+}
+
+/* ANIMATION */
+@keyframes scrollUp{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-50%);}
+}
+  .teacher-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  margin-top:30px;
+}
+
+.teacher-card{
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 10px 20px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.teacher-card:hover{
+  transform:translateY(-8px);
+}
+
+.teacher-card img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+
+.teacher-card h3{
+  color:#0ea5e9;
+}
+
+.teacher-card p{
+  color:#64748b;
+}
+  .gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+  margin-top:30px;
+}
+
+.gallery img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:15px;
+  transition:0.3s;
+  cursor:pointer;
+}
+
+.gallery img:hover{
+  transform:scale(1.05);
+}
+  .about-section{
+  padding:50px 20px;
+  background:#f8fafc;
+}
+
+.about-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+
+/* IMAGE */
+.about-img img{
+  width:100%;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* CONTENT */
+.about-content h2{
+  color:#0ea5e9;
+  margin-bottom:15px;
+}
+
+.about-content p{
+  color:#334155;
+  line-height:1.7;
+  margin-bottom:10px;
+}
+
+.about-content button{
+  margin-top:15px;
+  padding:12px 25px;
+  background:#0ea5e9;
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .about-container{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+}
+</style>
+
+ </head>  <body>  <!-- AUTO POPUP -->  <div class="popup-overlay" id="popupBox">
+  <div class="popup-content">    
+    <span class="popup-close" onclick="closePopup()">✖</span>    
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">    
+    <h3 id="popupTitle">Admission Open 🎓</h3>    
+    <p id="popupText">Join Best Commerce Classes Now</p>    
+  </div>    
+</div>  
+
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <h2 class="logo">Kisalay Classes</h2>
+
+  <!-- HAMBURGER -->
+  <div class="menu-toggle" onclick="toggleMenu()">
+  ☰
+</div>
+
+<div class="nav-links" id="navLinks">
+  <a href="#">Home</a>
+  <a href="#courses">Courses</a>
+  <a href="#contact">Contact</a>
+</div>
+
+ 
+</nav>
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>🔥 Admission Open | CA | CMA | CS | 11th | 12th | B.Com</span>
+</div>
+<!-- HERO SLIDER -->
+<div class="hero-scroll">
+
+  <div class="scroll-track">
+
+    <!-- ITEM 1 -->
+    <div class="scroll-item">
+      <img src="https://picsum.photos/400/250?1">
+      <p>CA Foundation Batch - New Admission Open</p>
+    </div>
+
+    <!-- ITEM 2 -->
+    <div class="scroll-item">
+      <img src="https://picsum.photos/400/250?2">
+      <p>Class 11th & 12th Commerce Coaching</p>
+    </div>
+
+    <!-- ITEM 3 -->
+    <div class="scroll-item">
+      <img src="https://picsum.photos/400/250?3">
+      <p>CMA Foundation Complete Course</p>
+    </div>
+
+    <!-- ITEM 4 -->
+    <div class="scroll-item">
+      <img src="https://picsum.photos/400/250?4">
+      <p>CS - CSEET Preparation</p>
+    </div>
+
+    <!-- DUPLICATE (smooth loop ke liye) -->
+    <div class="scroll-item">
+      <img src="https://picsum.photos/400/250?1">
+      <p>CA Foundation Batch - New Admission Open</p>
+    </div>
+
+    <div class="scroll-item">
+      <img src="https://picsum.photos/400/250?2">
+      <p>Class 11th & 12th Commerce Coaching</p>
+    </div>
+
+  </div>
+<section class="about-section">
+
+  <div class="about-container">
+
+    <!-- IMAGE -->
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">
+    </div>
+
+    <!-- CONTENT -->
+    <div class="about-content">
+      <h2>About Kisalay Commerce Classes</h2>
+
+      <p>
+        Kisalay Commerce Classes is one of the leading coaching institutes in Prayagraj,
+        dedicated to providing quality education in Commerce stream.
+      </p>
+
+      <p>
+        With 10+ years of experience, we specialize in CA, CMA, CS and
+        Class 11th & 12th Commerce coaching with expert faculty and
+        result-oriented teaching methods.
+      </p>
+
+      <p>
+        Our mission is to build strong concepts, boost confidence,
+        and help students achieve their academic and professional goals.
+      </p>
+
+      <button onclick="openPopup('class')">Join Now</button>
+    </div>
+
+  </div>
+
+</section>
+  <section>
+  <h2>OUR TEACHERS</h2>
+
+  <div class="teacher-container">
+
+    <!-- TEACHER 1 -->
+    <div class="teacher-card">
+      <img src="teacher1.jpg">
+      <h3>Rahul Sir</h3>
+      <p>Accounts Expert</p>
+    </div>
+
+    <!-- TEACHER 2 -->
+    <div class="teacher-card">
+      <img src="teacher2.jpg">
+      <h3>Neha Ma'am</h3>
+      <p>Business Studies</p>
+    </div>
+
+    <!-- TEACHER 3 -->
+    <div class="teacher-card">
+      <img src="teacher3.jpg">
+      <h3>Amit Sir</h3>
+      <p>Economics Faculty</p>
+    </div>
+
+  </div>
+</section>
+  <section>
+  <h2>GALLERY</h2>
+
+  <div class="gallery">
+
+    <img src="https://picsum.photos/300/200?1">
+    
+  </div>
+</section>
+</div> <!-- COURSES -->  <section id="courses">    
+<h2>OUR COURSES</h2>  <div class="course-container">  <!-- CARD 1 -->  <div class="course-box" onclick="openPopup('ca')">    
+<img src="https://images.unsplash.com/photo-1581093588401-22d1c2c5b4c4" />    
+<h3>Professional Course</h3>    
+<button>CA (Foundation)</button>    
+</div>  <!-- CARD 2 -->  <div class="course-box" onclick="openPopup('cma')">    
+<img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f" />    
+<h3>Professional Course</h3>    
+<button>CMA (Foundation)</button>    
+</div>  <!-- CARD 3 -->  <div class="course-box" onclick="openPopup('cs')">    
+<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" />    
+<h3>Professional Course</h3>    
+<button>CS - CSEET</button>    
+</div>  <!-- CARD 4 -->  <div class="course-box" onclick="openPopup('class')">    
+<img src="https://images.unsplash.com/photo-1577896851231-70ef18881754" />    
+<h3>Academic Course</h3>    
+<button>11th & 12th</button>    
+</div>  </div>    
+</section>  <!-- FEATURES -->  <section>    
+<h2>SPECIAL FEATURES</h2>  <div class="features-grid">  <div class="feature-box">    
+<img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png">    
+<h3>Live Interactive Sessions</h3>    
+</div>  <div class="feature-box">    
+<img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">    
+<h3>Recorded Lectures</h3>    
+</div>  <div class="feature-box">    
+<img src="https://cdn-icons-png.flaticon.com/512/2995/2995467.png">    
+<h3>Study Material</h3>    
+</div>  </div>    
+</section>  <!-- VIDEOS --> <section class="video-scroll-section">
+  <h2>Student Reviews</h2>
+
+  <div class="video-scroll">
+
+    <div class="video-track">
+
+      <!-- VIDEO 1 -->
+      <div class="video-item">
+        <video src="video1.mp4" controls></video>
+      </div>
+
+      <!-- VIDEO 2 -->
+      <div class="video-item">
+        <video src="video2.mp4" controls></video>
+      </div>
+
+      <!-- VIDEO 3 -->
+      <div class="video-item">
+        <video src="video3.mp4" controls></video>
+      </div>
+
+      <!-- DUPLICATE FOR SMOOTH LOOP -->
+      <div class="video-item">
+        <video src="video1.mp4" controls></video>
+      </div>
+
+      <div class="video-item">
+        <video src="video2.mp4" controls></video>
+      </div>
+
+    </div>
+
+  </div>
+</section>  <!-- UPDATES -->  <section class="updates-section">
+  <h2>LATEST UPDATES</h2>
+
+  <div class="updates-box">
+    <div class="updates-track">
+
+      <div class="update-item">
+        <b>B.Com 2nd Year 2025–26</b><br>
+        Started on 23rd September 2025<br>
+        Timing: 11 AM<br>
+        Mode: Online / Offline
+      </div>
+
+      <div class="update-item">
+        <b>B.Com 3rd Year 2025–26</b><br>
+        Started on 23rd June 2025<br>
+        Timing: 8 AM<br>
+        Mode: Online / Offline
+      </div>
+
+      <div class="update-item">
+        <b>CA Foundation – Jan/May 2026</b><br>
+        Started on 1st September<br>
+        Timing: 1 PM<br>
+        Mode: Online / Offline
+      </div>
+
+      <div class="update-item">
+        <b>CMA – December 2025</b><br>
+        Started on 1st September 2025<br>
+        Timing: 1 PM
+      </div>
+
+      <!-- DUPLICATE for smooth loop -->
+      <div class="update-item">
+        <b>B.Com 2nd Year 2025–26</b><br>
+        Started on 23rd September 2025<br>
+        Timing: 11 AM<br>
+        Mode: Online / Offline
+      </div>
+
+    </div>
+  </div>
+</section>
+<section>    
+<h2>FEATURED COURSES</h2>  <div class="slider-wrapper">    
+<div class="featured-slider">  <!-- CARD 1 -->  <div class="featured-card">    
+<img src="https://images.unsplash.com/photo-1588072432836-e10032774350">    
+<div class="featured-content">    
+<p>XI/XII</p>    
+<h3>Class 11th + 12th + CA FOUNDATION</h3>    
+<p>With CA/CMA/CS</p>    
+<button onclick="openPopup('class')">View Details</button>    
+</div>    
+</div>  <!-- CARD 2 -->  <div class="featured-card">    
+<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">    
+<div class="featured-content">    
+<p>CA</p>    
+<h3>CA Foundation Complete Course</h3>    
+<p>Accounts + Law + Maths</p>    
+<button onclick="openPopup('ca')">View Details</button>    
+</div>    
+</div>  <!-- CARD 3 -->  <div class="featured-card">    
+<img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f">    
+<div class="featured-content">    
+<p>CMA</p>    
+<h3>CMA Foundation</h3>    
+<p>Professional Course</p>    
+<button onclick="openPopup('cma')">View Details</button>    
+</div>    
+</div>  <!-- CARD 4 -->  <div class="featured-card">    
+<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">    
+<div class="featured-content">    
+<p>CS</p>    
+<h3>CS - CSEET</h3>    
+<p>Company Secretary Course</p>    
+<button onclick="openPopup('cs')">View Details</button>    
+</div>    
+</div>  </div>    
+</div>    
+</section>    
+<section>    
+<h2>HAPPY STUDENTS HAPPY US</h2>  <h3 style="font-size:28px;">EXCELLENT ⭐⭐⭐⭐⭐</h3>    
+<p>Based on <b>634 reviews</b></p>  <div class="review-card">    
+<h4>Shreya Tiwari</h4>    
+<p>⭐⭐⭐⭐⭐</p>    
+<p>Excellent platform for ur goals... best coaching for commerce</p>    
+</div>  </section>    
+<section>    
+<h2>HAPPY STUDENTS</h2>    
+<div class="testimonial">Rahul ⭐⭐⭐⭐⭐</div>    
+<div class="testimonial">Amit ⭐⭐⭐⭐⭐</div>    
+<div class="testimonial">Neha ⭐⭐⭐⭐⭐</div>    
+</section>    
+  
+<section>    
+<h2>FREQUENTLY ASKED QUESTIONS (FAQ)</h2>  <div class="faq-box">  <div class="faq-item" onclick="toggle(this)">    
+Why Kisalay Commerce Classes? <span>+</span>    
+</div>    
+<div class="faq-content">    
+Best faculty, results & guidance for commerce students.    
+</div>  <div class="faq-item" onclick="toggle(this)">    
+Will there be academic support? <span>+</span>    
+</div>    
+<div class="faq-content">    
+Yes, personal mentoring & doubt solving available.    
+</div>  <div class="faq-item" onclick="toggle(this)">    
+Will there be revision classes? <span>+</span>    
+</div>    
+<div class="faq-content">    
+Yes, regular revision sessions conducted.    
+</div>  </div>    
+</section>  <footer class="footer">
+
+  <div class="footer-container">
+
+    <div class="footer-box">
+      <h2>Kisalay Commerce Classes</h2>
+      <p>Best Commerce Coaching Institute in Prayagraj with 10+ years experience.</p>
+    </div>
+
+    <div class="footer-box">
+      <h3>Quick Links</h3>
+      <a href="#">Home</a>
+      <a href="#courses">Courses</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="footer-box">
+      <h3>Contact Us</h3>
+      <p>📍 Prayagraj</p>
+      <p>📞 +91-9451070072</p>
+      <p>📧 kisalaycommerceclasses@gmail.com</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2024 Kisalay Commerce Classes | All Rights Reserved
+  </div>
+
+</footer>  <script> 
+document.querySelectorAll(".gallery img").forEach(img=>{
+  img.onclick=()=>{
+    let popup = document.createElement("div");
+    popup.style.position="fixed";
+    popup.style.top="0";
+    popup.style.left="0";
+    popup.style.width="100%";
+    popup.style.height="100%";
+    popup.style.background="rgba(0,0,0,0.8)";
+    popup.style.display="flex";
+    popup.style.justifyContent="center";
+    popup.style.alignItems="center";
+
+    let bigImg = document.createElement("img");
+    bigImg.src = img.src;
+    bigImg.style.maxWidth="90%";
+    bigImg.style.borderRadius="10px";
+
+    popup.appendChild(bigImg);
+    document.body.appendChild(popup);
+
+    popup.onclick=()=>popup.remove();
+  }
+});
+   
+// AUTO POPUP    
+// POPUP
+window.onload=function(){
+  document.getElementById("popupBox").style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById("popupBox").style.display="none";
+}
+
+// MENU
+function toggleMenu(){
+  let menu = document.getElementById("navLinks");
+  menu.classList.toggle("active");
+}
+
+// SLIDER (ONLY ONCE)
+let slides = document.querySelectorAll(".slide");
+let i = 0;
+
+setInterval(()=>{
+  slides[i].classList.remove("active");
+  i = (i + 1) % slides.length;
+  slides[i].classList.add("active");
+},3000);
+
+// FAQ
+function toggle(el){
+  let next = el.nextElementSibling;
+  next.style.display = next.style.display=="block" ? "none":"block";
+}
+
+// POPUP DATA
+function openPopup(type){
+let title="",text="";
+
+if(type=="ca"){title="CA Foundation";text="Complete CA preparation";}
+if(type=="cma"){title="CMA Foundation";text="Professional CMA course";}
+if(type=="cs"){title="CS-CSEET";text="Best CS coaching";}
+if(type=="class"){title="11th & 12th";text="Commerce coaching";}
+
+document.getElementById("popupTitle").innerText=title;
+document.getElementById("popupText").innerText=text;
+document.getElementById("popupBox").style.display="flex";
+}
+</script>  </body>
+
+</html>    margin-top:10px;
   font-size:16px;
   color:#ffffff;
   opacity:0.8;
