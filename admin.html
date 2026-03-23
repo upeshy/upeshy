@@ -75,6 +75,10 @@ label{font-weight:bold;margin-top:8px;display:block;}
 <input id="popupText" placeholder="Text">
 <button onclick="savePopup()">Save Popup</button>
 
+<h2>Top Bar</h2>
+<input id="topbarInput" placeholder="Topbar Text">
+<button onclick="saveTopbar()">Save Topbar</button>
+  
 <!-- ================= EDIT STUDENT MODAL ================= -->
 <div class="modal" id="editModal">
   <div class="modal-content">
@@ -209,7 +213,12 @@ window.updateStudent = async function(){
   closeEditModal();
   loadStudents();
 }
-
+window.saveTopbar = async function(){
+  await setDoc(doc(db,"settings","topbar"),{
+    text: topbarInput.value
+  });
+  alert("Topbar Updated ✅");
+}
 // ================= ABOUT =================
 window.saveAbout = async function(){
   await setDoc(doc(db,"settings","about"), { text: aboutText.value });
