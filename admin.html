@@ -405,32 +405,7 @@ const db = firebase.firestore();
 let editStudentId = null;
 
 // ================= STUDENTS =================
-function addStudent(){
 
-  if(!s_name.value || !s_phone.value){
-    alert("Name & Phone required ❌");
-    return;
-  }
-
-  db.collection("students").add({
-    name: s_name.value,
-    phone: s_phone.value,
-    course: s_course.value,
-    photo: s_photo.value
-  })
-  .then(()=>{
-    alert("Added ✅");
-
-    // clear inputs
-    s_name.value="";
-    s_phone.value="";
-    s_course.value="";
-    s_photo.value="";
-
-    loadStudents();
-  })
-  .catch(err=>alert(err.message));
-}
 
 function loadStudents(){
   studentList.innerHTML="Loading...";
