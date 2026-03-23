@@ -1184,29 +1184,14 @@ form button:hover{
 
 </section>  
   <section>  
-  <h2>OUR TEACHERS</h2>    <div class="teacher-container">  <!-- TEACHER 1 -->  
-<div class="teacher-card">  
-  <img src="teacher1.jpg">  
-  <h3>Ajay Gupta</h3>  
-  <p> Director</p>  
-</div>  
+  <h2>OUR TEACHERS</h2>  
 
-<!-- TEACHER 2 -->  
-<div class="teacher-card">  
-  <img src="teacher2.jpg">  
-  <h3>Neha Ma'am</h3>  
-  <p>Business Studies</p>  
-</div>  
-
-<!-- TEACHER 3 -->  
-<div class="teacher-card">  
-  <img src="teacher3.jpg">  
-  <h3>Amit Sir</h3>  
-  <p>Economics Faculty</p>  
-</div>
-
+  <!-- 🔥 Firebase से auto load -->
+  <div class="teacher-container" id="teacherContainer">
+    Loading...
   </div>  
-</section>  
+
+</section>
   <section>  
   <h2>GALLERY</h2>    <div class="gallery">  <img src="onee.jpg">
 
@@ -1667,7 +1652,26 @@ async function loadAbout(){
   }
 }
 loadAbout();
+async function loadTeachers(){
+  const data = await getDocs(collection(db,"teachers"));
+  let html = "";
 
+  data.forEach(d=>{
+    const t = d.data();
+
+    html += `
+      <div class="teacher-card">
+        <img src="${t.image || 'https://via.placeholder.com/120'}">
+        <h3>${t.name || 'No Name'}</h3>
+        <p>${t.subject || ''}</p>
+      </div>
+    `;
+  });
+
+  document.getElementById("teacherContainer").innerHTML = html;
+}
+
+loadTeachers();
 // SLIDER (ONLY ONCE)
 // SLIDER WITH DOTS
 function toggleDropdown(){
