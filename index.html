@@ -1311,78 +1311,16 @@ form button:hover{
 
   </div>  
 </section>  <!-- UPDATES --> <section class="updates-section">  
-  <h2>LATEST UPDATES</h2>    <div class="updates-box">  
-    <div class="updates-track">  <!-- SCHOOL COURSES -->  
-  <div class="update-item">  
-    <b>Nursery to Class 5</b><br>  
-    New Batch Started<br>  
-    Timing: 9 AM<br>  
-    Mode: Offline  
+  <h2>LATEST UPDATES</h2>    
+
+  <div class="updates-box">  
+    <!-- 🔥 Firebase से auto load -->
+    <div class="updates-track" id="updatesTrack">
+      Loading...
+    </div>
   </div>  
 
-  <div class="update-item">  
-    <b>Class 6th to 10th</b><br>  
-    Started on 10th April 2026<br>  
-    Timing: 7 AM / 4 PM<br>  
-    Mode: Online / Offline  
-  </div>  
-
-  <div class="update-item">  
-    <b>Class 11th & 12th (Commerce)</b><br>  
-    Started on 15th April 2026<br>  
-    Timing: 11 AM<br>  
-    Mode: Online / Offline  
-  </div>  
-
-  <!-- COMPUTER COURSES -->  
-  <div class="update-item">  
-    <b>Basic Computer / CCC</b><br>  
-    New Batch Every Monday<br>  
-    Timing: 10 AM / 3 PM<br>  
-    Mode: Offline  
-  </div>  
-
-  <div class="update-item">  
-    <b>ADCA / DCA / Tally</b><br>  
-    Started on 1st April 2026<br>  
-    Timing: Flexible<br>  
-    Mode: Online / Offline  
-  </div>  
-
-  <!-- MODERN COURSES -->  
-  <div class="update-item">  
-    <b>Python Programming</b><br>  
-    Started on 5th April 2026<br>  
-    Timing: 2 PM<br>  
-    Mode: Online  
-  </div>  
-
-  <div class="update-item">  
-    <b>Artificial Intelligence (AI)</b><br>  
-    New Batch Starting Soon<br>  
-    Timing: 1 PM<br>  
-    Mode: Online  
-  </div>  
-
-  <div class="update-item">  
-    <b>Robotics Course</b><br>  
-    Started on 20th April 2026<br>  
-    Timing: 12 PM<br>  
-    Mode: Offline Lab  
-  </div>  
-
-  <!-- DUPLICATE FOR SMOOTH LOOP -->  
-  <div class="update-item">  
-    <b>Class 6th to 10th</b><br>  
-    Started on 10th April 2026<br>  
-    Timing: 7 AM / 4 PM<br>  
-    Mode: Online / Offline  
-  </div>  
-
-</div>
-
-  </div>  
-</section>  
+</section>
 <section>  <h2>FEATURED COURSES</h2>  <div class="slider-wrapper">  <div class="featured-slider">  <!-- SCHOOL -->  <div class="featured-card">  
 <img src="https://images.unsplash.com/photo-1588072432836-e10032774350">  
 <div class="featured-content">  
@@ -1587,7 +1525,25 @@ async function loadUpdates(){
 }
 loadUpdates();
 
+async function loadUpdates(){
+  const data = await getDocs(collection(db,"updates"));
+  let html = "";
 
+  data.forEach(d=>{
+    const u = d.data();
+
+    html += `
+      <div class="update-item">
+        <b>${u.title}</b><br>
+        ${u.text}
+      </div>
+    `;
+  });
+
+  document.getElementById("updatesTrack").innerHTML = html;
+}
+
+loadUpdates();
 
 // ================= POPUP =================
 async function loadPopup(){
