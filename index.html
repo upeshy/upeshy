@@ -1032,29 +1032,33 @@ form button:hover{
   0%{transform:translateX(0);}    
   100%{transform:translateX(-50%);}    
 }    
-  .whatsapp-float{
-  position:fixed;
+.whatsapp-float{
+  position:fixed !important;   /* 🔥 sabse important */
   bottom:20px;
   right:20px;
-  background:#25D366;
-  color:white;
-  font-size:28px;
-  padding:12px 15px;
+  z-index:99999;               /* 🔥 sabke upar rahe */
+  
+  width:55px;
+  height:55px;
   border-radius:50%;
-  text-decoration:none;
+  background:#25D366;
+  
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
   box-shadow:0 5px 15px rgba(0,0,0,0.3);
-  z-index:999;
   transition:0.3s;
+}
+
+.whatsapp-float img{
+  width:30px;
+  height:30px;
 }
 
 .whatsapp-float:hover{
   transform:scale(1.1);
-  background:#20b358;
 }
-  .whatsapp-float img{
-  width:30px;
-  height:30px;
-  }
 </style>   </head>  <body>  <!-- AUTO POPUP -->  <div class="popup-overlay" id="popupBox">  
   <div class="popup-content">      
     <span class="popup-close" onclick="closePopup()">✖</span>      
