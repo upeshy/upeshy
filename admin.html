@@ -169,7 +169,7 @@ function loadStudents(){
   studentList.innerHTML = "Loading...";
 
   db.collection("students")
-    .where("category","==",category)
+    .where("type","==",category)
     .get()
     .then(snapshot=>{
       studentList.innerHTML = "";
