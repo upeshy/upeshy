@@ -122,27 +122,24 @@ button:hover{background:#0284c7;}
 
 <!-- ABOUT -->
 <h2>📘 About</h2>
-
 <textarea id="aboutText"></textarea>
 <button onclick="saveAbout()">Save</button>
 
 <!-- POPUP -->
 <h2>🎯 Popup</h2>
-
 <input id="popupImage" placeholder="Image URL">
 <input id="popupTitle" placeholder="Title">
 <input id="popupText" placeholder="Text">
-<button onclick="savePopup()">Save</button>
+<button onclick="savePopup()">Save Popup</button>
 
 <!-- TOPBAR -->
 <h2>🔔 Topbar</h2>
-
 <input id="topbarInput">
 <button onclick="saveTopbar()">Save</button>
 
 <script>
 
-// 🔥 Firebase Config
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCJbmgvBuJ-PP2U9kf_hJQ-rMWtAd551sA",
   authDomain: "game-bbdc6.firebaseapp.com",
@@ -155,16 +152,17 @@ const db = firebase.firestore();
 let editStudentId = null;
 
 
-// ================= LOAD STUDENTS =================
+// ================= STUDENTS =================
 function loadStudents(){
   const category = document.getElementById("categorySelect").value;
+  const studentList = document.getElementById("studentList");
+
   studentList.innerHTML = "Loading...";
 
   db.collection("students")
     .where("category","==",category)
     .get()
     .then(snapshot=>{
-
       studentList.innerHTML = "";
 
       if(snapshot.empty){
@@ -191,12 +189,10 @@ function loadStudents(){
           </div>
         `;
       });
-
-    });
+    })
+    .catch(err=>alert(err.message));
 }
 
-
-// ================= DELETE =================
 function deleteStudent(id){
   if(confirm("Delete this student?")){
     db.collection("students").doc(id).delete()
@@ -207,76 +203,76 @@ function deleteStudent(id){
   }
 }
 
-
-// ================= EDIT =================
 function openEditModal(id){
   editStudentId = id;
 
   db.collection("students").doc(id).get().then(doc=>{
     let s = doc.data();
 
-    edit_name.value = s.name || "";
-    edit_father.value = s.father || "";
-    edit_mother.value = s.mother || "";
-    edit_phone.value = s.phone || "";
-    edit_email.value = s.email || "";
-    edit_dob.value = s.dob || "";
-    edit_course.value = s.course || "";
-    edit_address.value = s.address || "";
+    document.getElementById("edit_name").value = s.name || "";
+    document.getElementById("edit_father").value = s.father || "";
+    document.getElementById("edit_mother").value = s.mother || "";
+    document.getElementById("edit_phone").value = s.phone || "";
+    document.getElementById("edit_email").value = s.email || "";
+    document.getElementById("edit_dob").value = s.dob || "";
+    document.getElementById("edit_course").value = s.course || "";
+    document.getElementById("edit_address").value = s.address || "";
 
-    editModal.style.display="block";
+    document.getElementById("editModal").style.display = "block";
   });
 }
 
-
-// ================= UPDATE =================
 function updateStudent(){
   db.collection("students").doc(editStudentId).update({
-    name: edit_name.value,
-    father: edit_father.value,
-    mother: edit_mother.value,
-    phone: edit_phone.value,
-    email: edit_email.value,
-    dob: edit_dob.value,
-    course: edit_course.value,
-    address: edit_address.value
+    name: document.getElementById("edit_name").value,
+    father: document.getElementById("edit_father").value,
+    mother: document.getElementById("edit_mother").value,
+    phone: document.getElementById("edit_phone").value,
+    email: document.getElementById("edit_email").value,
+    dob: document.getElementById("edit_dob").value,
+    course: document.getElementById("edit_course").value,
+    address: document.getElementById("edit_address").value
   })
   .then(()=>{
     alert("Updated ✅");
     closeEditModal();
     loadStudents();
-  });
+  })
+  .catch(err=>alert(err.message));
 }
 
-
-// ================= CLOSE =================
 function closeEditModal(){
-  editModal.style.display="none";
+  document.getElementById("editModal").style.display = "none";
 }
 
 
 // ================= TEACHERS =================
 function saveTeacher(){
-  db.collection("teachers").doc(teacherSelect.value).set({
-    name: t_name.value,
-    subject: t_subject.value,
-    image: t_image.value
-  }).then(()=>alert("Teacher Saved ✅"));
+  db.collection("teachers").doc(document.getElementById("teacherSelect").value).set({
+    name: document.getElementById("t_name").value,
+    subject: document.getElementById("t_subject").value,
+    image: document.getElementById("t_image").value
+  })
+  .then(()=>alert("Teacher Saved ✅"))
+  .catch(err=>alert(err.message));
 }
 
 
 // ================= UPDATES =================
 function addUpdate(){
   db.collection("updates").add({
-    title: u_title.value,
-    text: u_text.value,
+    title: document.getElementById("u_title").value,
+    text: document.getElementById("u_text").value,
     createdAt: new Date()
-  });
+  })
+  .then(()=>alert("Update Added ✅"))
+  .catch(err=>alert(err.message));
 }
 
 db.collection("updates").orderBy("createdAt","desc")
 .onSnapshot(snapshot=>{
-  updateList.innerHTML="";
+  const updateList = document.getElementById("updateList");
+  updateList.innerHTML = "";
 
   snapshot.forEach(doc=>{
     let u = doc.data();
@@ -297,27 +293,33 @@ function deleteUpdate(id){
 
 // ================= SETTINGS =================
 function saveAbout(){
-  db.collection("settings").doc("about").set({
-    text: aboutText.value
-  });
+  const text = document.getElementById("aboutText").value;
+
+  db.collection("settings").doc("about").set({text})
+  .then(()=>alert("About Saved ✅"))
+  .catch(err=>alert(err.message));
 }
 
 function savePopup(){
   db.collection("settings").doc("popup").set({
-    image: popupImage.value,
-    title: popupTitle.value,
-    text: popupText.value
-  });
+    image: document.getElementById("popupImage").value,
+    title: document.getElementById("popupTitle").value,
+    text: document.getElementById("popupText").value
+  })
+  .then(()=>alert("Popup Saved ✅"))
+  .catch(err=>alert(err.message));
 }
 
 function saveTopbar(){
-  db.collection("settings").doc("topbar").set({
-    text: topbarInput.value
-  });
+  const text = document.getElementById("topbarInput").value;
+
+  db.collection("settings").doc("topbar").set({text})
+  .then(()=>alert("Topbar Saved ✅"))
+  .catch(err=>alert(err.message));
 }
 
 
-// ================= LOAD DEFAULT =================
+// LOAD
 loadStudents();
 
 </script>
