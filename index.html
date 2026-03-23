@@ -104,7 +104,27 @@ section{
   color:white;  
   cursor:pointer;  
 }  
-  
+  .dots{
+  position:absolute;
+  bottom:15px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:8px;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  background:#fff;
+  border-radius:50%;
+  opacity:0.5;
+}
+
+.dot.active{
+  opacity:1;
+  background:#0ea5e9;
+}
 /* ===== MOBILE ===== */  
 @media(max-width:768px){  
   
@@ -1045,7 +1065,11 @@ form button:hover{
   <a href="#contact">Contact</a>  
 </div>  
 
-<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+<div class="dots">
+  <span class="dot active"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
 
   </div>  </nav>  </nav>  
 <!-- TOP BAR -->  
@@ -1534,13 +1558,24 @@ menu.classList.toggle("active");
 }
 
 // SLIDER (ONLY ONCE)
+// SLIDER WITH DOTS
 let slides = document.querySelectorAll(".slide");
+let dots = document.querySelectorAll(".dot");
+
 let i = 0;
 
 setInterval(()=>{
-slides[i].classList.remove("active");
-i = (i + 1) % slides.length;
-slides[i].classList.add("active");
+  // remove active
+  slides[i].classList.remove("active");
+  if(dots[i]) dots[i].classList.remove("active");
+
+  // next index
+  i = (i + 1) % slides.length;
+
+  // add active
+  slides[i].classList.add("active");
+  if(dots[i]) dots[i].classList.add("active");
+
 },3000);
 
 // FAQ
