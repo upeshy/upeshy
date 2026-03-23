@@ -309,6 +309,9 @@ function uploadPDF(){
   const title = document.getElementById("pdfTitle").value;
   const file = document.getElementById("pdfFile").files[0];
 
+  console.log("Title:", title);
+  console.log("File:", file);
+
   if(!title || !file){
     alert("Title aur PDF select karo ❌");
     return;
@@ -317,8 +320,13 @@ function uploadPDF(){
   const storageRef = storage.ref("pdfs/" + Date.now() + "_" + file.name);
 
   storageRef.put(file)
-    .then(snapshot => snapshot.ref.getDownloadURL())
+    .then(snapshot => {
+      console.log("Uploaded", snapshot);
+      return snapshot.ref.getDownloadURL();
+    })
     .then(url => {
+      console.log("URL:", url);
+
       return db.collection("pdfs").add({
         title: title,
         fileURL: url,
@@ -329,9 +337,11 @@ function uploadPDF(){
       alert("PDF Upload ho gaya ✅");
       loadPDFs();
     })
-    .catch(err=>alert(err.message));
+    .catch(err=>{
+      console.error(err);
+      alert("Error: " + err.message);
+    });
 }
-
 
 // LOAD PDFs
 function loadPDFs(){
