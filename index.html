@@ -1164,6 +1164,10 @@ form button:hover{
 
   </div>  
 </div>
+
+  <h2 style="text-align:center; margin-top:40px;">📚 Study Materials</h2>
+
+<div id="pdfList" style="max-width:800px;margin:auto;"></div>
   <section class="about-section" id="about">
 
   <div class="about-container">
@@ -1694,6 +1698,47 @@ window.sendComputerForm = async function(){
   }
 }
 
+  // LOAD PDFs FOR STUDENTS
+function loadPDFs(){
+
+  const pdfList = document.getElementById("pdfList");
+
+  db.collection("pdfs")
+    .orderBy("createdAt","desc")
+    .get()
+    .then(snapshot=>{
+
+      pdfList.innerHTML = "";
+
+      if(snapshot.empty){
+        pdfList.innerHTML = "No Study Material Available";
+        return;
+      }
+
+      snapshot.forEach(doc=>{
+        let p = doc.data();
+
+        pdfList.innerHTML += `
+          <div style="background:#1e293b;padding:15px;margin:10px 0;border-radius:10px;color:white;">
+            
+            📄 <b>${p.title}</b><br><br>
+
+            <a href="${p.fileURL}" target="_blank" 
+               style="background:#0ea5e9;color:white;padding:6px 10px;border-radius:5px;text-decoration:none;">
+               View PDF
+            </a>
+
+          </div>
+        `;
+      });
+
+    })
+    .catch(err=>console.log(err));
+}
+
+
+// LOAD ON PAGE
+loadPDFs();
 // ================= COACHING FORM =================
 window.sendCoachingForm = async function(){
   try{
