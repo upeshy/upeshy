@@ -1358,7 +1358,47 @@ form button:hover{
 </div>  </div>  </div>  </section>  
 <section class="section" id="register">  
 <h2>Student Registration</h2>  
-<h3 style="text-align:center; margin-bottom:20px;">Computer Course Registration</h3>  
+<h3 style="text-align:center; margin:40px 0 20px;">Coaching Registration</h3>  
+
+<form onsubmit="sendCoachingForm();return false;">  
+
+<input id="s_name" type="text" placeholder="Student Name" required>  
+<input id="s_father" type="text" placeholder="Father Name" required>  
+<input id="s_mother" type="text" placeholder="Mother Name" required>  
+
+<input id="s_phone" type="tel" placeholder="Mobile Number" required>  
+<input id="s_email" type="email" placeholder="Email" required>  
+
+<label>Date of Birth</label>  
+<input id="s_dob" type="date" required>  
+
+<select id="s_board" required>  
+<option value="">Select Board</option>
+<option>CBSE</option>
+<option>BSEB</option>
+<option>ICSE</option>
+<option>OTHER</option>  
+</select>  
+
+<!-- ✅ UPDATED COURSES -->
+<select id="s_course" required>  
+<option value="">Select Course</option>  
+
+<!-- COMMERCE -->
+<option>11th Commerce</option>  
+<option>12th Commerce</option>  
+<option>B.Com</option>  
+
+<!-- SUBJECTS -->
+<option>Accountancy</option>  
+<option>Economics</option>  
+<option>Business Studies</option>  
+</select>  
+
+<textarea id="s_address" placeholder="Address"></textarea>  
+
+<button type="submit">Submit Coaching Form</button>  
+</form>  <h3 style="text-align:center; margin-bottom:20px;">Computer Course Registration</h3>  
 <form onsubmit="sendComputerForm();return false;">  
 <input id="c_name" type="text" placeholder="Full Name" required>  
 <input id="c_father" type="text" placeholder="Father Name" required>  
@@ -1378,33 +1418,6 @@ form button:hover{
 </select>  
 <textarea id="c_address" placeholder="Address"></textarea>  
 <button type="submit">Submit Computer Form</button>  
-</form>  <h3 style="text-align:center; margin:40px 0 20px;">Coaching Registration</h3>  
-<form onsubmit="sendCoachingForm();return false;">  
-<input id="s_name" type="text" placeholder="Student Name" required>  
-<input id="s_father" type="text" placeholder="Father Name" required>  
-<input id="s_mother" type="text" placeholder="Mother Name" required>  <input id="s_phone" type="tel" placeholder="Mobile Number" required>  
-<input id="s_email" type="email" placeholder="Email" required>  
-<label>Date of Birth</label>  
-<input id="s_dob" type="date" required>  
-<select id="s_board" required>  
-<option>Select Board</option><option>CBSE</option><option>BSEB</option><option>ICSE</option><option>OTHER</option>  
-</select>  
-<select id="s_course" required>  
-<option>Select Course</option>  
-<option>Junior Class 1-5</option>  
-<option>Class 6-7</option>  
-<option>Class 8-9</option>  
-<option>Class 10th Board Preparation</option>  
-<option>Class 11-12 Arts</option>  
-<option>Class 11-12 Science</option>  
-<option>IIT / NEET Foundation</option>  
-<option>Polytechnic / ITI / Paramedical</option>  
-<option>Class 12 English (Girls Free)</option>  
-<option>Class 10 Maths (Girls Free)</option>  
-<option>Competition</option>  
-</select>  
-<textarea id="s_address" placeholder="Address"></textarea>  
-<button type="submit">Submit Coaching Form</button>  
 </form>  
 </section>  <section>      
 <h2>HAPPY STUDENTS HAPPY US</h2>  <h3 style="font-size:28px;">EXCELLENT ⭐⭐⭐⭐⭐</h3>      
