@@ -1097,8 +1097,8 @@ form button:hover{
   </div>  </nav>  
 <!-- TOP BAR -->  
 <div class="topbar">  
-  <span>🔥 Admission Open | AI | Python | CS | 11th | 12th | CCC</span>  
-</div>  
+  <span id="topbarText">Loading...</span>  
+</div>
 <!-- HERO SLIDER -->  
 <div class="hero-scroll">    <div class="scroll-track">  <!-- SCHOOL COURSES -->  
 <div class="scroll-item">  
@@ -1629,6 +1629,15 @@ async function loadTeachers(){
 
 loadTeachers();
 // SLIDER (ONLY ONCE)
+    async function loadTopbar(){
+  const snap = await getDoc(doc(db,"settings","topbar"));
+
+  if(snap.exists()){
+    document.getElementById("topbarText").innerText = snap.data().text;
+  }
+}
+
+loadTopbar();
 // SLIDER WITH DOTS
 function toggleDropdown(){
   document.getElementById("dropdownMenu").classList.toggle("active");
