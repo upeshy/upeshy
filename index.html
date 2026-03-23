@@ -1462,11 +1462,14 @@ Yes, regular revision sessions conducted.
   </div>    <div class="footer-bottom">  
     © 2024 Excellent Commerce Classes | All Rights Reserved  
   </div>  </footer> 
-  <script type="module">
+  
+  
+
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// 🔥 SAME Firebase Config (Admin wala hi use karo)
+// 🔥 Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCJbmgvBuJ-PP2U9kf_hJQ-rMWtAd551sA",
   authDomain: "game-bbdc6.firebaseapp.com",
@@ -1479,144 +1482,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-
 // ================= ABOUT =================
-async function loadAbout(){
-  const snap = await getDoc(doc(db,"settings","about"));
-  if(snap.exists()){
-    document.querySelector(".about-content p").innerText = snap.data().text;
-  }
-}
-loadAbout();
-
-
-
-// ================= TEACHERS =================
-async function loadTeachers(){
-  const data = await getDocs(collection(db,"teachers"));
-  let html = "";
-  data.forEach(d=>{
-    const t = d.data();
-    html += `
-      <div class="teacher-card">
-        <img src="${t.image}">
-        <h3>${t.name}</h3>
-        <p>${t.subject}</p>
-      </div>
-    `;
-  });
-
-  document.querySelector(".teacher-container").innerHTML = html;
-}
-loadTeachers();
-
-
-
-// ================= UPDATES =================
-async function loadUpdates(){
-  const data = await getDocs(collection(db,"updates"));
-  let html = "";
-  data.forEach(d=>{
-    const u = d.data();
-    html += `
-      <div class="update-item">
-        <b>${u.title}</b><br>
-        ${u.text}
-      </div>
-    `;
-  });
-
-  document.querySelector(".updates-track").innerHTML = html;
-}
-loadUpdates();
-
-async function loadUpdates(){
-  const data = await getDocs(collection(db,"updates"));
-  let html = "";
-
-  data.forEach(d=>{
-    const u = d.data();
-
-    html += `
-      <div class="update-item">
-        <b>${u.title}</b><br>
-        ${u.text}
-      </div>
-    `;
-  });
-
-  document.getElementById("updatesTrack").innerHTML = html;
-}
-
-loadUpdates();
-
-// ================= POPUP =================
-async function loadPopup(){
-  const snap = await getDoc(doc(db,"settings","popup"));
-
-  if(snap.exists()){
-    const p = snap.data();
-
-    document.getElementById("popupTitle").innerText = p.title || "";
-    document.getElementById("popupText").innerText = p.text || "";
-    document.getElementById("popupImg").src = p.image || "";
-  }
-}
-
-loadPopup();
-
-  </script>
-  <script>   
-document.querySelectorAll(".gallery img").forEach(img=>{  
-  img.onclick=()=>{  
-    let popup = document.createElement("div");  
-    popup.style.position="fixed";  
-    popup.style.top="0";  
-    popup.style.left="0";  
-    popup.style.width="100%";  
-    popup.style.height="100%";  
-    popup.style.background="rgba(0,0,0,0.8)";  
-    popup.style.display="flex";  
-    popup.style.justifyContent="center";  
-    popup.style.alignItems="center";  let bigImg = document.createElement("img");  
-bigImg.src = img.src;  
-bigImg.style.maxWidth="90%";  
-bigImg.style.borderRadius="10px";  
-
-popup.appendChild(bigImg);  
-document.body.appendChild(popup);  
-
-popup.onclick=()=>popup.remove();
-
-}
-});
-
-
-
-// AUTO POPUP
-// POPUP
-window.onload=function(){
-document.getElementById("popupBox").style.display="flex";
-}
-
-function closePopup(){
-document.getElementById("popupBox").style.display="none";
-}
-
 async function loadAbout(){
   const snap = await getDoc(doc(db,"settings","about"));
   
   if(snap.exists()){
-    let text = snap.data().text;
+    let text = snap.data().text || "";
 
-    // 🔥 line break support
+    // line break support
     text = text.replace(/\n/g, "<br><br>");
 
     document.getElementById("aboutText").innerHTML = text;
   }
 }
-loadAbout();
+
+// ================= TEACHERS =================
 async function loadTeachers(){
   const data = await getDocs(collection(db,"teachers"));
   let html = "";
@@ -1636,22 +1516,101 @@ async function loadTeachers(){
   document.getElementById("teacherContainer").innerHTML = html;
 }
 
-loadTeachers();
-// SLIDER (ONLY ONCE)
-    async function loadTopbar(){
-  const snap = await getDoc(doc(db,"settings","topbar"));
+// ================= UPDATES =================
+async function loadUpdates(){
+  const data = await getDocs(collection(db,"updates"));
+  let html = "";
+
+  data.forEach(d=>{
+    const u = d.data();
+
+    html += `
+      <div class="update-item">
+        <b>${u.title || ''}</b><br>
+        ${u.text || ''}
+      </div>
+    `;
+  });
+
+  document.getElementById("updatesTrack").innerHTML = html;
+}
+
+// ================= POPUP =================
+async function loadPopup(){
+  const snap = await getDoc(doc(db,"settings","popup"));
 
   if(snap.exists()){
-    document.getElementById("topbarText").innerText = snap.data().text;
+    const p = snap.data();
+
+    document.getElementById("popupTitle").innerText = p.title || "";
+    document.getElementById("popupText").innerText = p.text || "";
+    document.getElementById("popupImg").src = p.image || "";
   }
 }
 
+// ================= TOPBAR =================
+async function loadTopbar(){
+  const snap = await getDoc(doc(db,"settings","topbar"));
+
+  if(snap.exists()){
+    document.getElementById("topbarText").innerText = snap.data().text || "";
+  }
+}
+
+// 🔥 Load All
+loadAbout();
+loadTeachers();
+loadUpdates();
+loadPopup();
 loadTopbar();
-// SLIDER WITH DOTS
+
+</script>
+
+<script>
+
+// ===== GALLERY POPUP =====
+document.querySelectorAll(".gallery img").forEach(img=>{
+  img.onclick = ()=>{
+    let popup = document.createElement("div");
+    popup.style = `
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.8);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+    `;
+
+    let bigImg = document.createElement("img");
+    bigImg.src = img.src;
+    bigImg.style.maxWidth = "90%";
+    bigImg.style.borderRadius = "10px";
+
+    popup.appendChild(bigImg);
+    document.body.appendChild(popup);
+
+    popup.onclick = ()=> popup.remove();
+  }
+});
+
+// ===== AUTO POPUP =====
+window.onload = function(){
+  document.getElementById("popupBox").style.display = "flex";
+}
+
+function closePopup(){
+  document.getElementById("popupBox").style.display = "none";
+}
+
+// ===== DROPDOWN =====
 function toggleDropdown(){
   document.getElementById("dropdownMenu").classList.toggle("active");
 }
-// click outside = close dropdown
+
 document.addEventListener("click", function(e){
   let menu = document.getElementById("dropdownMenu");
   let btn = document.querySelector(".menu-3dot");
@@ -1660,42 +1619,34 @@ document.addEventListener("click", function(e){
     menu.classList.remove("active");
   }
 });
-// FAQ
+
+// ===== FAQ =====
 function toggle(el){
-let next = el.nextElementSibling;
-next.style.display = next.style.display=="block" ? "none":"block";
+  let next = el.nextElementSibling;
+  next.style.display = next.style.display=="block" ? "none":"block";
 }
 
-// POPUP DATA
+// ===== COURSE POPUP =====
 function openPopup(type){
   let title="",text="";
 
-  if(type=="ca"){title="CA Foundation";text="Complete CA preparation";}
-  if(type=="cma"){title="CMA Foundation";text="Professional CMA course";}
-  if(type=="cs"){title="CS-CSEET";text="Best CS coaching";}
   if(type=="class"){title="11th & 12th";text="Commerce coaching";}
-
   if(type=="nc"){title="Nursery to Class 5";text="Strong foundation classes";}
-  if(type=="mid"){title="Class 6-8";text="Middle school preparation";}
-  if(type=="high"){title="Class 9-10";text="Board preparation";}
-  if(type=="inter"){title="Class 11-12";text="Commerce / Science / Arts";}
-
   if(type=="basic"){title="Basic Computer";text="Start from basics";}
-  if(type=="ccc"){title="CCC Course";text="Government recognized";}
-  if(type=="adca"){title="ADCA/DCA";text="Diploma in Computer";}
-  if(type=="web"){title="Web Development";text="Website making course";}
-  if(type=="tally"){title="Tally Course";text="Accounting software";}
-  if(type=="hardware"){title="Hardware Course";text="Computer repairing";}
-  if(type=="school"){title="NC to Class 12";text="Complete school coaching";}
   if(type=="ai"){title="AI Course";text="Learn Artificial Intelligence";}
-  if(type=="python"){title="Python Programming";text="Coding from basic to advanced";}
-  if(type=="robotics"){title="Robotics";text="Build and control robots";}
+  if(type=="python"){title="Python Programming";text="Coding course";}
+  if(type=="robotics"){title="Robotics";text="Build robots";}
 
-  document.getElementById("popupTitle").innerText=title;
-  document.getElementById("popupText").innerText=text;
-  document.getElementById("popupBox").style.display="flex";
+  document.getElementById("popupTitle").innerText = title;
+  document.getElementById("popupText").innerText = text;
+  document.getElementById("popupBox").style.display = "flex";
 }
-</script> 
+
+</script>
+
+
+
+  
 <a href="https://wa.me/919506878769" class="whatsapp-float" target="_blank">
   <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
 </a>
