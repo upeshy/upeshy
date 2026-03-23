@@ -26,25 +26,18 @@ button{
   border-radius:6px;
   cursor:pointer;
 }
-
 button:hover{background:#0284c7;}
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:10px;
+.card{
+  background:#1e293b;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
 }
 
-th,td{
-  border:1px solid #334155;
-  padding:8px;
-  text-align:center;
-}
-
-img{
-  width:50px;
-  height:50px;
-  border-radius:50%;
+.card img{
+  width:60px;
+  border-radius:6px;
 }
 
 .modal{
@@ -54,7 +47,6 @@ img{
   height:100%;
   background:rgba(0,0,0,0.7);
 }
-
 .modal-content{
   background:white;
   color:black;
@@ -66,6 +58,7 @@ img{
 }
 </style>
 
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
@@ -74,27 +67,36 @@ img{
 
 <h1>🔥 Admin Dashboard</h1>
 
-
-<!-- ================= RECORDS ================= -->
+<!-- STUDENTS -->
 <h2>📋 Student Records</h2>
 
-<select id="categorySelect" onchange="loadRecords()">
+<select id="categorySelect" onchange="loadStudents()">
   <option value="computer">Computer</option>
   <option value="coaching">Coaching</option>
 </select>
 
-<table>
-<thead>
-<tr>
-<th>Name</th><th>Father</th><th>Mother</th><th>Phone</th>
-        <th>Email</th><th>DOB</th><th>Course</th><th>Address</th>
-        <th>Photo</th><th>Actions</th>
-</tr>
-</thead>
-<tbody id="recordsTable"></tbody>
-</table>
+<div id="studentList"></div>
 
-<!-- ================= TEACHERS ================= -->
+<!-- EDIT MODAL -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <h3>Edit Student</h3>
+
+    <input id="edit_name" placeholder="Name">
+    <input id="edit_father" placeholder="Father">
+    <input id="edit_mother" placeholder="Mother">
+    <input id="edit_phone" placeholder="Phone">
+    <input id="edit_email" placeholder="Email">
+    <input id="edit_dob" type="date">
+    <input id="edit_course" placeholder="Course">
+    <textarea id="edit_address" placeholder="Address"></textarea>
+
+    <button onclick="updateStudent()">Update</button>
+    <button onclick="closeEditModal()">Close</button>
+  </div>
+</div>
+
+<!-- TEACHERS -->
 <h2>👨‍🏫 Teachers</h2>
 
 <select id="teacherSelect">
@@ -109,256 +111,12 @@ img{
 
 <button onclick="saveTeacher()">Save Teacher</button>
 
-<!-- ================= UPDATES ================= -->
-<h2>📢 Updates</h2>
-
-<input id="u_title" placeholder="Title">
-<input id="u_text" placeholder="Text">
-<button onclick="addUpdate()">Add</button>
-
-<div id="updateList"></div>
-
-<!-- ================= ABOUT ================= -->
-<h2>📘 About</h2>
-
-<textarea id="aboutText"></textarea>
-<button onclick="saveAbout()">Save</button>
-
-<!-- ================= POPUP ================= -->
-<h2>🎯 Popup</h2>
-
-<input id="popupImage" placeholder="Image URL">
-<input id="popupTitle" placeholder="Title">
-<input id="popupText" placeholder="Text">
-<button onclick="savePopup()">Save Popup</button>
-
-<!-- ================= TOPBAR ================= -->
-<h2>🔔 Topbar</h2>
-
-<input id="topbarInput">
-<button onclick="saveTopbar()">Save</button>
-
-<!-- ================= EDIT MODAL ================= -->
-<div class="modal" id="editModal">
-<div class="modal-content">
-
-<h3>Edit Student</h3>
-
-<input id="editName">
-<input id="editFather">
-<input id="editMother">
-<input id="editPhone">
-<input id="editEmail">
-<input id="editDOB" type="date">
-<input id="editCourse">
-<textarea id="editAddress"></textarea>
-
-<button onclick="updateRecord()">Save</button>
-<button onclick="closeEditModal()">Close</button>
-
-</div>
-</div>
-
-<script>
-
-// Firebase Config
-const firebaseConfig = {
-  apiKey: "AIzaSyCJbmgvBuJ-PP2U9kf_hJQ-rMWtAd551sA",
-  authDomain: "game-bbdc6.firebaseapp.com",
-  projectId: "game-bbdc6"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-let editId=null;
-
-// ================= ADD =================
-
-
-// ================= LOAD =================
-function loadStudents(){
-  studentList.innerHTML = "Loading...";
-
-  const studentsRef = ref(db, `students/${currentCategory}`);
-
-  onValue(studentsRef, snapshot=>{
-    studentList.innerHTML = "";
-
-    if(snapshot.exists()){
-      snapshot.forEach(childSnap=>{
-        let s = childSnap.val();
-        let id = childSnap.key;
-
-        studentList.innerHTML += `
-          <div class="card">
-            <b>${s.name || ""}</b> (${s.course || ""})<br>
-            👨 Father: ${s.father || ""}<br>
-            👩 Mother: ${s.mother || ""}<br>
-            📞 ${s.phone || ""}<br>
-            📧 ${s.email || ""}<br>
-            🎂 ${s.dob || ""}<br>
-            🏠 ${s.address || ""}<br>
-            <img src="${s.photo || "https://via.placeholder.com/60"}" width="60"><br>
-
-            <button onclick="openEditModal('${id}')">Edit</button>
-            <button onclick="deleteStudent('${id}')">Delete</button>
-          </div>
-        `;
-      });
-    } else {
-      studentList.innerHTML = "No Records Found";
-    }
-  });
-}
-
-
-// --- DELETE ---
-function deleteStudent(id){
-  if(confirm("Are you sure you want to delete?")){
-    remove(ref(db, `students/${currentCategory}/${id}`))
-      .then(()=>alert("Deleted ✅"))
-      .catch(err=>alert("Error: "+err.message));
-  }
-}
-
-
-// --- OPEN EDIT ---
-function openEditModal(id){
-  editKey = id;
-
-  get(child(ref(db), `students/${currentCategory}/${id}`)).then(snap=>{
-    let s = snap.val();
-
-    edit_name.value = s.name || "";
-    edit_father.value = s.father || "";
-    edit_mother.value = s.mother || "";
-    edit_phone.value = s.phone || "";
-    edit_email.value = s.email || "";
-    edit_dob.value = s.dob || "";
-    edit_course.value = s.course || "";
-    edit_address.value = s.address || "";
-
-    editModal.style.display = "block";
-  });
-}
-
-
-// --- UPDATE ---
-function updateStudent(){
-  const updatedData = {
-    name: edit_name.value,
-    father: edit_father.value,
-    mother: edit_mother.value,
-    phone: edit_phone.value,
-    email: edit_email.value,
-    dob: edit_dob.value,
-    course: edit_course.value,
-    address: edit_address.value
-  };
-
-  update(ref(db, `students/${currentCategory}/${editKey}`), updatedData)
-    .then(()=>{
-      alert("Updated ✅");
-      closeEditModal();
-    })
-    .catch(err=>alert("Error: "+err.message));
-}
-
-
-// --- CLOSE MODAL ---
-function closeEditModal(){
-  editModal.style.display = "none";
-}
-function closeEditModal(){
-  editModal.style.display="none";
-}
-
-// ================= UPDATES =================
-function addUpdate(){
-  db.collection("updates").add({
-    title:u_title.value,
-    text:u_text.value,
-    createdAt:new Date()
-  });
-}
-
-// realtime updates
-db.collection("updates").orderBy("createdAt","desc")
-.onSnapshot(snapshot=>{
-  updateList.innerHTML="";
-
-  snapshot.forEach(doc=>{
-    let u=doc.data();
-
-    updateList.innerHTML+=`
-    <div style="background:#1e293b;padding:10px;margin:5px;border-radius:6px;">
-      <b>${u.title}</b><br>${u.text}
-      <button onclick="editUpdate('${doc.id}','${u.title}','${u.text}')">Edit</button>
-      <button onclick="deleteUpdate('${doc.id}')">Delete</button>
-    </div>`;
-  });
-});
-
-function editUpdate(id,title,text){
-  let t=prompt("Edit Title",title);
-  let x=prompt("Edit Text",text);
-
-  if(t && x){
-    db.collection("updates").doc(id).update({
-      title:t,
-      text:x
-    });
-  }
-}
-
-function deleteUpdate(id){
-  db.collection("updates").doc(id).delete();
-}
-
-// ================= SETTINGS =================
-function saveAbout(){
-  db.collection("settings").doc("about").set({text:aboutText.value});
-}
-
-function savePopup(){
-  db.collection("settings").doc("popup").set({
-    image:popupImage.value,
-    title:popupTitle.value,
-    text:popupText.value
-  });
-}
-
-function saveTopbar(){
-  db.collection("settings").doc("topbar").set({
-    text:topbarInput.value
-  });
-}
-
-// ================= TEACHERS =================
-function saveTeacher(){
-  db.collection("teachers").doc(teacherSelect.value).set({
-    name:t_name.value,
-    subject:t_subject.value,
-    image:t_image.value
-  });
-}
-
-// LOAD DEFAULT
-loadRecords();
-
-</script>
-
-</body>
-</html>
-<button onclick="saveTeacher()">Save Teacher</button>
-
 <!-- UPDATES -->
 <h2>📢 Updates</h2>
 
 <input id="u_title" placeholder="Title">
 <input id="u_text" placeholder="Text">
-<button onclick="addUpdate()">Add Update</button>
+<button onclick="addUpdate()">Add</button>
 
 <div id="updateList"></div>
 
@@ -374,26 +132,13 @@ loadRecords();
 <input id="popupImage" placeholder="Image URL">
 <input id="popupTitle" placeholder="Title">
 <input id="popupText" placeholder="Text">
-<button onclick="savePopup()">Save Popup</button>
+<button onclick="savePopup()">Save</button>
 
 <!-- TOPBAR -->
 <h2>🔔 Topbar</h2>
 
 <input id="topbarInput">
 <button onclick="saveTopbar()">Save</button>
-
-<!-- EDIT MODAL -->
-<div class="modal" id="editModal">
-  <div class="modal-content">
-    <span class="close" onclick="closeEditModal()">✖</span>
-    <h3>Edit Student</h3>
-
-    <input id="edit_name">
-    <input id="edit_phone">
-
-    <button onclick="updateStudent()">Update</button>
-  </div>
-</div>
 
 <script>
 
@@ -409,55 +154,92 @@ const db = firebase.firestore();
 
 let editStudentId = null;
 
-// ================= STUDENTS =================
 
-
+// ================= LOAD STUDENTS =================
 function loadStudents(){
-  studentList.innerHTML="Loading...";
+  const category = document.getElementById("categorySelect").value;
+  studentList.innerHTML = "Loading...";
 
-  db.collection("students").get().then(data=>{
-    studentList.innerHTML="";
+  db.collection("students")
+    .where("category","==",category)
+    .get()
+    .then(snapshot=>{
 
-    data.forEach(d=>{
-      let s = d.data();
+      studentList.innerHTML = "";
 
-      studentList.innerHTML += `
-        <div class="card">
-          <b>${s.name || ""}</b> (${s.course || ""})<br>
-          📞 ${s.phone || ""}<br>
-          <img src="${s.photo || "https://via.placeholder.com/60"}"><br>
-          <button onclick="openEditModal('${d.id}')">Edit</button>
-          <button onclick="deleteStudent('${d.id}')">Delete</button>
-        </div>
-      `;
+      if(snapshot.empty){
+        studentList.innerHTML = "No Records Found";
+        return;
+      }
+
+      snapshot.forEach(doc=>{
+        let s = doc.data();
+
+        studentList.innerHTML += `
+          <div class="card">
+            <b>${s.name || ""}</b> (${s.course || ""})<br>
+            👨 Father: ${s.father || ""}<br>
+            👩 Mother: ${s.mother || ""}<br>
+            📞 ${s.phone || ""}<br>
+            📧 ${s.email || ""}<br>
+            🎂 ${s.dob || ""}<br>
+            🏠 ${s.address || ""}<br>
+            <img src="${s.photo || "https://via.placeholder.com/60"}"><br>
+
+            <button onclick="openEditModal('${doc.id}')">Edit</button>
+            <button onclick="deleteStudent('${doc.id}')">Delete</button>
+          </div>
+        `;
+      });
+
     });
-  });
 }
 
+
+// ================= DELETE =================
 function deleteStudent(id){
-  if(confirm("Delete?")){
+  if(confirm("Delete this student?")){
     db.collection("students").doc(id).delete()
-    .then(()=>loadStudents());
+    .then(()=>{
+      alert("Deleted ✅");
+      loadStudents();
+    });
   }
 }
 
+
+// ================= EDIT =================
 function openEditModal(id){
   editStudentId = id;
 
   db.collection("students").doc(id).get().then(doc=>{
     let s = doc.data();
 
-    edit_name.value = s.name;
-    edit_phone.value = s.phone;
+    edit_name.value = s.name || "";
+    edit_father.value = s.father || "";
+    edit_mother.value = s.mother || "";
+    edit_phone.value = s.phone || "";
+    edit_email.value = s.email || "";
+    edit_dob.value = s.dob || "";
+    edit_course.value = s.course || "";
+    edit_address.value = s.address || "";
 
     editModal.style.display="block";
   });
 }
 
+
+// ================= UPDATE =================
 function updateStudent(){
   db.collection("students").doc(editStudentId).update({
     name: edit_name.value,
-    phone: edit_phone.value
+    father: edit_father.value,
+    mother: edit_mother.value,
+    phone: edit_phone.value,
+    email: edit_email.value,
+    dob: edit_dob.value,
+    course: edit_course.value,
+    address: edit_address.value
   })
   .then(()=>{
     alert("Updated ✅");
@@ -466,9 +248,12 @@ function updateStudent(){
   });
 }
 
+
+// ================= CLOSE =================
 function closeEditModal(){
   editModal.style.display="none";
 }
+
 
 // ================= TEACHERS =================
 function saveTeacher(){
@@ -476,58 +261,45 @@ function saveTeacher(){
     name: t_name.value,
     subject: t_subject.value,
     image: t_image.value
-  })
-  .then(()=>alert("Teacher Saved ✅"));
+  }).then(()=>alert("Teacher Saved ✅"));
 }
+
 
 // ================= UPDATES =================
 function addUpdate(){
-
-  if(!u_title.value){
-    alert("Title required ❌");
-    return;
-  }
-
   db.collection("updates").add({
     title: u_title.value,
-    text: u_text.value
-  })
-  .then(()=>{
-    u_title.value="";
-    u_text.value="";
-    loadUpdates();
+    text: u_text.value,
+    createdAt: new Date()
   });
 }
 
-function loadUpdates(){
-  updateList.innerHTML="Loading...";
+db.collection("updates").orderBy("createdAt","desc")
+.onSnapshot(snapshot=>{
+  updateList.innerHTML="";
 
-  db.collection("updates").get().then(data=>{
-    updateList.innerHTML="";
+  snapshot.forEach(doc=>{
+    let u = doc.data();
 
-    data.forEach(d=>{
-      let u = d.data();
-
-      updateList.innerHTML += `
-        <div class="card">
-          <b>${u.title}</b><br>${u.text}
-          <button onclick="deleteUpdate('${d.id}')">Delete</button>
-        </div>
-      `;
-    });
+    updateList.innerHTML += `
+      <div class="card">
+        <b>${u.title}</b><br>${u.text}
+        <button onclick="deleteUpdate('${doc.id}')">Delete</button>
+      </div>
+    `;
   });
-}
+});
 
 function deleteUpdate(id){
-  db.collection("updates").doc(id).delete()
-  .then(()=>loadUpdates());
+  db.collection("updates").doc(id).delete();
 }
+
 
 // ================= SETTINGS =================
 function saveAbout(){
   db.collection("settings").doc("about").set({
     text: aboutText.value
-  }).then(()=>alert("Saved ✅"));
+  });
 }
 
 function savePopup(){
@@ -535,18 +307,18 @@ function savePopup(){
     image: popupImage.value,
     title: popupTitle.value,
     text: popupText.value
-  }).then(()=>alert("Popup Saved ✅"));
+  });
 }
 
 function saveTopbar(){
   db.collection("settings").doc("topbar").set({
     text: topbarInput.value
-  }).then(()=>alert("Topbar Saved ✅"));
+  });
 }
 
-// LOAD
+
+// ================= LOAD DEFAULT =================
 loadStudents();
-loadUpdates();
 
 </script>
 
