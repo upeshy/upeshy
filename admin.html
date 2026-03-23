@@ -27,6 +27,8 @@ button{
   cursor:pointer;
 }
 
+button:hover{background:#0284c7;}
+
 .card{
   background:#1e293b;
   padding:15px;
@@ -67,7 +69,7 @@ img{
 }
 </style>
 
-<!-- 🔥 Firebase CDN -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
@@ -76,7 +78,7 @@ img{
 
 <h1>🔥 Admin Dashboard</h1>
 
-<!-- ================= STUDENTS ================= -->
+<!-- STUDENTS -->
 <h2>📚 Students</h2>
 
 <input id="s_name" placeholder="Name">
@@ -87,7 +89,7 @@ img{
 
 <div id="studentList"></div>
 
-<!-- ================= TEACHERS ================= -->
+<!-- TEACHERS -->
 <h2>👨‍🏫 Teachers</h2>
 
 <select id="teacherSelect">
@@ -102,7 +104,7 @@ img{
 
 <button onclick="saveTeacher()">Save Teacher</button>
 
-<!-- ================= UPDATES ================= -->
+<!-- UPDATES -->
 <h2>📢 Updates</h2>
 
 <input id="u_title" placeholder="Title">
@@ -111,13 +113,13 @@ img{
 
 <div id="updateList"></div>
 
-<!-- ================= ABOUT ================= -->
+<!-- ABOUT -->
 <h2>📘 About</h2>
 
 <textarea id="aboutText"></textarea>
 <button onclick="saveAbout()">Save</button>
 
-<!-- ================= POPUP ================= -->
+<!-- POPUP -->
 <h2>🎯 Popup</h2>
 
 <input id="popupImage" placeholder="Image URL">
@@ -125,13 +127,13 @@ img{
 <input id="popupText" placeholder="Text">
 <button onclick="savePopup()">Save Popup</button>
 
-<!-- ================= TOPBAR ================= -->
+<!-- TOPBAR -->
 <h2>🔔 Topbar</h2>
 
 <input id="topbarInput">
 <button onclick="saveTopbar()">Save</button>
 
-<!-- ================= EDIT MODAL ================= -->
+<!-- EDIT MODAL -->
 <div class="modal" id="editModal">
   <div class="modal-content">
     <span class="close" onclick="closeEditModal()">✖</span>
@@ -160,15 +162,30 @@ let editStudentId = null;
 
 // ================= STUDENTS =================
 function addStudent(){
+
+  if(!s_name.value || !s_phone.value){
+    alert("Name & Phone required ❌");
+    return;
+  }
+
   db.collection("students").add({
     name: s_name.value,
     phone: s_phone.value,
     course: s_course.value,
     photo: s_photo.value
-  }).then(()=>{
+  })
+  .then(()=>{
     alert("Added ✅");
+
+    // clear inputs
+    s_name.value="";
+    s_phone.value="";
+    s_course.value="";
+    s_photo.value="";
+
     loadStudents();
-  });
+  })
+  .catch(err=>alert(err.message));
 }
 
 function loadStudents(){
@@ -176,14 +193,15 @@ function loadStudents(){
 
   db.collection("students").get().then(data=>{
     studentList.innerHTML="";
+
     data.forEach(d=>{
       let s = d.data();
 
       studentList.innerHTML += `
         <div class="card">
-          <b>${s.name}</b> (${s.course})<br>
-          📞 ${s.phone}<br>
-          <img src="${s.photo}"><br>
+          <b>${s.name || ""}</b> (${s.course || ""})<br>
+          📞 ${s.phone || ""}<br>
+          <img src="${s.photo || "https://via.placeholder.com/60"}"><br>
           <button onclick="openEditModal('${d.id}')">Edit</button>
           <button onclick="deleteStudent('${d.id}')">Delete</button>
         </div>
@@ -194,7 +212,8 @@ function loadStudents(){
 
 function deleteStudent(id){
   if(confirm("Delete?")){
-    db.collection("students").doc(id).delete().then(loadStudents);
+    db.collection("students").doc(id).delete()
+    .then(()=>loadStudents());
   }
 }
 
@@ -203,8 +222,10 @@ function openEditModal(id){
 
   db.collection("students").doc(id).get().then(doc=>{
     let s = doc.data();
+
     edit_name.value = s.name;
     edit_phone.value = s.phone;
+
     editModal.style.display="block";
   });
 }
@@ -213,7 +234,8 @@ function updateStudent(){
   db.collection("students").doc(editStudentId).update({
     name: edit_name.value,
     phone: edit_phone.value
-  }).then(()=>{
+  })
+  .then(()=>{
     alert("Updated ✅");
     closeEditModal();
     loadStudents();
@@ -230,15 +252,27 @@ function saveTeacher(){
     name: t_name.value,
     subject: t_subject.value,
     image: t_image.value
-  }).then(()=>alert("Teacher Saved"));
+  })
+  .then(()=>alert("Teacher Saved ✅"));
 }
 
 // ================= UPDATES =================
 function addUpdate(){
+
+  if(!u_title.value){
+    alert("Title required ❌");
+    return;
+  }
+
   db.collection("updates").add({
     title: u_title.value,
     text: u_text.value
-  }).then(loadUpdates);
+  })
+  .then(()=>{
+    u_title.value="";
+    u_text.value="";
+    loadUpdates();
+  });
 }
 
 function loadUpdates(){
@@ -246,6 +280,7 @@ function loadUpdates(){
 
   db.collection("updates").get().then(data=>{
     updateList.innerHTML="";
+
     data.forEach(d=>{
       let u = d.data();
 
@@ -260,12 +295,15 @@ function loadUpdates(){
 }
 
 function deleteUpdate(id){
-  db.collection("updates").doc(id).delete().then(loadUpdates);
+  db.collection("updates").doc(id).delete()
+  .then(()=>loadUpdates());
 }
 
 // ================= SETTINGS =================
 function saveAbout(){
-  db.collection("settings").doc("about").set({text: aboutText.value});
+  db.collection("settings").doc("about").set({
+    text: aboutText.value
+  }).then(()=>alert("Saved ✅"));
 }
 
 function savePopup(){
@@ -273,13 +311,13 @@ function savePopup(){
     image: popupImage.value,
     title: popupTitle.value,
     text: popupText.value
-  });
+  }).then(()=>alert("Popup Saved ✅"));
 }
 
 function saveTopbar(){
   db.collection("settings").doc("topbar").set({
     text: topbarInput.value
-  });
+  }).then(()=>alert("Topbar Saved ✅"));
 }
 
 // LOAD
