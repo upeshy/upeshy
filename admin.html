@@ -108,7 +108,7 @@ button:hover{background:#0284c7;}
 <!-- TEACHERS -->
 <h2>👨‍🏫 Teachers</h2>
 
-<select id="teacherSelect">
+<select id="teacherSelect" onchange="loadTeacher()">
 <option value="teacher1">Teacher 1</option>
 <option value="teacher2">Teacher 2</option>
 <option value="teacher3">Teacher 3</option>
@@ -414,13 +414,32 @@ function loadAbout(){
     }
   });
   }
+function loadTeacher(){
+  const id = document.getElementById("teacherSelect").value;
 
+  db.collection("teachers").doc(id).get()
+  .then(doc=>{
+    if(doc.exists){
+      let t = doc.data();
+
+      document.getElementById("t_name").value = t.name || "";
+      document.getElementById("t_subject").value = t.subject || "";
+      document.getElementById("t_image").value = t.image || "";
+    }else{
+      // agar data nahi hai to blank karo
+      document.getElementById("t_name").value = "";
+      document.getElementById("t_subject").value = "";
+      document.getElementById("t_image").value = "";
+    }
+  });
+    }
 // LOAD
 loadStudents();
 loadPDFs();
 loadAbout();
 loadPopup();
 loadTopbar();
+loadTeacher();
 </script>
 
 </body>
