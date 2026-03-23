@@ -1082,11 +1082,7 @@ form button:hover{
   <a href="#contact">Contact</a>  
 </div>  
 
-<div class="dots">
-  <span class="dot active"></span>
-  <span class="dot"></span>
-  <span class="dot"></span>
-</div>
+
 
   </div>  </nav>  </nav>  
 <!-- TOP BAR -->  
@@ -1557,6 +1553,12 @@ popup.onclick=()=>popup.remove();
 
 }
 });
+// MENU
+<!-- 3 DOT MENU -->
+<div class="menu-3dot" onclick="toggleDropdown()">
+  ⋮
+</div>
+
 
 // AUTO POPUP
 // POPUP
@@ -1568,17 +1570,7 @@ function closePopup(){
 document.getElementById("popupBox").style.display="none";
 }
 
-// MENU
-<!-- 3 DOT MENU -->
-<div class="menu-3dot" onclick="toggleDropdown()">
-  ⋮
-</div>
 
-<div class="dropdown-menu" id="dropdownMenu">
-  <a href="#about">About</a>
-  <a href="#courses">Courses</a>
-  <a href="#contact">Contact</a>
-</div>
 
 // SLIDER (ONLY ONCE)
 // SLIDER WITH DOTS
