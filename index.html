@@ -1643,7 +1643,74 @@ function openPopup(type){
 }
 
 </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+// 🔥 Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyCJbmgvBuJ-PP2U9kf_hJQ-rMWtAd551sA",
+  authDomain: "game-bbdc6.firebaseapp.com",
+  projectId: "game-bbdc6",
+  storageBucket: "game-bbdc6.firebasestorage.app",
+  messagingSenderId: "390252047078",
+  appId: "1:390252047078:web:bf415ec022efd738d06927"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ================= COMPUTER FORM =================
+window.sendComputerForm = async function(){
+  try{
+    await addDoc(collection(db,"students"),{
+      type: "computer",
+      name: document.getElementById("c_name").value,
+      father: document.getElementById("c_father").value,
+      mother: document.getElementById("c_mother").value,
+      phone: document.getElementById("c_phone").value,
+      email: document.getElementById("c_email").value,
+      dob: document.getElementById("c_dob").value,
+      course: document.getElementById("c_course").value,
+      address: document.getElementById("c_address").value,
+      created: new Date()
+    });
+
+    alert("Form Submitted ✅");
+
+    document.querySelector("#register form").reset();
+
+  }catch(e){
+    alert("Error: "+e.message);
+  }
+}
+
+// ================= COACHING FORM =================
+window.sendCoachingForm = async function(){
+  try{
+    await addDoc(collection(db,"students"),{
+      type: "coaching",
+      name: document.getElementById("s_name").value,
+      father: document.getElementById("s_father").value,
+      mother: document.getElementById("s_mother").value,
+      phone: document.getElementById("s_phone").value,
+      email: document.getElementById("s_email").value,
+      dob: document.getElementById("s_dob").value,
+      board: document.getElementById("s_board").value,
+      course: document.getElementById("s_course").value,
+      address: document.getElementById("s_address").value,
+      created: new Date()
+    });
+
+    alert("Form Submitted ✅");
+
+    document.querySelectorAll("#register form")[1].reset();
+
+  }catch(e){
+    alert("Error: "+e.message);
+  }
+}
+</script>
 
 
   
