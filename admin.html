@@ -61,12 +61,21 @@ button:hover{background:#0284c7;}
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>  
 
 </head>
 <body>
 
 <h1>🔥 Admin Dashboard</h1>
+<!-- PDF UPLOAD -->
+<h2>📄 Upload PDF Notes</h2>
 
+<input type="text" id="pdfTitle" placeholder="Enter PDF Title">
+<input type="file" id="pdfFile" accept="application/pdf">
+
+<button onclick="uploadPDF()">Upload PDF</button>
+
+<div id="pdfList"></div>
 <!-- STUDENTS -->
 <h2>📋 Student Records</h2>
 
@@ -290,7 +299,71 @@ function deleteUpdate(id){
   db.collection("updates").doc(id).delete();
 }
 
+// ================= PDF SYSTEM =================
 
+// Storage init
+const storage = firebase.storage();
+
+// UPLOAD PDF
+function uploadPDF(){
+  const title = document.getElementById("pdfTitle").value;
+  const file = document.getElementById("pdfFile").files[0];
+
+  if(!title || !file){
+    alert("Title aur PDF select karo ❌");
+    return;
+  }
+
+  const storageRef = storage.ref("pdfs/" + Date.now() + "_" + file.name);
+
+  storageRef.put(file)
+    .then(snapshot => snapshot.ref.getDownloadURL())
+    .then(url => {
+      return db.collection("pdfs").add({
+        title: title,
+        fileURL: url,
+        createdAt: new Date()
+      });
+    })
+    .then(()=>{
+      alert("PDF Upload ho gaya ✅");
+      loadPDFs();
+    })
+    .catch(err=>alert(err.message));
+}
+
+
+// LOAD PDFs
+function loadPDFs(){
+  const pdfList = document.getElementById("pdfList");
+
+  db.collection("pdfs").orderBy("createdAt","desc")
+  .onSnapshot(snapshot=>{
+    pdfList.innerHTML = "";
+
+    snapshot.forEach(doc=>{
+      let p = doc.data();
+
+      pdfList.innerHTML += `
+        <div class="card">
+          📄 <b>${p.title}</b><br>
+          <a href="${p.fileURL}" target="_blank">View PDF</a><br>
+          <button onclick="deletePDF('${doc.id}')">Delete</button>
+        </div>
+      `;
+    });
+
+  });
+}
+
+
+// DELETE PDF
+function deletePDF(id){
+  if(confirm("Delete PDF?")){
+    db.collection("pdfs").doc(id).delete()
+    .then(()=>alert("Deleted ✅"));
+  }
+}
 // ================= SETTINGS =================
 function saveAbout(){
   const text = document.getElementById("aboutText").value;
