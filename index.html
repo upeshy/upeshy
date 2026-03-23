@@ -1569,31 +1569,20 @@ document.getElementById("popupBox").style.display="none";
 }
 
 // MENU
-function toggleMenu(){
-let menu = document.getElementById("navLinks");
-menu.classList.toggle("active");
-}
+<!-- 3 DOT MENU -->
+<div class="menu-3dot" onclick="toggleDropdown()">
+  ⋮
+</div>
+
+<div class="dropdown-menu" id="dropdownMenu">
+  <a href="#about">About</a>
+  <a href="#courses">Courses</a>
+  <a href="#contact">Contact</a>
+</div>
 
 // SLIDER (ONLY ONCE)
 // SLIDER WITH DOTS
-let slides = document.querySelectorAll(".slide");
-let dots = document.querySelectorAll(".dot");
 
-let i = 0;
-
-setInterval(()=>{
-  // remove active
-  slides[i].classList.remove("active");
-  if(dots[i]) dots[i].classList.remove("active");
-
-  // next index
-  i = (i + 1) % slides.length;
-
-  // add active
-  slides[i].classList.add("active");
-  if(dots[i]) dots[i].classList.add("active");
-
-},3000);
 
 // FAQ
 function toggle(el){
