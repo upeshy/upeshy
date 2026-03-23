@@ -1062,11 +1062,17 @@ form button:hover{
 </style>   </head>  <body>  <!-- AUTO POPUP -->  <div class="popup-overlay" id="popupBox">  
   <div class="popup-content">      
     <span class="popup-close" onclick="closePopup()">✖</span>      
-    <img src="popup.jpg">      
-    <h3 id="popupTitle">Admission Open 🎓</h3>      
-    <p id="popupText">Join Best Commerce Classes Now</p>      
+
+    <!-- 🔥 Dynamic Image -->
+    <img id="popupImg" src="">
+
+    <!-- 🔥 Dynamic Title -->
+    <h3 id="popupTitle">Loading...</h3>      
+
+    <!-- 🔥 Dynamic Text -->
+    <p id="popupText">Loading...</p>      
   </div>      
-</div>    <!-- NAVBAR -->  <nav class="navbar">    <!-- LEFT: LOGO + NAME -->    <div class="nav-left">  
+</div>  <!-- NAVBAR -->  <nav class="navbar">    <!-- LEFT: LOGO + NAME -->    <div class="nav-left">  
     <img src="logo.jpg" alt="Logo">  
     <h2>Excellent Commerce Classes</h2>  
   </div>    <!-- RIGHT -->    <div class="nav-right">
@@ -1548,13 +1554,16 @@ loadUpdates();
 // ================= POPUP =================
 async function loadPopup(){
   const snap = await getDoc(doc(db,"settings","popup"));
+
   if(snap.exists()){
     const p = snap.data();
-    document.getElementById("popupTitle").innerText = p.title;
-    document.getElementById("popupText").innerText = p.text;
-    document.querySelector(".popup-content img").src = p.image;
+
+    document.getElementById("popupTitle").innerText = p.title || "";
+    document.getElementById("popupText").innerText = p.text || "";
+    document.getElementById("popupImg").src = p.image || "";
   }
 }
+
 loadPopup();
 
   </script>
