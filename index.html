@@ -1100,7 +1100,7 @@ form button:hover{
 </div>
 
 
-  </div>  </nav>  </nav>  
+  </div>  </nav>  
 <!-- TOP BAR -->  
 <div class="topbar">  
   <span>🔥 Admission Open | AI | Python | CS | 11th | 12th | CCC</span>  
@@ -1598,32 +1598,33 @@ next.style.display = next.style.display=="block" ? "none":"block";
 
 // POPUP DATA
 function openPopup(type){
-let title="",text="";
+  let title="",text="";
 
-if(type=="ca"){title="CA Foundation";text="Complete CA preparation";}
-if(type=="cma"){title="CMA Foundation";text="Professional CMA course";}
-if(type=="cs"){title="CS-CSEET";text="Best CS coaching";}
-if(type=="class"){title="11th & 12th";text="Commerce coaching";}
+  if(type=="ca"){title="CA Foundation";text="Complete CA preparation";}
+  if(type=="cma"){title="CMA Foundation";text="Professional CMA course";}
+  if(type=="cs"){title="CS-CSEET";text="Best CS coaching";}
+  if(type=="class"){title="11th & 12th";text="Commerce coaching";}
 
-document.getElementById("popupTitle").innerText=title;
-document.getElementById("popupText").innerText=text;
-document.getElementById("popupBox").style.display="flex";
+  if(type=="nc"){title="Nursery to Class 5";text="Strong foundation classes";}
+  if(type=="mid"){title="Class 6-8";text="Middle school preparation";}
+  if(type=="high"){title="Class 9-10";text="Board preparation";}
+  if(type=="inter"){title="Class 11-12";text="Commerce / Science / Arts";}
+
+  if(type=="basic"){title="Basic Computer";text="Start from basics";}
+  if(type=="ccc"){title="CCC Course";text="Government recognized";}
+  if(type=="adca"){title="ADCA/DCA";text="Diploma in Computer";}
+  if(type=="web"){title="Web Development";text="Website making course";}
+  if(type=="tally"){title="Tally Course";text="Accounting software";}
+  if(type=="hardware"){title="Hardware Course";text="Computer repairing";}
+  if(type=="school"){title="NC to Class 12";text="Complete school coaching";}
+  if(type=="ai"){title="AI Course";text="Learn Artificial Intelligence";}
+  if(type=="python"){title="Python Programming";text="Coding from basic to advanced";}
+  if(type=="robotics"){title="Robotics";text="Build and control robots";}
+
+  document.getElementById("popupTitle").innerText=title;
+  document.getElementById("popupText").innerText=text;
+  document.getElementById("popupBox").style.display="flex";
 }
-if(type=="nc"){title="Nursery to Class 5";text="Strong foundation classes";}
-if(type=="mid"){title="Class 6-8";text="Middle school preparation";}
-if(type=="high"){title="Class 9-10";text="Board preparation";}
-if(type=="inter"){title="Class 11-12";text="Commerce / Science / Arts";}
-
-if(type=="basic"){title="Basic Computer";text="Start from basics";}
-if(type=="ccc"){title="CCC Course";text="Government recognized";}
-if(type=="adca"){title="ADCA/DCA";text="Diploma in Computer";}
-if(type=="web"){title="Web Development";text="Website making course";}
-if(type=="tally"){title="Tally Course";text="Accounting software";}
-if(type=="hardware"){title="Hardware Course";text="Computer repairing";}
-if(type=="school"){title="NC to Class 12";text="Complete school coaching";}
-if(type=="ai"){title="AI Course";text="Learn Artificial Intelligence";}
-if(type=="python"){title="Python Programming";text="Coding from basic to advanced";}
-if(type=="robotics"){title="Robotics";text="Build and control robots";}
 </script>  </body>
 
 </html>    
