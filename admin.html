@@ -386,11 +386,41 @@ function saveTopbar(){
   .then(()=>alert("Topbar Saved ✅"))
   .catch(err=>alert(err.message));
 }
+function loadAbout(){
+  db.collection("settings").doc("about").get()
+  .then(doc=>{
+    if(doc.exists){
+      document.getElementById("aboutText").value = doc.data().text || "";
+    }
+  });
+                }
+  function loadPopup(){
+  db.collection("settings").doc("popup").get()
+  .then(doc=>{
+    if(doc.exists){
+      const p = doc.data();
 
+      document.getElementById("popupImage").value = p.image || "";
+      document.getElementById("popupTitle").value = p.title || "";
+      document.getElementById("popupText").value = p.text || "";
+    }
+  });
+  }
+  function loadTopbar(){
+  db.collection("settings").doc("topbar").get()
+  .then(doc=>{
+    if(doc.exists){
+      document.getElementById("topbarInput").value = doc.data().text || "";
+    }
+  });
+  }
 
 // LOAD
 loadStudents();
 loadPDFs();
+loadAbout();
+loadPopup();
+loadTopbar();
 </script>
 
 </body>
