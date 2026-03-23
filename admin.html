@@ -61,7 +61,7 @@ button:hover{background:#0284c7;}
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>  
+
 
 </head>
 <body>
@@ -71,7 +71,7 @@ button:hover{background:#0284c7;}
 <h2>📄 Upload PDF Notes</h2>
 
 <input type="text" id="pdfTitle" placeholder="Enter PDF Title">
-<input type="file" id="pdfFile" accept="application/pdf">
+
 
 <button onclick="uploadPDF()">Upload PDF</button>
 
@@ -302,45 +302,31 @@ function deleteUpdate(id){
 // ================= PDF SYSTEM =================
 
 // Storage init
-const storage = firebase.storage();
+
 
 // UPLOAD PDF
 function uploadPDF(){
   const title = document.getElementById("pdfTitle").value;
-  const file = document.getElementById("pdfFile").files[0];
 
-  console.log("Title:", title);
-  console.log("File:", file);
+  const url = prompt("Google Drive PDF link daalo");
 
-  if(!title || !file){
-    alert("Title aur PDF select karo ❌");
+  if(!title || !url){
+    alert("Title aur PDF link daalo ❌");
     return;
   }
 
-  const storageRef = storage.ref("pdfs/" + Date.now() + "_" + file.name);
-
-  storageRef.put(file)
-    .then(snapshot => {
-      console.log("Uploaded", snapshot);
-      return snapshot.ref.getDownloadURL();
-    })
-    .then(url => {
-      console.log("URL:", url);
-
-      return db.collection("pdfs").add({
-        title: title,
-        fileURL: url,
-        createdAt: new Date()
-      });
-    })
-    .then(()=>{
-      alert("PDF Upload ho gaya ✅");
-      loadPDFs();
-    })
-    .catch(err=>{
-      console.error(err);
-      alert("Error: " + err.message);
-    });
+  db.collection("pdfs").add({
+    title: title,
+    fileURL: url,
+    createdAt: new Date()
+  })
+  .then(()=>{
+    alert("PDF Add ho gaya ✅");
+    loadPDFs();
+  })
+  .catch(err=>{
+    alert("Error: " + err.message);
+  });
 }
 
 // LOAD PDFs
