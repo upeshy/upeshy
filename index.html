@@ -1160,37 +1160,29 @@ form button:hover{
   <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">  
 </div>  
 <section class="about-section" id="about">
-<!-- CONTENT -->  
-<div class="about-content">  
-  <h2>Excellent Commerce Classes</h2>  
 
-  <p>  
-    Excellent Commerce Classes is a trusted and result-oriented coaching institute in Prayagraj,  
-    providing quality education from Nursery to Class 12th for all streams with strong academic support.  
-  </p>  
+  <div class="about-container">
 
-  <p>  
-    We specialize in Commerce education including CA, CMA, CS along with  
-    Class 11th & 12th preparation. Our experienced faculty focuses on concept clarity,  
-    regular tests, and personal mentoring for every student.  
-  </p>  
+    <!-- IMAGE -->
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">
+    </div>
 
-  <p>  
-    Along with academics, we also provide modern skill-based courses like  
-    <b>Computer Courses (CCC, ADCA, DCA, Tally)</b>,  
-    <b>Python Programming</b>, <b>Artificial Intelligence (AI)</b> and  
-    <b>Robotics Training</b> to prepare students for future technologies.  
-  </p>  
+    <!-- CONTENT -->
+    <div class="about-content">
+      <h2>Excellent Commerce Classes</h2>
 
-  <p>  
-    Our mission is to build strong fundamentals, improve confidence,  
-    and help students achieve success in both academic and professional careers.  
-  </p>  
+      <!-- 🔥 Firebase dynamic text -->
+      <div id="aboutText">
+        Loading...
+      </div>
 
-  <button onclick="openPopup('class')">Join Now</button>  
-</div>
+      <button onclick="openPopup('class')">Join Now</button>
+    </div>
 
-  </div>  </section>  
+  </div>
+
+</section>  
   <section>  
   <h2>OUR TEACHERS</h2>    <div class="teacher-container">  <!-- TEACHER 1 -->  
 <div class="teacher-card">  
@@ -1540,7 +1532,92 @@ Yes, regular revision sessions conducted.
 
   </div>    <div class="footer-bottom">  
     © 2024 Excellent Commerce Classes | All Rights Reserved  
-  </div>  </footer>  <script>   
+  </div>  </footer> 
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// 🔥 SAME Firebase Config (Admin wala hi use karo)
+const firebaseConfig = {
+  apiKey: "AIzaSyCJbmgvBuJ-PP2U9kf_hJQ-rMWtAd551sA",
+  authDomain: "game-bbdc6.firebaseapp.com",
+  projectId: "game-bbdc6",
+  storageBucket: "game-bbdc6.firebasestorage.app",
+  messagingSenderId: "390252047078",
+  appId: "1:390252047078:web:bf415ec022efd738d06927"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+
+// ================= ABOUT =================
+async function loadAbout(){
+  const snap = await getDoc(doc(db,"settings","about"));
+  if(snap.exists()){
+    document.querySelector(".about-content p").innerText = snap.data().text;
+  }
+}
+loadAbout();
+
+
+
+// ================= TEACHERS =================
+async function loadTeachers(){
+  const data = await getDocs(collection(db,"teachers"));
+  let html = "";
+  data.forEach(d=>{
+    const t = d.data();
+    html += `
+      <div class="teacher-card">
+        <img src="${t.image}">
+        <h3>${t.name}</h3>
+        <p>${t.subject}</p>
+      </div>
+    `;
+  });
+
+  document.querySelector(".teacher-container").innerHTML = html;
+}
+loadTeachers();
+
+
+
+// ================= UPDATES =================
+async function loadUpdates(){
+  const data = await getDocs(collection(db,"updates"));
+  let html = "";
+  data.forEach(d=>{
+    const u = d.data();
+    html += `
+      <div class="update-item">
+        <b>${u.title}</b><br>
+        ${u.text}
+      </div>
+    `;
+  });
+
+  document.querySelector(".updates-track").innerHTML = html;
+}
+loadUpdates();
+
+
+
+// ================= POPUP =================
+async function loadPopup(){
+  const snap = await getDoc(doc(db,"settings","popup"));
+  if(snap.exists()){
+    const p = snap.data();
+    document.getElementById("popupTitle").innerText = p.title;
+    document.getElementById("popupText").innerText = p.text;
+    document.querySelector(".popup-content img").src = p.image;
+  }
+}
+loadPopup();
+
+  </script>
+  <script>   
 document.querySelectorAll(".gallery img").forEach(img=>{  
   img.onclick=()=>{  
     let popup = document.createElement("div");  
@@ -1577,7 +1654,19 @@ function closePopup(){
 document.getElementById("popupBox").style.display="none";
 }
 
+async function loadAbout(){
+  const snap = await getDoc(doc(db,"settings","about"));
+  
+  if(snap.exists()){
+    let text = snap.data().text;
 
+    // 🔥 line break support
+    text = text.replace(/\n/g, "<br><br>");
+
+    document.getElementById("aboutText").innerHTML = text;
+  }
+}
+loadAbout();
 
 // SLIDER (ONLY ONCE)
 // SLIDER WITH DOTS
