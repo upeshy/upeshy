@@ -174,97 +174,102 @@ const db = firebase.firestore();
 let editId=null;
 
 // ================= ADD =================
-function addStudent(){
-  db.collection("students").add({
-    category:s_category.value,
-    name:s_name.value,
-    father:s_father.value,
-    mother:s_mother.value,
-    phone:s_phone.value,
-    email:s_email.value,
-    dob:s_dob.value,
-    course:s_course.value,
-    address:s_address.value,
-    photo:s_photo.value,
-    createdAt:new Date()
-  });
 
-  alert("Added ✅");
-}
 
 // ================= LOAD =================
-function loadRecords(){
-  let cat=categorySelect.value;
+function loadStudents(){
+  studentList.innerHTML = "Loading...";
 
-  db.collection("students")
-  .where("category","==",cat)
-  .orderBy("createdAt","desc")
-  .onSnapshot(snapshot=>{
+  const studentsRef = ref(db, `students/${currentCategory}`);
 
-    recordsTable.innerHTML="";
+  onValue(studentsRef, snapshot=>{
+    studentList.innerHTML = "";
 
-    snapshot.forEach(doc=>{
-      let s=doc.data();
+    if(snapshot.exists()){
+      snapshot.forEach(childSnap=>{
+        let s = childSnap.val();
+        let id = childSnap.key;
 
-      recordsTable.innerHTML+=`
-      <tr>
-        <td>${s.name}</td>
-        <td>${s.father}</td>
-        <td>${s.phone}</td>
-        <td>${s.course}</td>
-        <td><img src="${s.photo||""}"></td>
-        <td>
-          <button onclick="openEdit('${doc.id}')">Edit</button>
-          <button onclick="deleteRecord('${doc.id}')">Delete</button>
-        </td>
-      </tr>`;
-    });
+        studentList.innerHTML += `
+          <div class="card">
+            <b>${s.name || ""}</b> (${s.course || ""})<br>
+            👨 Father: ${s.father || ""}<br>
+            👩 Mother: ${s.mother || ""}<br>
+            📞 ${s.phone || ""}<br>
+            📧 ${s.email || ""}<br>
+            🎂 ${s.dob || ""}<br>
+            🏠 ${s.address || ""}<br>
+            <img src="${s.photo || "https://via.placeholder.com/60"}" width="60"><br>
+
+            <button onclick="openEditModal('${id}')">Edit</button>
+            <button onclick="deleteStudent('${id}')">Delete</button>
+          </div>
+        `;
+      });
+    } else {
+      studentList.innerHTML = "No Records Found";
+    }
   });
 }
 
-// ================= DELETE =================
-function deleteRecord(id){
-  if(confirm("Delete?")){
-    db.collection("students").doc(id).delete();
+
+// --- DELETE ---
+function deleteStudent(id){
+  if(confirm("Are you sure you want to delete?")){
+    remove(ref(db, `students/${currentCategory}/${id}`))
+      .then(()=>alert("Deleted ✅"))
+      .catch(err=>alert("Error: "+err.message));
   }
 }
 
-// ================= EDIT =================
-function openEdit(id){
-  editId=id;
 
-  db.collection("students").doc(id).get().then(doc=>{
-    let s=doc.data();
+// --- OPEN EDIT ---
+function openEditModal(id){
+  editKey = id;
 
-    editName.value=s.name;
-    editFather.value=s.father;
-    editMother.value=s.mother;
-    editPhone.value=s.phone;
-    editEmail.value=s.email;
-    editDOB.value=s.dob;
-    editCourse.value=s.course;
-    editAddress.value=s.address;
+  get(child(ref(db), `students/${currentCategory}/${id}`)).then(snap=>{
+    let s = snap.val();
 
-    editModal.style.display="block";
+    edit_name.value = s.name || "";
+    edit_father.value = s.father || "";
+    edit_mother.value = s.mother || "";
+    edit_phone.value = s.phone || "";
+    edit_email.value = s.email || "";
+    edit_dob.value = s.dob || "";
+    edit_course.value = s.course || "";
+    edit_address.value = s.address || "";
+
+    editModal.style.display = "block";
   });
 }
 
-function updateRecord(){
-  db.collection("students").doc(editId).update({
-    name:editName.value,
-    father:editFather.value,
-    mother:editMother.value,
-    phone:editPhone.value,
-    email:editEmail.value,
-    dob:editDOB.value,
-    course:editCourse.value,
-    address:editAddress.value
-  });
 
-  alert("Updated ✅");
-  closeEditModal();
+// --- UPDATE ---
+function updateStudent(){
+  const updatedData = {
+    name: edit_name.value,
+    father: edit_father.value,
+    mother: edit_mother.value,
+    phone: edit_phone.value,
+    email: edit_email.value,
+    dob: edit_dob.value,
+    course: edit_course.value,
+    address: edit_address.value
+  };
+
+  update(ref(db, `students/${currentCategory}/${editKey}`), updatedData)
+    .then(()=>{
+      alert("Updated ✅");
+      closeEditModal();
+    })
+    .catch(err=>alert("Error: "+err.message));
 }
 
+
+// --- CLOSE MODAL ---
+function closeEditModal(){
+  editModal.style.display = "none";
+}
 function closeEditModal(){
   editModal.style.display="none";
 }
