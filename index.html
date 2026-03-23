@@ -104,26 +104,43 @@ section{
   color:white;  
   cursor:pointer;  
 }  
-  .dots{
+/* 3 DOT BUTTON */
+.menu-3dot{
+  font-size:22px;
+  color:white;
+  cursor:pointer;
+  padding:5px 10px;
+}
+
+/* DROPDOWN */
+.dropdown-menu{
   position:absolute;
-  bottom:15px;
-  left:50%;
-  transform:translateX(-50%);
+  top:60px;
+  right:10px;
+  background:white;
+  border-radius:10px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  display:none;
+  flex-direction:column;
+  min-width:150px;
+  overflow:hidden;
+  z-index:999;
+}
+
+.dropdown-menu a{
+  padding:12px;
+  text-decoration:none;
+  color:#0f172a;
+  border-bottom:1px solid #eee;
+}
+
+.dropdown-menu a:hover{
+  background:#f1f5f9;
+}
+
+/* SHOW */
+.dropdown-menu.active{
   display:flex;
-  gap:8px;
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  background:#fff;
-  border-radius:50%;
-  opacity:0.5;
-}
-
-.dot.active{
-  opacity:1;
-  background:#0ea5e9;
 }
 /* ===== MOBILE ===== */  
 @media(max-width:768px){  
