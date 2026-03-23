@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Full Admit</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f1f5f9;padding:20px;}
+h1,h2{color:#0ea5e9;}
+input,textarea,select{display:block;margin:5px 0;padding:8px;width:300px;border-radius:5px;border:1px solid #ccc;}
+button{padding:8px 15px;margin:5px;border:none;background:#0ea5e9;color:white;border-radius:6px;cursor:pointer;}
+.card{background:white;padding:10px;margin:10px 0;border-radius:8px;}
+img{width:60px;height:60px;border-radius:50%;}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);overflow:auto;z-index:1000;}
+.modal-content{background:white;padding:20px;margin:50px auto;border-radius:10px;width:90%;max-width:500px;position:relative;}
+.close{position:absolute;top:10px;right:15px;font-size:20px;cursor:pointer;color:red;}
+label{font-weight:bold;margin-top:8px;display:block;}
+</style>
+</head>
+<body>
+
+<h1>🔥 Admin Dashboard</h1>
+
+<!-- ================= TEACHERS ================= -->
+<h2>Teachers</h2>
+<select id="teacherSelect">
+  <option value="teacher1">Teacher 1</option>
+  <option value="teacher2">Teacher 2</option>
+  <option value="teacher3">Teacher 3</option>
+</select>
+<input id="t_name" placeholder="Name">
+<input id="t_subject" placeholder="Subject">
+<input id="t_image" placeholder="Image URL">
+<button onclick="saveTeacher()">Save Teacher</button>
+
+<hr>
+
+<!-- ================= STUDENTS ================= -->
+<h2>Students</h2>
+<input id="s_name" placeholder="Name">
+<input id="s_father" placeholder="Father Name">
+<input id="s_mother" placeholder="Mother Name">
+<input id="s_phone" placeholder="Phone">
+<input id="s_email" placeholder="Email">
+<input id="s_dob" type="date" placeholder="DOB">
+<input id="s_course" placeholder="Course (Coaching/Computer)">
+<textarea id="s_address" placeholder="Address"></textarea>
+<input id="s_photo" placeholder="Photo URL">
+<button onclick="addStudent()">Add Student</button>
+
+<div id="studentList"></div>
+
+<hr>
+
+<!-- ================= ABOUT ================= -->
+<h2>About</h2>
+<textarea id="aboutText" placeholder="Write About"></textarea>
+<button onclick="saveAbout()">Save About</button>
+
+<hr>
+
+<!-- ================= UPDATES ================= -->
+<h2>Updates</h2>
+<input id="u_title" placeholder="Title">
+<input id="u_text" placeholder="Text">
+<button onclick="addUpdate()">Add Update</button>
+<div id="updateList"></div>
+
+<hr>
+
+<!-- ================= POPUP ================= -->
+<h2>Popup</h2>
+<input id="popupImage" placeholder="Image URL">
+<input id="popupTitle" placeholder="Title">
+<input id="popupText" placeholder="Text">
+<button onclick="savePopup()">Save Popup</button>
+
+<!-- ================= EDIT STUDENT MODAL ================= -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeEditModal()">✖</span>
+    <h3>Edit Student</h3>
+    <input id="edit_name" placeholder="Name">
+    <input id="edit_father" placeholder="Father Name">
+    <input id="edit_mother" placeholder="Mother Name">
+    <input id="edit_phone" placeholder="Phone">
+    <input id="edit_email" placeholder="Email">
+    <input id="edit_dob" type="date" placeholder="DOB">
+    <input id="edit_course" placeholder="Course (Coaching/Computer)">
+    <textarea id="edit_address" placeholder="Address"></textarea>
+    <input id="edit_photo" placeholder="Photo URL">
+    <button onclick="updateStudent()">Save Changes</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs, addDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// 🔥 Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyCJbmgvBuJ-PP2U9kf_hJQ-rMWtAd551sA",
+  authDomain: "game-bbdc6.firebaseapp.com",
+  projectId: "game-bbdc6",
+  storageBucket: "game-bbdc6.firebasestorage.app",
+  messagingSenderId: "390252047078",
+  appId: "1:390252047078:web:bf415ec022efd738d06927"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ================= TEACHERS =================
+window.saveTeacher = async function(){
+  let id = document.getElementById("teacherSelect").value;
+  await setDoc(doc(db,"teachers",id),{
+    name: t_name.value,
+    subject: t_subject.value,
+    image: t_image.value
+  });
+  alert("Teacher Saved ✅");
+}
+
+// ================= STUDENTS =================
+let editStudentId = null;
+
+window.addStudent = async function(){
+  const studentData = {
+    name: s_name.value,
+    father: s_father.value,
+    mother: s_mother.value,
+    phone: s_phone.value,
+    email: s_email.value,
+    dob: s_dob.value,
+    course: s_course.value,
+    address: s_address.value,
+    photo: s_photo.value
+  };
+  if(!studentData.name || !studentData.phone){
+    alert("Name and Phone are required!");
+    return;
+  }
+  await addDoc(collection(db,"students"), studentData);
+  s_name.value=""; s_father.value=""; s_mother.value=""; s_phone.value=""; s_email.value="";
+  s_dob.value=""; s_course.value=""; s_address.value=""; s_photo.value="";
+  loadStudents();
+}
+
+async function loadStudents(){
+  const data = await getDocs(collection(db,"students"));
+  studentList.innerHTML="";
+  data.forEach(d=>{
+    const s = d.data();
+    studentList.innerHTML += `
+      <div class="card" id="student-${d.id}">
+        <b>${s.name}</b> (${s.course})<br>
+        Father: ${s.father}<br>
+        Mother: ${s.mother}<br>
+        Phone: ${s.phone}<br>
+        Email: ${s.email}<br>
+        DOB: ${s.dob}<br>
+        Address: ${s.address}<br>
+        <img src="${s.photo}" alt="Photo"><br>
+        <button onclick="openEditModal('${d.id}')">Edit</button>
+        <button onclick="deleteStudent('${d.id}')">Delete</button>
+      </div>
+    `;
+  });
+}
+
+window.deleteStudent = async function(id){
+  if(confirm("Delete this student?")){
+    await deleteDoc(doc(db,"students",id));
+    loadStudents();
+  }
+}
+
+window.openEditModal = async function(id){
+  editStudentId = id;
+  const snap = await getDoc(doc(db,"students",id));
+  if(snap.exists()){
+    const s = snap.data();
+    edit_name.value = s.name; edit_father.value=s.father; edit_mother.value=s.mother;
+    edit_phone.value=s.phone; edit_email.value=s.email; edit_dob.value=s.dob;
+    edit_course.value=s.course; edit_address.value=s.address; edit_photo.value=s.photo;
+    document.getElementById("editModal").style.display="block";
+  }
+}
+
+window.closeEditModal = function(){
+  document.getElementById("editModal").style.display="none";
+}
+
+window.updateStudent = async function(){
+  if(!editStudentId) return;
+  const updatedData = {
+    name: edit_name.value,
+    father: edit_father.value,
+    mother: edit_mother.value,
+    phone: edit_phone.value,
+    email: edit_email.value,
+    dob: edit_dob.value,
+    course: edit_course.value,
+    address: edit_address.value,
+    photo: edit_photo.value
+  };
+  await updateDoc(doc(db,"students",editStudentId), updatedData);
+  alert("Student Updated ✅");
+  closeEditModal();
+  loadStudents();
+}
+
+// ================= ABOUT =================
+window.saveAbout = async function(){
+  await setDoc(doc(db,"settings","about"), { text: aboutText.value });
+  alert("About Saved ✅");
+}
+
+// ================= UPDATES =================
+window.addUpdate = async function(){
+  await addDoc(collection(db,"updates"),{ title: u_title.value, text: u_text.value });
+  u_title.value=""; u_text.value="";
+  loadUpdates();
+}
+
+window.deleteUpdate = async function(id){
+  await deleteDoc(doc(db,"updates",id));
+  loadUpdates();
+}
+
+async function loadUpdates(){
+  const data = await getDocs(collection(db,"updates"));
+  updateList.innerHTML="";
+  data.forEach(d=>{
+    const u = d.data();
+    updateList.innerHTML += `
+      <div class="card">
+        <b>${u.title}</b><br>${u.text}<br>
+        <button onclick="deleteUpdate('${d.id}')">Delete</button>
+      </div>
+    `;
+  });
+}
+
+// ================= POPUP =================
+window.savePopup = async function(){
+  await setDoc(doc(db,"settings","popup"),{
+    image: popupImage.value,
+    title: popupTitle.value,
+    text: popupText.value
+  });
+  alert("Popup Saved ✅");
+}
+
+// ================= INITIAL LOAD =================
+loadStudents();
+loadUpdates();
+</script>
+
+</body>
+</html>
