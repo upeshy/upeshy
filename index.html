@@ -1032,6 +1032,29 @@ form button:hover{
   0%{transform:translateX(0);}    
   100%{transform:translateX(-50%);}    
 }    
+  .whatsapp-float{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  font-size:28px;
+  padding:12px 15px;
+  border-radius:50%;
+  text-decoration:none;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  z-index:999;
+  transition:0.3s;
+}
+
+.whatsapp-float:hover{
+  transform:scale(1.1);
+  background:#20b358;
+}
+  .whatsapp-float img{
+  width:30px;
+  height:30px;
+  }
 </style>   </head>  <body>  <!-- AUTO POPUP -->  <div class="popup-overlay" id="popupBox">  
   <div class="popup-content">      
     <span class="popup-close" onclick="closePopup()">✖</span>      
@@ -1495,7 +1518,9 @@ Yes, regular revision sessions conducted.
   <h2>Excellent Commerce Classes</h2>  
   <p>Best Commerce Coaching Institute in Prayagraj with 10+ years experience.</p>  
 </div>  
-
+<a href="https://wa.me/919506878769" class="whatsapp-float" target="_blank">
+  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+</a>
 <div class="footer-box">  
   <h3>Quick Links</h3>  
   <a href="#">Home</a>  
