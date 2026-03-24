@@ -97,7 +97,10 @@ button:hover{background:#0284c7;}
 <button onclick="saveTopbar()">Save</button>
 
 <button onclick="logout()" style="background:red;margin-top:20px;">Logout</button>
+<input type="text" id="videoTitle" placeholder="Video Title">
+<input type="text" id="videoURL" placeholder="YouTube Link">
 
+<button onclick="addVideo()">Add Video</button>
 </div>
 
 <script>
@@ -135,7 +138,15 @@ function logout(){
     document.getElementById("dashboard").style.display="none";
   });
 }
+async function addVideo(){
+  await addDoc(collection(db,"videos"),{
+    title: document.getElementById("videoTitle").value,
+    url: document.getElementById("videoURL").value,
+    createdAt: new Date()
+  });
 
+  alert("Video Added ✅");
+}
 // ================= STUDENTS =================
 function loadStudents(){
   const category = document.getElementById("categorySelect").value;
