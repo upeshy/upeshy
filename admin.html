@@ -165,7 +165,6 @@ let editStudentId = null;
 function loadStudents(){
   const category = document.getElementById("categorySelect").value;
   const studentList = document.getElementById("studentList");
-
   studentList.innerHTML = "Loading...";
 
   db.collection("students")
@@ -182,21 +181,31 @@ function loadStudents(){
       snapshot.forEach(doc=>{
         let s = doc.data();
 
-        studentList.innerHTML += `
-          <div class="card">
-            <b>${s.name || ""}</b> (${s.course || ""})<br>
-            👨 Father: ${s.father || ""}<br>
-            👩 Mother: ${s.mother || ""}<br>
-            📞 ${s.phone || ""}<br>
-            📧 ${s.email || ""}<br>
-            🎂 ${s.dob || ""}<br>
-            🏠 ${s.address || ""}<br>
-            
+        const div = document.createElement("div");
+        div.className = "card";
 
-            <button onclick="openEditModal('${doc.id}')">Edit</button>
-            <button onclick="deleteStudent('${doc.id}')">Delete</button>
-          </div>
+        div.innerHTML = `
+          <b>${s.name || ""}</b> (${s.course || ""})<br>
+          👨 Father: ${s.father || ""}<br>
+          👩 Mother: ${s.mother || ""}<br>
+          📞 ${s.phone || ""}<br>
+          📧 ${s.email || ""}<br>
+          🎂 ${s.dob || ""}<br>
+          🏠 ${s.address || ""}<br>
         `;
+
+        const editBtn = document.createElement("button");
+        editBtn.innerText = "Edit";
+        editBtn.onclick = () => openEditModal(doc.id);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "Delete";
+        deleteBtn.onclick = () => deleteStudent(doc.id);
+
+        div.appendChild(editBtn);
+        div.appendChild(deleteBtn);
+
+        studentList.appendChild(div);
       });
     })
     .catch(err=>alert(err.message));
