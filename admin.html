@@ -95,12 +95,18 @@ button:hover{background:#0284c7;}
 <h2>🔔 Topbar</h2>
 <input id="topbarInput">
 <button onclick="saveTopbar()">Save</button>
+<h2>🎬 Manage YouTube Videos</h2>
 
-<button onclick="logout()" style="background:red;margin-top:20px;">Logout</button>
 <input type="text" id="videoTitle" placeholder="Video Title">
 <input type="text" id="videoURL" placeholder="YouTube Link">
 
-<button onclick="addVideo()">Add Video</button>
+<button class="add-btn" onclick="addVideo()">Add Video</button>
+
+<hr>
+
+<div id="videoList">Loading...</div>
+<button onclick="logout()" style="background:red;margin-top:20px;">Logout</button>
+
 </div>
 
 <script>
@@ -216,7 +222,68 @@ function updateStudent(){
 }
 function closeEditModal(){ document.getElementById("editModal").style.display="none"; }
 function deleteStudent(id){ if(confirm("Delete?")){ db.collection("students").doc(id).delete().then(()=>loadStudents()); } }
+// ================= ADD =================
+window.addVideo = async function(){
+  const title = document.getElementById("videoTitle").value;
+  const url = document.getElementById("videoURL").value;
 
+  if(!url){
+    alert("Enter YouTube Link");
+    return;
+  }
+
+  await addDoc(collection(db,"videos"),{
+    title: title,
+    url: url,
+    createdAt: new Date()
+  });
+
+  alert("Video Added ✅");
+
+  document.getElementById("videoTitle").value = "";
+  document.getElementById("videoURL").value = "";
+
+  loadVideos();
+}
+
+// ================= LOAD =================
+async function loadVideos(){
+  const data = await getDocs(collection(db,"videos"));
+  let html = "";
+
+  if(data.empty){
+    html = "No Videos Found";
+  }
+
+  data.forEach(d=>{
+    const v = d.data();
+
+    html += `
+      <div class="video-box">
+        <b>${v.title || "No Title"}</b><br>
+        <small>${v.url}</small><br><br>
+
+        <button class="delete-btn" onclick="deleteVideo('${d.id}')">
+          Delete
+        </button>
+      </div>
+    `;
+  });
+
+  document.getElementById("videoList").innerHTML = html;
+}
+
+// ================= DELETE =================
+window.deleteVideo = async function(id){
+  if(confirm("Delete this video?")){
+    await deleteDoc(doc(db,"videos",id));
+    alert("Deleted ❌");
+    loadVideos();
+  }
+}
+
+// 🔥 AUTO LOAD
+loadVideos();
 // ================= TEACHERS =================
 function saveTeacher(){
   const id=document.getElementById("teacherSelect").value;
