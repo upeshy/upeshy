@@ -223,7 +223,35 @@ function updateStudent(){
 function closeEditModal(){ document.getElementById("editModal").style.display="none"; }
 function deleteStudent(id){ if(confirm("Delete?")){ db.collection("students").doc(id).delete().then(()=>loadStudents()); } }
 // ================= ADD =================
-window.addVideo = async function(){
+function loadVideos(){
+  db.collection("videos").get().then(snapshot=>{
+    let html = "";
+
+    if(snapshot.empty){
+      html = "No Videos Found";
+    }
+
+    snapshot.forEach(doc=>{
+      let v = doc.data();
+
+      html += `
+        <div class="card">
+          <b>${v.title || "No Title"}</b><br>
+          <small>${v.url}</small><br><br>
+
+          <button onclick="deleteVideo('${doc.id}')">
+            Delete
+          </button>
+        </div>
+      `;
+    });
+
+    document.getElementById("videoList").innerHTML = html;
+  });
+}
+
+// ================= LOAD =================
+async function addVideo(){
   const title = document.getElementById("videoTitle").value;
   const url = document.getElementById("videoURL").value;
 
@@ -232,53 +260,31 @@ window.addVideo = async function(){
     return;
   }
 
-  await addDoc(collection(db,"videos"),{
+  db.collection("videos").add({
     title: title,
     url: url,
     createdAt: new Date()
-  });
+  })
+  .then(()=>{
+    alert("Video Added ✅");
 
-  alert("Video Added ✅");
+    document.getElementById("videoTitle").value = "";
+    document.getElementById("videoURL").value = "";
 
-  document.getElementById("videoTitle").value = "";
-  document.getElementById("videoURL").value = "";
-
-  loadVideos();
-}
-
-// ================= LOAD =================
-async function loadVideos(){
-  const data = await getDocs(collection(db,"videos"));
-  let html = "";
-
-  if(data.empty){
-    html = "No Videos Found";
-  }
-
-  data.forEach(d=>{
-    const v = d.data();
-
-    html += `
-      <div class="video-box">
-        <b>${v.title || "No Title"}</b><br>
-        <small>${v.url}</small><br><br>
-
-        <button class="delete-btn" onclick="deleteVideo('${d.id}')">
-          Delete
-        </button>
-      </div>
-    `;
-  });
-
-  document.getElementById("videoList").innerHTML = html;
+    loadVideos();
+  })
+  .catch(err=>alert(err.message));
 }
 
 // ================= DELETE =================
-window.deleteVideo = async function(id){
+function deleteVideo(id){
   if(confirm("Delete this video?")){
-    await deleteDoc(doc(db,"videos",id));
-    alert("Deleted ❌");
-    loadVideos();
+    db.collection("videos").doc(id).delete()
+    .then(()=>{
+      alert("Deleted ❌");
+      loadVideos();
+    })
+    .catch(err=>alert(err.message));
   }
 }
 
