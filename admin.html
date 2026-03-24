@@ -4,103 +4,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
-
 <style>
-body{font-family:Arial;background:#0f172a;color:white;padding:20px;}
-h1{color:#38bdf8;}
-h2{color:#facc15;margin-top:30px;}
-
-input,textarea,select{
-  width:100%;
-  padding:10px;
-  margin:6px 0;
-  border-radius:6px;
-  border:none;
-}
-
-button{
-  padding:8px 12px;
-  border:none;
-  background:#0ea5e9;
-  color:white;
-  border-radius:6px;
-  cursor:pointer;
-}
+body{font-family:Arial,sans-serif;background:#0f172a;color:white;padding:20px;}
+h1{color:#38bdf8;} h2{color:#facc15;margin-top:30px;}
+input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none;}
+button{padding:8px 12px;border:none;background:#0ea5e9;color:white;border-radius:6px;cursor:pointer;}
 button:hover{background:#0284c7;}
-
-.card{
-  background:#1e293b;
-  padding:15px;
-  margin:10px 0;
-  border-radius:10px;
-}
-
-.card img{
-  width:60px;
-  border-radius:6px;
-}
-
-.modal{
-  display:none;
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.7);
-}
-.modal-content{
-  background:white;
-  color:black;
-  padding:20px;
-  margin:50px auto;
-  width:90%;
-  max-width:400px;
-  border-radius:10px;
-}
-  .modal{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.7);
-  z-index:9999; /* ensure modal is above everything */
-  }
+.card{background:#1e293b;padding:15px;margin:10px 0;border-radius:10px;}
+.card img{width:60px;border-radius:6px;}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;}
+.modal-content{background:white;color:black;padding:20px;margin:50px auto;width:90%;max-width:400px;border-radius:10px;}
 </style>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 </head>
 <body>
 
-<h1>🔥 Admin Dashboard</h1>
-<!-- PDF UPLOAD -->
-<h2>📄 Upload PDF Notes</h2>
+<h1>🔥 Admin Panel</h1>
 
-<input type="text" id="pdfTitle" placeholder="Enter PDF Title">
+<!-- LOGIN -->
+<div id="loginDiv">
+  <h2>🔐 Login</h2>
+  <input id="loginEmail" type="email" placeholder="Email">
+  <input id="loginPassword" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
 
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none;">
 
-<button onclick="uploadPDF()">Upload PDF</button>
-
-<div id="pdfList"></div>
-<!-- STUDENTS -->
-<h2>📋 Student Records</h2>
-
+<h2>📋 Students</h2>
 <select id="categorySelect" onchange="loadStudents()">
   <option value="computer">computer</option>
   <option value="coaching">coaching</option>
 </select>
-
 <div id="studentList"></div>
 
-<!-- EDIT MODAL -->
+<!-- Edit Modal -->
 <div class="modal" id="editModal">
   <div class="modal-content">
     <h3>Edit Student</h3>
-
     <input id="edit_name" placeholder="Name">
     <input id="edit_father" placeholder="Father">
     <input id="edit_mother" placeholder="Mother">
@@ -109,67 +55,86 @@ button:hover{background:#0284c7;}
     <input id="edit_dob" type="date">
     <input id="edit_course" placeholder="Course">
     <textarea id="edit_address" placeholder="Address"></textarea>
-
     <button onclick="updateStudent()">Update</button>
     <button onclick="closeEditModal()">Close</button>
   </div>
 </div>
 
-<!-- TEACHERS -->
 <h2>👨‍🏫 Teachers</h2>
-
 <select id="teacherSelect" onchange="loadTeacher()">
 <option value="teacher1">Teacher 1</option>
 <option value="teacher2">Teacher 2</option>
 <option value="teacher3">Teacher 3</option>
 </select>
-
 <input id="t_name" placeholder="Name">
 <input id="t_subject" placeholder="Subject">
 <input id="t_image" placeholder="Image URL">
-
 <button onclick="saveTeacher()">Save Teacher</button>
 
-<!-- UPDATES -->
-<h2>📢 Updates</h2>
+<h2>📄 PDF Notes</h2>
+<input id="pdfTitle" placeholder="PDF Title">
+<button onclick="uploadPDF()">Upload PDF</button>
+<div id="pdfList"></div>
 
+<h2>📢 Updates</h2>
 <input id="u_title" placeholder="Title">
 <input id="u_text" placeholder="Text">
 <button onclick="addUpdate()">Add</button>
-
 <div id="updateList"></div>
 
-<!-- ABOUT -->
 <h2>📘 About</h2>
 <textarea id="aboutText"></textarea>
 <button onclick="saveAbout()">Save</button>
 
-<!-- POPUP -->
 <h2>🎯 Popup</h2>
 <input id="popupImage" placeholder="Image URL">
 <input id="popupTitle" placeholder="Title">
 <input id="popupText" placeholder="Text">
 <button onclick="savePopup()">Save Popup</button>
 
-<!-- TOPBAR -->
 <h2>🔔 Topbar</h2>
 <input id="topbarInput">
 <button onclick="saveTopbar()">Save</button>
 
-<script>
+<button onclick="logout()" style="background:red;margin-top:20px;">Logout</button>
 
+</div>
+
+<script>
 // Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCJbmgvBuJ-PP2U9kf_hJQ-rMWtAd551sA",
   authDomain: "game-bbdc6.firebaseapp.com",
   projectId: "game-bbdc6"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const auth = firebase.auth();
 
 let editStudentId = null;
 
+// ================= LOGIN =================
+function login(){
+  const email = document.getElementById("loginEmail").value;
+  const pass = document.getElementById("loginPassword").value;
+  if(!email || !pass){ alert("Email & Password required"); return; }
+
+  auth.signInWithEmailAndPassword(email, pass)
+  .then(()=>{
+    alert("Logged in ✅");
+    document.getElementById("loginDiv").style.display="none";
+    document.getElementById("dashboard").style.display="block";
+    loadStudents(); loadPDFs(); loadTeacher(); loadAbout(); loadPopup(); loadTopbar();
+  })
+  .catch(err=>alert(err.message));
+}
+
+function logout(){
+  auth.signOut().then(()=>{
+    document.getElementById("loginDiv").style.display="block";
+    document.getElementById("dashboard").style.display="none";
+  });
+}
 
 // ================= STUDENTS =================
 function loadStudents(){
@@ -182,19 +147,12 @@ function loadStudents(){
     .get()
     .then(snapshot=>{
       studentList.innerHTML = "";
-
-      if(snapshot.empty){
-        studentList.innerHTML = "No Records Found";
-        return;
-      }
+      if(snapshot.empty){ studentList.innerHTML="No Records"; return; }
 
       snapshot.forEach(doc=>{
         let s = doc.data();
-
         const div = document.createElement("div");
-        div.className = "card";
-
-        // Student info
+        div.className="card";
         div.innerHTML = `
           <b>${s.name || ""}</b> (${s.course || ""})<br>
           👨 Father: ${s.father || ""}<br>
@@ -204,63 +162,32 @@ function loadStudents(){
           🎂 ${s.dob || ""}<br>
           🏠 ${s.address || ""}<br>
         `;
-
-        // Edit Button
         const editBtn = document.createElement("button");
-        editBtn.innerText = "Edit";
-        editBtn.style.marginRight = "6px";
-        editBtn.onclick = () => openEditModal(doc.id);
-
-        // Delete Button
-        const deleteBtn = document.createElement("button");
-        deleteBtn.innerText = "Delete";
-        deleteBtn.onclick = () => deleteStudent(doc.id);
-
-        div.appendChild(editBtn);
-        div.appendChild(deleteBtn);
-
+        editBtn.innerText="Edit"; editBtn.style.marginRight="6px";
+        editBtn.onclick = ()=>openEditModal(doc.id);
+        const deleteBtn=document.createElement("button");
+        deleteBtn.innerText="Delete"; deleteBtn.onclick=()=>deleteStudent(doc.id);
+        div.appendChild(editBtn); div.appendChild(deleteBtn);
         studentList.appendChild(div);
       });
     })
     .catch(err=>alert(err.message));
 }
 
-function deleteStudent(id){
-  if(confirm("Delete this student?")){
-    db.collection("students").doc(id).delete()
-    .then(()=>{
-      alert("Deleted ✅");
-      loadStudents();
-    });
-  }
-}
-
 function openEditModal(id){
-  if(!id){
-    alert("ID missing ❌");
-    return;
-  }
-  
-  editStudentId = id;
-
+  editStudentId=id;
   db.collection("students").doc(id).get().then(doc=>{
-    if(!doc.exists){
-      alert("Student not found ❌");
-      return;
-    }
-
-    let s = doc.data();
-
-    document.getElementById("edit_name").value = s.name || "";
-    document.getElementById("edit_father").value = s.father || "";
-    document.getElementById("edit_mother").value = s.mother || "";
-    document.getElementById("edit_phone").value = s.phone || "";
-    document.getElementById("edit_email").value = s.email || "";
-    document.getElementById("edit_dob").value = s.dob || "";
-    document.getElementById("edit_course").value = s.course || "";
-    document.getElementById("edit_address").value = s.address || "";
-
-    document.getElementById("editModal").style.display = "block";
+    if(!doc.exists){ alert("Student not found ❌"); return; }
+    let s=doc.data();
+    document.getElementById("edit_name").value=s.name||"";
+    document.getElementById("edit_father").value=s.father||"";
+    document.getElementById("edit_mother").value=s.mother||"";
+    document.getElementById("edit_phone").value=s.phone||"";
+    document.getElementById("edit_email").value=s.email||"";
+    document.getElementById("edit_dob").value=s.dob||"";
+    document.getElementById("edit_course").value=s.course||"";
+    document.getElementById("edit_address").value=s.address||"";
+    document.getElementById("editModal").style.display="block";
   });
 }
 function updateStudent(){
@@ -273,206 +200,81 @@ function updateStudent(){
     dob: document.getElementById("edit_dob").value,
     course: document.getElementById("edit_course").value,
     address: document.getElementById("edit_address").value
-  })
-  .then(()=>{
-    alert("Updated ✅");
-    closeEditModal();
-    loadStudents();
-  })
+  }).then(()=>{ alert("Updated ✅"); closeEditModal(); loadStudents(); })
   .catch(err=>alert(err.message));
 }
-
-function closeEditModal(){
-  document.getElementById("editModal").style.display = "none";
-}
-
+function closeEditModal(){ document.getElementById("editModal").style.display="none"; }
+function deleteStudent(id){ if(confirm("Delete?")){ db.collection("students").doc(id).delete().then(()=>loadStudents()); } }
 
 // ================= TEACHERS =================
 function saveTeacher(){
-  db.collection("teachers").doc(document.getElementById("teacherSelect").value).set({
-    name: document.getElementById("t_name").value,
-    subject: document.getElementById("t_subject").value,
-    image: document.getElementById("t_image").value
-  })
-  .then(()=>alert("Teacher Saved ✅"))
+  const id=document.getElementById("teacherSelect").value;
+  db.collection("teachers").doc(id).set({
+    name:document.getElementById("t_name").value,
+    subject:document.getElementById("t_subject").value,
+    image:document.getElementById("t_image").value
+  }).then(()=>alert("Teacher Saved ✅"))
   .catch(err=>alert(err.message));
 }
+function loadTeacher(){
+  const id=document.getElementById("teacherSelect").value;
+  db.collection("teachers").doc(id).get().then(doc=>{
+    if(doc.exists){
+      let t=doc.data();
+      document.getElementById("t_name").value=t.name||"";
+      document.getElementById("t_subject").value=t.subject||"";
+      document.getElementById("t_image").value=t.image||"";
+    } else { document.getElementById("t_name").value=""; document.getElementById("t_subject").value=""; document.getElementById("t_image").value=""; }
+  });
+}
 
+// ================= PDF =================
+function uploadPDF(){
+  const title=document.getElementById("pdfTitle").value;
+  const url=prompt("Google Drive PDF Link");
+  if(!title||!url){ alert("Title & URL required"); return; }
+  db.collection("pdfs").add({title,fileURL:url,createdAt:new Date()})
+  .then(()=>{ alert("PDF Added ✅"); loadPDFs(); })
+  .catch(err=>alert(err.message));
+}
+function loadPDFs(){
+  const pdfList=document.getElementById("pdfList");
+  db.collection("pdfs").orderBy("createdAt","desc").onSnapshot(snapshot=>{
+    pdfList.innerHTML="";
+    snapshot.forEach(doc=>{
+      let p=doc.data();
+      const div=document.createElement("div"); div.className="card";
+      div.innerHTML=`📄 <b>${p.title}</b><br><a href="${p.fileURL}" target="_blank">View PDF</a><br>`;
+      const delBtn=document.createElement("button"); delBtn.innerText="Delete"; delBtn.onclick=()=>db.collection("pdfs").doc(doc.id).delete();
+      div.appendChild(delBtn); pdfList.appendChild(div);
+    });
+  });
+}
 
 // ================= UPDATES =================
 function addUpdate(){
-  db.collection("updates").add({
-    title: document.getElementById("u_title").value,
-    text: document.getElementById("u_text").value,
-    createdAt: new Date()
-  })
-  .then(()=>alert("Update Added ✅"))
-  .catch(err=>alert(err.message));
+  db.collection("updates").add({title:document.getElementById("u_title").value,text:document.getElementById("u_text").value,createdAt:new Date()})
+  .then(()=>alert("Update Added ✅")).catch(err=>alert(err.message));
 }
-
-db.collection("updates").orderBy("createdAt","desc")
-.onSnapshot(snapshot=>{
-  const updateList = document.getElementById("updateList");
-  updateList.innerHTML = "";
-
+db.collection("updates").orderBy("createdAt","desc").onSnapshot(snapshot=>{
+  const updateList=document.getElementById("updateList"); updateList.innerHTML="";
   snapshot.forEach(doc=>{
-    let u = doc.data();
-
-    updateList.innerHTML += `
-      <div class="card">
-        <b>${u.title}</b><br>${u.text}
-        <button onclick="deleteUpdate('${doc.id}')">Delete</button>
-      </div>
-    `;
+    let u=doc.data();
+    const div=document.createElement("div"); div.className="card";
+    div.innerHTML=`<b>${u.title}</b><br>${u.text}`;
+    const delBtn=document.createElement("button"); delBtn.innerText="Delete"; delBtn.onclick=()=>db.collection("updates").doc(doc.id).delete();
+    div.appendChild(delBtn); updateList.appendChild(div);
   });
 });
 
-function deleteUpdate(id){
-  db.collection("updates").doc(id).delete();
-}
-
-// ================= PDF SYSTEM =================
-
-// Storage init
-
-
-// UPLOAD PDF
-function uploadPDF(){
-  const title = document.getElementById("pdfTitle").value;
-
-  const url = prompt("Google Drive PDF link daalo");
-
-  if(!title || !url){
-    alert("Title aur PDF link daalo ❌");
-    return;
-  }
-
-  db.collection("pdfs").add({
-    title: title,
-    fileURL: url,
-    createdAt: new Date()
-  })
-  .then(()=>{
-    alert("PDF Add ho gaya ✅");
-    loadPDFs();
-  })
-  .catch(err=>{
-    alert("Error: " + err.message);
-  });
-}
-
-// LOAD PDFs
-function loadPDFs(){
-  const pdfList = document.getElementById("pdfList");
-
-  db.collection("pdfs").orderBy("createdAt","desc")
-  .onSnapshot(snapshot=>{
-    pdfList.innerHTML = "";
-
-    snapshot.forEach(doc=>{
-      let p = doc.data();
-
-      pdfList.innerHTML += `
-        <div class="card">
-          📄 <b>${p.title}</b><br>
-          <a href="${p.fileURL}" target="_blank">View PDF</a><br>
-          <button onclick="deletePDF('${doc.id}')">Delete</button>
-        </div>
-      `;
-    });
-
-  });
-}
-
-
-// DELETE PDF
-function deletePDF(id){
-  if(confirm("Delete PDF?")){
-    db.collection("pdfs").doc(id).delete()
-    .then(()=>alert("Deleted ✅"));
-  }
-}
 // ================= SETTINGS =================
-function saveAbout(){
-  const text = document.getElementById("aboutText").value;
+function saveAbout(){ db.collection("settings").doc("about").set({text:document.getElementById("aboutText").value}).then(()=>alert("Saved ✅")).catch(err=>alert(err.message)); }
+function savePopup(){ db.collection("settings").doc("popup").set({image:document.getElementById("popupImage").value,title:document.getElementById("popupTitle").value,text:document.getElementById("popupText").value}).then(()=>alert("Saved ✅")).catch(err=>alert(err.message)); }
+function saveTopbar(){ db.collection("settings").doc("topbar").set({text:document.getElementById("topbarInput").value}).then(()=>alert("Saved ✅")).catch(err=>alert(err.message)); }
+function loadAbout(){ db.collection("settings").doc("about").get().then(doc=>{ if(doc.exists)document.getElementById("aboutText").value=doc.data().text||""; }); }
+function loadPopup(){ db.collection("settings").doc("popup").get().then(doc=>{ if(doc.exists){ let p=doc.data(); document.getElementById("popupImage").value=p.image||""; document.getElementById("popupTitle").value=p.title||""; document.getElementById("popupText").value=p.text||""; } }); }
+function loadTopbar(){ db.collection("settings").doc("topbar").get().then(doc=>{ if(doc.exists)document.getElementById("topbarInput").value=doc.data().text||""; }); }
 
-  db.collection("settings").doc("about").set({text})
-  .then(()=>alert("About Saved ✅"))
-  .catch(err=>alert(err.message));
-}
-
-function savePopup(){
-  db.collection("settings").doc("popup").set({
-    image: document.getElementById("popupImage").value,
-    title: document.getElementById("popupTitle").value,
-    text: document.getElementById("popupText").value
-  })
-  .then(()=>alert("Popup Saved ✅"))
-  .catch(err=>alert(err.message));
-}
-
-function saveTopbar(){
-  const text = document.getElementById("topbarInput").value;
-
-  db.collection("settings").doc("topbar").set({text})
-  .then(()=>alert("Topbar Saved ✅"))
-  .catch(err=>alert(err.message));
-}
-function loadAbout(){
-  db.collection("settings").doc("about").get()
-  .then(doc=>{
-    if(doc.exists){
-      document.getElementById("aboutText").value = doc.data().text || "";
-    }
-  });
-                }
-  function loadPopup(){
-  db.collection("settings").doc("popup").get()
-  .then(doc=>{
-    if(doc.exists){
-      const p = doc.data();
-
-      document.getElementById("popupImage").value = p.image || "";
-      document.getElementById("popupTitle").value = p.title || "";
-      document.getElementById("popupText").value = p.text || "";
-    }
-  });
-  }
-  function loadTopbar(){
-  db.collection("settings").doc("topbar").get()
-  .then(doc=>{
-    if(doc.exists){
-      document.getElementById("topbarInput").value = doc.data().text || "";
-    }
-  });
-  }
-function loadTeacher(){
-  const id = document.getElementById("teacherSelect").value;
-
-  db.collection("teachers").doc(id).get()
-  .then(doc=>{
-    if(doc.exists){
-      let t = doc.data();
-
-      document.getElementById("t_name").value = t.name || "";
-      document.getElementById("t_subject").value = t.subject || "";
-      document.getElementById("t_image").value = t.image || "";
-    }else{
-      // agar data nahi hai to blank karo
-      document.getElementById("t_name").value = "";
-      document.getElementById("t_subject").value = "";
-      document.getElementById("t_image").value = "";
-    }
-  });
-    }
-// LOAD
-loadStudents();
-loadPDFs();
-loadAbout();
-loadPopup();
-loadTopbar();
-loadTeacher();
 </script>
-
 </body>
 </html>
