@@ -1658,7 +1658,11 @@ function openPopup(type){
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+import { 
+  getFirestore, 
+  collection, 
+  getDocs 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 // 🔥 Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCJbmgvBuJ-PP2U9kf_hJQ-rMWtAd551sA",
@@ -1699,45 +1703,52 @@ window.sendComputerForm = async function(){
 
   // LOAD PDFs FOR STUDENTS
 // ================= VIDEOS =================
+// ================= VIDEOS =================
 async function loadVideos(){
-  const data = await getDocs(collection(db,"videos"));
-  let html = "";
+  try{
+    const data = await getDocs(collection(db,"videos"));
+    let html = "";
 
-  if(data.empty){
-    document.getElementById("videoTrack").innerHTML = "No Videos Available";
-    return;
+    if(data.empty){
+      document.getElementById("videoTrack").innerHTML = "No Videos Available";
+      return;
+    }
+
+    data.forEach(d=>{
+      const v = d.data();
+
+      let videoId = "";
+
+      if(v.url.includes("watch?v=")){
+        videoId = v.url.split("watch?v=")[1].split("&")[0];
+      }
+      else if(v.url.includes("youtu.be/")){
+        videoId = v.url.split("youtu.be/")[1].split("?")[0];
+      }
+
+      let embedUrl = "https://www.youtube.com/embed/" + videoId;
+
+      html += `
+        <div class="video-item">
+          <iframe 
+            width="100%" 
+            height="200" 
+            src="${embedUrl}" 
+            frameborder="0" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      `;
+    });
+
+    document.getElementById("videoTrack").innerHTML = html;
+
+  }catch(e){
+    console.error("Video Load Error:", e);
   }
-
-  data.forEach(d=>{
-    const v = d.data();
-
-    let videoId = "";
-
-    if(v.url.includes("watch?v=")){
-      videoId = v.url.split("watch?v=")[1].split("&")[0];
-    }
-    else if(v.url.includes("youtu.be/")){
-      videoId = v.url.split("youtu.be/")[1].split("?")[0];
-    }
-
-    let embedUrl = "https://www.youtube.com/embed/" + videoId;
-
-    html += `
-      <div class="video-item">
-        <iframe 
-          width="100%" 
-          height="200" 
-          src="${embedUrl}" 
-          frameborder="0" 
-          allowfullscreen>
-        </iframe>
-      </div>
-    `;
-  });
-
-  document.getElementById("videoTrack").innerHTML = html;
 }
 
+// 🔥 CALL
 loadVideos();
 // ================= COACHING FORM =================
 window.sendCoachingForm = async function(){
