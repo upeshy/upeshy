@@ -1703,15 +1703,21 @@ async function loadVideos(){
   const data = await getDocs(collection(db,"videos"));
   let html = "";
 
+  if(data.empty){
+    document.getElementById("videoTrack").innerHTML = "No Videos Available";
+    return;
+  }
+
   data.forEach(d=>{
     const v = d.data();
 
-    // YouTube URL se embed link banana
     let videoId = "";
+
     if(v.url.includes("watch?v=")){
-      videoId = v.url.split("watch?v=")[1];
-    }else if(v.url.includes("youtu.be/")){
-      videoId = v.url.split("youtu.be/")[1];
+      videoId = v.url.split("watch?v=")[1].split("&")[0];
+    }
+    else if(v.url.includes("youtu.be/")){
+      videoId = v.url.split("youtu.be/")[1].split("?")[0];
     }
 
     let embedUrl = "https://www.youtube.com/embed/" + videoId;
@@ -1730,7 +1736,9 @@ async function loadVideos(){
   });
 
   document.getElementById("videoTrack").innerHTML = html;
-  }
+}
+
+loadVideos();
 // ================= COACHING FORM =================
 window.sendCoachingForm = async function(){
   try{
