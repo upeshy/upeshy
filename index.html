@@ -1272,30 +1272,15 @@ form button:hover{
 <img src="https://cdn-icons-png.flaticon.com/512/2995/2995467.png">      
 <h3>Study Material</h3>      
 </div>  </div>      
-</section>  <!-- VIDEOS --> <section class="video-scroll-section">  
-  <h2>Student Reviews</h2>    <div class="video-scroll">  <div class="video-track">  
+</section>  <section class="video-scroll-section">
+  <h2>YouTube video</h2>
 
-  <!-- VIDEO 1 -->  
-  <div class="video-item">  
-    <video src="video1.mp4" controls></video>  
-  </div>  
-
-  <!-- VIDEO 2 -->  
-  <div class="video-item">  
-    <video src="video2.mp4" controls></video>  
-  </div>  
-
-  <!-- VIDEO 3 -->  
-  <div class="video-item">  
-    <video src="video3.mp4" controls></video>  
-  </div>  
-
-    
-
-</div>
-
-  </div>  
-</section>  <!-- UPDATES --> <section class="updates-section">  
+  <div class="video-scroll">
+    <div class="video-track" id="videoTrack">
+      Loading...
+    </div>
+  </div>
+</section><!-- UPDATES --> <section class="updates-section">  
   <h2>LATEST UPDATES</h2>    
 
   <div class="updates-box">  
@@ -1713,7 +1698,39 @@ window.sendComputerForm = async function(){
 }
 
   // LOAD PDFs FOR STUDENTS
+// ================= VIDEOS =================
+async function loadVideos(){
+  const data = await getDocs(collection(db,"videos"));
+  let html = "";
 
+  data.forEach(d=>{
+    const v = d.data();
+
+    // YouTube URL se embed link banana
+    let videoId = "";
+    if(v.url.includes("watch?v=")){
+      videoId = v.url.split("watch?v=")[1];
+    }else if(v.url.includes("youtu.be/")){
+      videoId = v.url.split("youtu.be/")[1];
+    }
+
+    let embedUrl = "https://www.youtube.com/embed/" + videoId;
+
+    html += `
+      <div class="video-item">
+        <iframe 
+          width="100%" 
+          height="200" 
+          src="${embedUrl}" 
+          frameborder="0" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    `;
+  });
+
+  document.getElementById("videoTrack").innerHTML = html;
+  }
 // ================= COACHING FORM =================
 window.sendCoachingForm = async function(){
   try{
