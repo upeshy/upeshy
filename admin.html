@@ -87,10 +87,16 @@ button:hover{background:#0284c7;}
 <button onclick="saveAbout()">Save</button>
 
 <h2>🎯 Popup</h2>
-<input id="popupImage" placeholder="Image URL">
+
+<input type="file" id="popupFile">
+<br><br>
+
+<img id="previewImg" style="width:120px;border-radius:8px;display:none;"><br><br>
+
 <input id="popupTitle" placeholder="Title">
 <input id="popupText" placeholder="Text">
-<button onclick="savePopup()">Save Popup</button>
+
+<button onclick="uploadPopupImage()">Upload & Save</button>
 
 <h2>🔔 Topbar</h2>
 <input id="topbarInput">
@@ -249,7 +255,37 @@ function loadVideos(){
     document.getElementById("videoList").innerHTML = html;
   });
 }
+function uploadPopupImage(){
+  const file = document.getElementById("popupFile").files[0];
 
+  if(!file){
+    alert("Please select image");
+    return;
+  }
+
+  const storageRef = firebase.storage().ref("popup/" + file.name);
+
+  storageRef.put(file)
+  .then(snapshot => snapshot.ref.getDownloadURL())
+  .then(url => {
+
+    // preview show
+    document.getElementById("previewImg").src = url;
+    document.getElementById("previewImg").style.display = "block";
+
+    // save in firestore
+    return db.collection("settings").doc("popup").set({
+      image: url,
+      title: document.getElementById("popupTitle").value,
+      text: document.getElementById("popupText").value
+    });
+
+  })
+  .then(()=>{
+    alert("Popup Saved ✅");
+  })
+  .catch(err=>alert(err.message));
+}
 // ================= LOAD =================
 async function addVideo(){
   const title = document.getElementById("videoTitle").value;
