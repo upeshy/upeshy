@@ -289,11 +289,12 @@ padding:10px;
 
 /* 🔥 IMAGE FULL FIT */
 .popup-content img{
-  width:90%;
-  height:140px;
-  object-fit:cover;
+  width:100%;
+  height:auto;
+  max-height:300px;   /* 🔥 limit fix */
+  object-fit:contain;
   display:block;
-  margin:10px auto;
+  margin:auto;
 }
 
 /* 🔥 TEXT SPACING */
